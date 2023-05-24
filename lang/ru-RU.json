@@ -1,0 +1,82 @@
+{
+  "navigation": {
+    "main": "Главная"
+  },
+
+  "toasts": {
+    "hide": "Закрыть"
+  },
+
+  "loginPage": {
+    "title": "Вход",
+
+    "loginField": {
+      "label": "Имя пользователя",
+      "placeholder": "Имя пользователя"
+    },
+
+    "passwordField": {
+      "label": "Пароль",
+      "placeholder": "Пароль"
+    },
+
+    "rememberMe": "Запомнить меня",
+
+    "actions": {
+      "singIn": "Войти",
+      "singUp": "Или зарегистрироваться"
+    },
+
+    "errors" : {
+      "invalidCredentials": "Неправильные учетные данные!",
+      "needUsername": "Введите имя пользователя!",
+      "needPassword": "Введите пароль!",
+      "serverError": "Ошибка сервера"
+    }
+  },
+
+  "registerPage": {
+    "title": "Регистрация",
+
+    "loginField": {
+      "label": "Имя пользователя",
+      "placeholder": "Имя пользователя"
+    },
+
+    "passwordField": {
+      "label": "Пароль",
+      "placeholder": "Пароль"
+    },
+
+    "actions": {
+      "singUp": "Зарегистрироваться",
+      "singIn": "Или войти"
+    },
+
+    "errors" : {
+      "password": {
+        "tooShort": "Слишком короткий!",
+        "tooLong": "Слишком длинный!",
+        "missingSpecials": "Отсутствуют спец. символы!",
+        "missingNumbers": "Отсуствуют цифры!"
+      },
+
+      "needUsername": "Введите имя пользователя!",
+      "needPassword": "Введите пароль!",
+      "userExists": "Имя пользователя занято!",
+      "serverError": "Ошибка сервера"
+    },
+
+    "lang": {
+      "label": "Язык"
+    },
+
+    "timezone": {
+      "label": "Часовой пояс"
+    }
+  },
+
+  "accountsPanel": {
+    "label": "Счета"
+  }
+}

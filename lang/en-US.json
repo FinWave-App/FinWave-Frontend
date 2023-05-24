@@ -1,0 +1,135 @@
+{
+  "navigation": {
+    "main": "Main"
+  },
+
+  "toasts": {
+    "hide": "Hide"
+  },
+
+  "loginPage": {
+    "title": "Login",
+
+    "loginField": {
+      "label": "Username",
+      "placeholder": "Username"
+    },
+
+    "passwordField": {
+      "label": "Password",
+      "placeholder": "Password"
+    },
+
+    "rememberMe": "Remember me",
+
+    "actions": {
+      "singIn": "Sing in",
+      "singUp": "Or sing up"
+    },
+
+    "errors" : {
+      "invalidCredentials": "Invalid credentials!",
+      "needUsername": "Enter your username!",
+      "needPassword": "Enter your password!",
+      "serverError": "Server error"
+    }
+  },
+
+  "registerPage": {
+    "title": "Registration",
+
+    "loginField": {
+      "label": "Username",
+      "placeholder": "Username"
+    },
+
+    "passwordField": {
+      "label": "Password",
+      "placeholder": "Password"
+    },
+
+    "actions": {
+      "singUp": "Sing up",
+      "singIn": "Or sing in"
+    },
+
+    "errors" : {
+      "password": {
+        "tooShort": "Too short!",
+        "tooLong": "Too long!",
+        "missingSpecials": "No special characters!",
+        "missingNumbers": "No numbers!"
+      },
+      "needUsername": "Enter your username!",
+      "needPassword": "Enter your password!",
+      "userExists": "Username is busy!",
+      "serverError": "Server error"
+    },
+
+    "lang": {
+      "label": "Language"
+    },
+
+    "timezone": {
+      "label": "Timezone"
+    }
+  },
+
+  "accountsPanel": {
+    "label": "Accounts",
+    "newTag": "New tag",
+    "newAccount": "New account"
+  },
+
+  "accountTagEntry": {
+    "messages": {
+      "deleted": "Account tag was successfully deleted",
+      "deleteFail": "Failed to delete tag",
+      "edited": "Account tag was successfully edited"
+    }
+  },
+
+  "modals": {
+    "buttons": {
+      "create": "Create",
+      "deny": "Deny",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "apply": "Apply",
+      "close": "Close"
+    },
+
+    "newAccount": {
+      "title": "New account",
+      "placeholders": {
+        "accountName": "Account name",
+        "currencySelect": "Select currency",
+        "accountDescription": "Account description"
+      }
+    },
+
+    "newAccountTag": {
+      "title": "New account tag",
+      "placeholders": {
+        "tagName": "Tag name",
+        "tagDescription": "Tag description"
+      },
+      "messages": {
+        "success": "Account tag created",
+        "error": "Oops, failed to create account tag"
+      }
+    },
+
+    "editAccountTag": {
+      "title": "Edit account tag",
+      "placeholders": {
+        "tagName": "Tag name",
+        "tagDescription": "Tag description"
+      },
+      "messages": {
+        "success": "Account tag edited",
+        "error": "Oops, failed to edit account tag"
+      }
+    }
+  }
+}
