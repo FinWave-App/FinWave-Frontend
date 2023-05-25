@@ -130,6 +130,19 @@
         "success": "Account tag edited",
         "error": "Oops, failed to edit account tag"
       }
+    },
+
+    "editAccount": {
+      "title": "Edit account",
+      "placeholders": {
+        "accountName": "Account name",
+        "accountDescription": "Account description",
+        "tagSelect": "Select tag"
+      },
+      "messages": {
+        "success": "Account edited",
+        "error": "Oops, failed to edit account"
+      }
     }
   }
 }

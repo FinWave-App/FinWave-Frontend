@@ -59,6 +59,9 @@ watch(() => props.opened, (selection, prevSelection) => {
   if (selection) {
     name.value = props.tag.name;
     description.value = props.tag.description;
+
+    nameSyncStatus.value = 1;
+    descriptionSyncStatus.value = 1;
   }
 })
 

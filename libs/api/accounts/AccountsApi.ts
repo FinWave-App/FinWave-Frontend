@@ -20,6 +20,91 @@ export class AccountsApi {
         this.accounts.value = data.value.accounts || [];
     }
 
+    public async editAccountDescription(description: string, accountId: number) {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId, description: description }
+        };
+
+        const { error } = await useApi("/user/accounts/editDescription", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.accounts.value.find((t) => t.accountId == accountId).description = description;
+
+        return true;
+    }
+
+    public async editAccountName(name: string, accountId: number) {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId, name: name }
+        };
+
+        const { error } = await useApi("/user/accounts/editName", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.accounts.value.find((t) => t.accountId == accountId).name = name;
+
+        return true;
+    }
+
+    public async editAccountTag(tagId: number, accountId: number) {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId, tagId: tagId }
+        };
+
+        const { error } = await useApi("/user/accounts/editTag", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.accounts.value.find((t) => t.accountId == accountId).tagId = tagId;
+
+        return true;
+    }
+
+    public async hideAccount(accountId: number) {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId }
+        };
+
+        const { error } = await useApi("/user/accounts/hide", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.accounts.value.find((t) => t.accountId == accountId).hidden = true;
+
+        return true;
+    }
+
+    public async showAccount(accountId: number) {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId }
+        };
+
+        const { error } = await useApi("/user/accounts/show", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.accounts.value.find((t) => t.accountId == accountId).hidden = false;
+
+        return true;
+    }
+
     public async newAccount(name: string, currencyId: number, tagId: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",

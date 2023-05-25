@@ -3,7 +3,7 @@
     <input type="checkbox" :id="name" class="modal-toggle" :checked="opened" />
     <div class="modal modal-bottom sm:modal-middle">
       <div v-if="title.length > 0" class="modal-box p-0">
-        <div class="px-6 pt-4 pb-2 border-b font-bold text-lg">
+        <div class="px-6 pt-4 pb-2 border-b border-b-base-200 font-bold text-lg">
           {{ title }}
         </div>
         <div class="p-6 pt-4">
