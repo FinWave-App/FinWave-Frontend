@@ -61,9 +61,9 @@ const configs = $serverConfigs.configs.accounts;
 
 const allTags = await $accountsTagsApi.getTags();
 
-const name = ref(props.account.name);
-const description = ref(props.account.description);
-const tag = ref(props.account.tagId);
+const name = ref();
+const description = ref();
+const tag = ref();
 
 const nameSyncStatus = ref(1);
 const descriptionSyncStatus = ref(1);
@@ -75,9 +75,11 @@ watch(() => props.opened, (selection, prevSelection) => {
     description.value = props.account.description;
     tag.value = props.account.tagId;
 
-    nameSyncStatus.value = 1;
-    descriptionSyncStatus.value = 1;
-    tagSyncStatus.value = 1;
+    nextTick(() => {
+      nameSyncStatus.value = 1;
+      descriptionSyncStatus.value = 1;
+      tagSyncStatus.value = 1;
+    })
   }
 })
 

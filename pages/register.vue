@@ -99,7 +99,7 @@ definePageMeta({
     () => {
     const {$serverConfigs, $auth} = useNuxtApp()
 
-      if ($auth.state().authed || !$serverConfigs.configs.users.registration.enabled)
+      if ($auth.state().authed.value || !$serverConfigs.configs.users.registration.enabled)
         return navigateTo("/");
     }
   ],

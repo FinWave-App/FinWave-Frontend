@@ -56,7 +56,7 @@
 definePageMeta({
   middleware: [
     () => {
-      if (useNuxtApp().$auth.state().authed)
+      if (useNuxtApp().$auth.state().authed.value)
         return navigateTo("/");
     }
   ],

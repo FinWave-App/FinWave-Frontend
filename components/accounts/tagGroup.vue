@@ -7,7 +7,7 @@
         </p>
 
         <div class="flex gap-1 items-center">
-          <plus-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus"  @event="createAccountModal = true" />
+          <plus-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus" @event="createAccountModal = true" />
           <edit-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus" @event="tagEditModal = true"/>
 
           <delete-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="hideStatus && accounts.length === 0" @click="deleteTag" />
@@ -21,9 +21,11 @@
     </div>
     <div v-if="!hideStatus" class="bg-base-300 rounded-b-2xl p-2">
       <div v-if="accounts.length > 0" class="flex flex-col gap-2">
-        <entry v-for="account in accounts" :account="account">
+        <transition-group name="accounts">
+          <entry v-for="account in showedAccounts" :account="account" @edit-modal="openEditAccountModal(account)" :key="account.accountId"/>
 
-        </entry>
+          <entry v-for="account in hiddenAccounts" :account="account" @edit-modal="openEditAccountModal(account)" :key="account.accountId"/>
+        </transition-group>
       </div>
       <div v-else class="card min-w-max templateBorder">
         <div class="card-body p-5 justify-center items-center h-max">
@@ -47,6 +49,7 @@
     </confirmation>
 
     <modal-account-tag-edit @close="tagEditModal = false" :opened="tagEditModal" :tag="tag"/>
+    <modal-account-edit :account="accountToEdit" :opened="accountEditModal" @close="accountEditModal = false"></modal-account-edit>
   </div>
 </template>
 
@@ -78,9 +81,17 @@ const props = defineProps({
 
 })
 
+const showedAccounts = computed(() => props.accounts.filter((a) => !a.hidden));
+const hiddenAccounts = computed(() => props.accounts.filter((a) => a.hidden));
+
 const createAccountModal = ref(false);
 const tagDeleteModal = ref(false);
 const tagEditModal = ref(false);
+
+const accountEditModal = ref(false);
+
+const accountToEdit = ref(null);
+
 const setHide = () => {
   emit('hide');
 }
@@ -91,6 +102,11 @@ const unHide = () => {
 
 const deleteTag = () => {
   tagDeleteModal.value = true;
+}
+
+const openEditAccountModal = (account) => {
+  accountToEdit.value = account;
+  accountEditModal.value = true;
 }
 
 const confirmDelete = () => {
@@ -109,5 +125,21 @@ const confirmDelete = () => {
 <style scoped>
 .tag-info {
   @apply p-2 px-3 bg-base-100 rounded-t-2xl;
+}
+
+.accounts-move,
+.accounts-enter-active,
+.accounts-leave-active {
+  transition: all 0.5s ease;
+}
+.accounts-enter-from,
+.accounts-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.accounts-leave-active {
+  @apply w-max;
+  position: absolute;
 }
 </style>

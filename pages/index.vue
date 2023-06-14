@@ -5,18 +5,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 definePageMeta({
   middleware: [
       "auth"
   ]
 })
-
-const {$auth, $accountsApi} = useNuxtApp();
-
-const authState = $auth.state();
-const accounts = $accountsApi.getAccounts();
 
 </script>
 

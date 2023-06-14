@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     const state = $auth.state();
 
-    if (!state.authed)
+    if (!state.authed.value)
         return navigateTo("/login");
 })

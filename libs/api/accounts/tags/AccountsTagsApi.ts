@@ -1,23 +1,16 @@
 import {Ref} from "vue";
 
 export class AccountsTagsApi {
-    private tags: Ref<Array<any> | null> = ref(null);
+    private tags: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void> {
-
-    }
-
-    public async getTags(): Promise<Ref<Array<any> | null>> {
-        if (this.tags.value === null)
-            await this.fetchTags();
-
-        return this.tags;
-    }
-
-    private async fetchTags() {
         const {data} = await useApi<any>("/user/accounts/tags/getList");
 
         this.tags.value = data.value.tags || [];
+    }
+
+    public getTags(): Ref<Array<any> | null> {
+        return this.tags;
     }
 
     public async newTag(name: string, description: string | null) : Promise<boolean> {

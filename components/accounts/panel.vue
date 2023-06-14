@@ -13,13 +13,25 @@
 
     <div v-if="tags.length > 0" class="flex flex-col gap-4 mt-2">
       <transition-group name="tags">
-        <tag-group v-for="tag in tags.filter((t) => !t.hide)" :key="tag.tagId" :tag="tag" :hide-status="tag.hide" @hide="setHideTagStatus(tag, true)" @unHide="setHideTagStatus(tag, false)" :accounts="getTagAccounts(tag)">
+        <tag-group v-for="tag in tags.filter((t) => !t.hide)"
+                   :key="tag.tagId" :tag="tag"
+                   :hide-status="tag.hide"
+                   @hide="setHideTagStatus(tag, true)"
+                   @unHide="setHideTagStatus(tag, false)"
+                   :accounts="getTagAccounts(tag)">
         </tag-group>
-        <tag-group v-for="tag in tags.filter((t) => t.hide)" :key="tag.tagId" :tag="tag" :hide-status="tag.hide" @hide="setHideTagStatus(tag, true)" @unHide="setHideTagStatus(tag, false)" :accounts="getTagAccounts(tag)">
+
+        <tag-group v-for="tag in tags.filter((t) => t.hide)"
+                   :key="tag.tagId"
+                   :tag="tag"
+                   :hide-status="tag.hide"
+                   @hide="setHideTagStatus(tag, true)"
+                   @unHide="setHideTagStatus(tag, false)"
+                   :accounts="getTagAccounts(tag)">
         </tag-group>
       </transition-group>
     </div>
-    <div v-else class="card min-w-max templateBorder">
+    <div v-else class="card min-w-max templateBorder mt-2">
       <div class="card-body p-5 justify-center items-center h-max">
 
         <button class="btn btn-ghost btn-circle text-opacity-60" @click="createTagModal = true">

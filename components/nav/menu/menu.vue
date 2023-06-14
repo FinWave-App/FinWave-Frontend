@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="gap-2">
     <nav-menu-entry v-for="item in items" :entry="item">
     </nav-menu-entry>
   </ul>
@@ -12,7 +12,11 @@ const items = computed(() => {
     {
       text: "navigation.main",
       url: "/"
-    }
+    },
+    {
+      text: "navigation.tags",
+      url: "/tags"
+    },
   ];
 });
 /*

@@ -1,10 +1,23 @@
 {
   "navigation": {
-    "main": "Main"
+    "main": "Main",
+    "tags": "Tags"
   },
 
   "toasts": {
     "hide": "Hide"
+  },
+
+  "tagsPage": {
+    "path": "Path:",
+    "table": {
+      "name": "Name",
+      "expectedAmount": "Expected Amount",
+      "type": "Type",
+      "description": "Description",
+      "action": "Action",
+      "toChilds": "To Childs"
+    }
   },
 
   "loginPage": {
@@ -86,6 +99,15 @@
       "deleted": "Account tag was successfully deleted",
       "deleteFail": "Failed to delete tag",
       "edited": "Account tag was successfully edited"
+    }
+  },
+
+  "accountEntry": {
+    "messages": {
+      "hided": "Account was successfully hidden",
+      "hideFail": "Failed to hide account",
+      "showed": "Account was successfully showed",
+      "showFail": "Failed to show account"
     }
   },
 

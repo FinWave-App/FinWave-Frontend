@@ -1,23 +1,16 @@
 import {Ref} from "vue";
 
 export class AccountsApi {
-    private accounts: Ref<Array<any> | null> = ref(null);
+    private accounts: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void> {
-
-    }
-
-    public async getAccounts(): Promise<Ref<Array<any> | null>> {
-        if (this.accounts.value === null)
-            await this.fetchAccounts();
-
-        return this.accounts;
-    }
-
-    private async fetchAccounts() {
         const {data} = await useApi<any>("/user/accounts/getList");
 
         this.accounts.value = data.value.accounts || [];
+    }
+
+    public getAccounts(): Ref<Array<any>> {
+        return this.accounts;
     }
 
     public async editAccountDescription(description: string, accountId: number) {
@@ -108,19 +101,23 @@ export class AccountsApi {
     public async newAccount(name: string, currencyId: number, tagId: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
-            params: { name: name, currencyId: currencyId, tagId: tagId }
-        };
+            params: {
+                name: name,
+                currencyId: currencyId,
+                tagId: tagId
+            }
+        }
 
         if (description !== null && description.length > 0)
             opts.params.description = description;
 
-        const {data: newAccount, error} = await useApi("/user/accounts/new", opts);
+        const {data: newAccount, error} = await useApi<any>("/user/accounts/new", opts);
 
         if (error.value !== null) {
             return false;
         }
 
-        this.accounts.value.push({
+        this.accounts.value?.push({
             accountId: newAccount.value.accountId,
             tagId: tagId,
             currencyId: currencyId,

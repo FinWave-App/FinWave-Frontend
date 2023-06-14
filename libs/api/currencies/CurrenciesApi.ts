@@ -1,29 +1,22 @@
 import {Ref} from "vue";
 
 export class CurrenciesApi {
-    private currencies: Ref<Array<any> | null> = ref(null);
+    private currencies: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void> {
-
-    }
-
-    public async getCurrencies(): Promise<Ref<Array<any> | null>> {
-        if (this.currencies.value === null)
-            await this.fetchCurrencies();
-
-        return this.currencies;
-    }
-
-    private async fetchCurrencies() {
         const {data} = await useApi<any>("/user/currencies/getList");
 
         this.currencies.value = data.value.currencies || [];
     }
 
-    public async newCurrency(code: string, symbol: string, description: string) : Promise<boolean> {
+    public getCurrencies(): Ref<Array<any>> {
+        return this.currencies;
+    }
+
+    public async newCurrency(code: string, symbol: string, decimals: number, description: string) : Promise<boolean> {
         const opts = {
             method: "POST",
-            params: { code: code, symbol: symbol, description: description }
+            params: { code: code, symbol: symbol, decimals: decimals, description: description }
         };
 
         const {data: newCurrency, error} = await useApi("/user/currencies/new", opts);
@@ -37,6 +30,7 @@ export class CurrenciesApi {
             owned: true,
             code: code,
             symbol: symbol,
+            decimals: decimals,
             description: description
         });
 
