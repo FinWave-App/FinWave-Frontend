@@ -13,7 +13,12 @@
     "table": {
       "name": "Name",
       "expectedAmount": "Expected Amount",
-      "type": "Type",
+      "tagType": {
+        "type": "Type",
+        "expense": "Expense",
+        "income": "Income",
+        "mixed": "Mixed"
+      },
       "description": "Description",
       "action": "Action",
       "toChilds": "To Childs"
@@ -124,17 +129,17 @@
     "newAccount": {
       "title": "New account",
       "placeholders": {
-        "accountName": "Account name",
+        "accountName": "Name",
         "currencySelect": "Select currency",
-        "accountDescription": "Account description"
+        "accountDescription": "Description"
       }
     },
 
     "newAccountTag": {
       "title": "New account tag",
       "placeholders": {
-        "tagName": "Tag name",
-        "tagDescription": "Tag description"
+        "tagName": "Name",
+        "tagDescription": "Description"
       },
       "messages": {
         "success": "Account tag created",
@@ -145,8 +150,8 @@
     "editAccountTag": {
       "title": "Edit account tag",
       "placeholders": {
-        "tagName": "Tag name",
-        "tagDescription": "Tag description"
+        "tagName": "Name",
+        "tagDescription": "Description"
       },
       "messages": {
         "success": "Account tag edited",
@@ -164,6 +169,48 @@
       "messages": {
         "success": "Account edited",
         "error": "Oops, failed to edit account"
+      }
+    },
+
+    "newTransactionTag": {
+      "title": "New transaction tag",
+      "tagWithoutParent": "Root",
+      "placeholders": {
+        "tagName": "Name",
+        "tagExpectedAmount": "Expected amount",
+        "tagType": {
+          "type": "Type",
+          "expense": "Expense",
+          "income": "Income",
+          "mixed": "Mixed"
+        },
+        "tagParent": "Parent",
+        "tagDescription": "Description"
+      },
+      "messages": {
+        "success": "Transaction tag created",
+        "error": "Oops, failed to create transaction tag"
+      }
+    },
+
+    "editTransactionTag": {
+      "title": "Edit transaction tag",
+      "tagWithoutParent": "Root",
+      "placeholders": {
+        "tagName": "Name",
+        "tagExpectedAmount": "Expected amount",
+        "tagType": {
+          "type": "Type",
+          "expense": "Expense",
+          "income": "Income",
+          "mixed": "Mixed"
+        },
+        "tagParent": "Parent",
+        "tagDescription": "Description"
+      },
+      "messages": {
+        "success": "Transaction tag edited",
+        "error": "Oops, failed to edit transaction tag"
       }
     }
   }

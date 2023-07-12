@@ -14,7 +14,7 @@
         </div>
       </div>
       <div>
-        <plus-button class="btn btn-sm btn-ghost" @event=""></plus-button>
+        <plus-button class="btn btn-sm btn-ghost" @event="newOpened = true"></plus-button>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
         <tr>
           <th>{{$t("tagsPage.table.name")}}</th>
           <th>{{$t("tagsPage.table.expectedAmount")}}</th>
-          <th>{{$t("tagsPage.table.type")}}</th>
+          <th>{{$t("tagsPage.table.tagType.type")}}</th>
           <th>{{$t("tagsPage.table.description")}}</th>
           <th class="text-right">{{$t("tagsPage.table.action")}}</th>
           <th></th>
@@ -33,8 +33,11 @@
         <tbody>
         <tr v-for="entry in (view.length > 0 ? tagsMap[view[view.length - 1]].childs : tagsTree)">
           <th class="w-64">{{entry.tag.name}}</th>
-          <td class="w-32">{{ formatter.format(entry.tag.expectedAmount)}}</td>
-          <td class="w-32">{{entry.tag.type}}</td>
+          <td class="w-32">{{formatter.format(entry.tag.expectedAmount)}}</td>
+          <td class="w-32 font-bold"
+              :class="{'text-success' : entry.tag.type == 1, 'text-error' : entry.tag.type == -1}">
+            {{ tagTypeToString(entry.tag.type) }}
+          </td>
           <td>{{entry.tag.description}}</td>
           <td class="text-right">
             <edit-button class="btn btn-ghost btn-xs" @event="editTag(entry.tag)"></edit-button>
@@ -47,8 +50,8 @@
       </table>
     </div>
 
-    <modal-transaction-tag-edit :opened="editOpened" :tag="tagToEdit" @close="editOpened = false"/>
-
+    <modal-transaction-tag-edit :opened="editOpened" :tag="tagToEdit" :tags-map="tagsMap" :tags-tree="tagsTree" @close="editOpened = false"/>
+    <modal-transaction-tag-create :opened="newOpened" :tags-tree="tagsTree" :tags-map="tagsMap" @close="newOpened = false"></modal-transaction-tag-create>
   </div>
 
 </template>
@@ -70,53 +73,59 @@ const { $transactionsTagsApi } = useNuxtApp();
 
 const formatter = Intl.NumberFormat(locale.value, {});
 
-let tagsTree = [];
-let tagsMap = {};
+const tagsTree = ref([]);
+const tagsMap = ref({});
 const view = ref([]);
 const tags = $transactionsTagsApi.getTags();
 
 const editOpened = ref(false);
+const newOpened = ref(false);
 const tagToEdit = ref(null);
 
+const tagTypeToString = (type) => {
+  const text = type == 1 ? "income" : (type == -1 ? "expense" : "mixed");
+
+  return t("tagsPage.table.tagType." + text);
+}
+
 const buildTree = () => {
-  tagsTree = [];
-  tagsMap = {};
-  
+  tagsMap.value = {};
+  tagsTree.value = [];
+
   tags.value.forEach((t) => {
     let treeObject = {
       tag: t,
       childs: []
     };
 
-    if (tagsMap[t.tagId] === undefined) {
-      tagsMap[t.tagId] = treeObject;
+    if (tagsMap.value[t.tagId] === undefined) {
+      tagsMap.value[t.tagId] = treeObject;
     }else {
-      treeObject = tagsMap[t.tagId]
+      treeObject = tagsMap.value[t.tagId]
       treeObject.tag = t;
     }
 
     if (t.parentsTree === '') {
-      tagsTree.push(treeObject);
+      tagsTree.value.push(treeObject);
     } else {
       const tree = t.parentsTree.split('.');
-      const parent = Number.parseInt(tree[tree.length - 1]);
+      const parent = Number.parseInt(tree.slice(-1));
 
-      if (tagsMap[parent] === undefined) {
-        tagsMap[parent] = {
+      if (tagsMap.value[parent] === undefined) {
+        tagsMap.value[parent] = {
           t: null,
           childs: []
         }
       }
 
-      tagsMap[parent].childs.push(treeObject)
+      tagsMap.value[parent].childs.push(treeObject)
     }
   })
-
 }
 
 watch(tags, (old, newV) => {
   buildTree()
-})
+}, { deep: true })
 
 buildTree()
 

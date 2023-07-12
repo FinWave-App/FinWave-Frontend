@@ -1,5 +1,5 @@
 <template>
-  <modal-base :title="$t('modals.newAccountTag.title')" :opened="opened" :name="'account-tag-create-modal'">
+  <modal-base :title="$t('modals.newAccountTag.title')" :opened="opened" :name="'account-transactionTag-create-modal'">
     <div class="w-full flex flex-col gap-2">
       <input type="text" class="input input-bordered" :placeholder="$t('modals.newAccountTag.placeholders.tagName')" v-model.trim="name" :maxlength="tagsConfigs.maxNameLength"/>
 

@@ -88,8 +88,14 @@ export class TransactionsTagsApi {
     public async editTagParent(parentId: number, tagId: number) {
         const opts = {
             method: "POST",
-            params: { tagId: tagId, parentId: parentId }
+            params: { tagId: tagId }
         };
+
+        if (parentId != 0) {
+            opts.params.parentId = parentId;
+        }else {
+            opts.params.setToRoot = true;
+        }
 
         const { error } = await useApi("/user/transactions/tags/editParent", opts);
 
@@ -97,7 +103,12 @@ export class TransactionsTagsApi {
             return false;
         }
 
-        this.tags.value.find((t) => t.tagId == tagId).parentId = parentId;
+        let parentsTree = ""
+
+        if (parentId != 0)
+            parentsTree = this.tags.value.find((t) => t.tagId == parentId).parentsTree + "." + parentId;
+
+        this.tags.value.find((t) => t.tagId == tagId).parentsTree = parentsTree;
 
         return true;
     }

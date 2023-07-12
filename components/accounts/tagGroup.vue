@@ -40,7 +40,7 @@
 
     <modal-account-create :tag="tag" @close="createAccountModal = false" :opened="createAccountModal"/>
 
-    <confirmation :opened="tagDeleteModal" :name="'tag-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="tagDeleteModal = false">
+    <confirmation :opened="tagDeleteModal" :name="'transactionTag-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="tagDeleteModal = false">
       <div class="flex justify-center">
         <p class="text-lg font-bold">
           Delete tag?

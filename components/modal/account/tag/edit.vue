@@ -1,5 +1,5 @@
 <template>
-  <modal-base :title="$t('modals.editAccountTag.title')" :opened="opened" :name="'account-tag-edit-modal'">
+  <modal-base :title="$t('modals.editAccountTag.title')" :opened="opened" :name="'account-transactionTag-edit-modal'">
     <div class="w-full flex flex-col gap-2">
       <input type="text"
              class="input input-bordered"
