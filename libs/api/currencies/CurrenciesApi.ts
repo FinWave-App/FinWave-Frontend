@@ -2,15 +2,24 @@ import {Ref} from "vue";
 
 export class CurrenciesApi {
     private currencies: Ref<Array<any>> = ref([]);
+    private currenciesMap: Ref<Map<number, any>> = ref(new Map<number, any>);
 
     async init(): Promise<void> {
         const {data} = await useApi<any>("/user/currencies/getList");
 
         this.currencies.value = data.value.currencies || [];
+
+        this.currencies.value.forEach((currency) => {
+            this.currenciesMap.value.set(currency.currencyId, currency);
+        });
     }
 
     public getCurrencies(): Ref<Array<any>> {
         return this.currencies;
+    }
+
+    public getCurrenciesMap(): Ref<Map<number, any>> {
+        return this.currenciesMap;
     }
 
     public async newCurrency(code: string, symbol: string, decimals: number, description: string) : Promise<boolean> {

@@ -2,15 +2,28 @@ import {Ref} from "vue";
 
 export class AccountsApi {
     private accounts: Ref<Array<any>> = ref([]);
+    private accountsMap: Ref<Map<number, any>> = ref(new Map<number, any>);
 
     async init(): Promise<void> {
+        await this.reloadAccounts();
+    }
+
+    public async reloadAccounts(): Promise<void> {
         const {data} = await useApi<any>("/user/accounts/getList");
 
         this.accounts.value = data.value.accounts || [];
+
+        this.accounts.value.forEach((account) => {
+            this.accountsMap.value.set(account.accountId, account);
+        })
     }
 
     public getAccounts(): Ref<Array<any>> {
         return this.accounts;
+    }
+
+    public getAccountsMap(): Ref<Map<number, any>> {
+        return this.accountsMap;
     }
 
     public async editAccountDescription(description: string, accountId: number) {

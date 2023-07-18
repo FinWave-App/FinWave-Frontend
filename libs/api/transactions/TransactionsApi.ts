@@ -45,7 +45,8 @@ export class TransactionsApi {
                 tagId: tagId,
                 accountId: accountId,
                 createdAt: createdAt.toISOString(),
-                delta: delta
+                delta: delta,
+                description: description
             }
         };
 

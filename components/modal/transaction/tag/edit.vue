@@ -42,15 +42,16 @@
         <label class="label">
           <span class="label-text">{{ $t('modals.editTransactionTag.placeholders.tagParent') }}</span>
         </label>
-        <select class="select select-bordered w-full"
-                v-if="tag !== null"
-                :disabled="tagsMap[tag.tagId].childs.length > 0"
-                :class="{'select-success' : parentTagSyncStatus === 1, 'select-warning' : parentTagSyncStatus === 0, 'select-error' : parentTagSyncStatus === -1}"
-                v-model="parentTag"
-                @change="syncParent">
-          <option value="0">{{ $t('modals.editTransactionTag.tagWithoutParent') }}</option>
-          <option v-for="entry in parentSelectRender.filter(e => e.item.tag.tagId !== tag.tagId)" :value="entry.item.tag.tagId">{{ ("&nbsp;&nbsp;".repeat(entry.deep)) + entry.item.tag.name }}</option>
-        </select>
+        <select-transaction-tag class="w-full"
+                                      v-if="tag !== null && tag !== undefined"
+                                      :disabled="tagsMap.get(tag.tagId).childs.length > 0"
+                                      :class="{'success' : parentTagSyncStatus === 1, 'warning' : parentTagSyncStatus === 0, 'error' : parentTagSyncStatus === -1}"
+                                      v-model="parentTag"
+                                      @selected="syncParent"
+                                      :can-be-without-parent="true"
+                                      :exclude-tag-id="tag.tagId"
+                                      :tags-tree="tagsTree">
+        </select-transaction-tag>
       </div>
 
       <div class="form-control w-full">
@@ -109,31 +110,8 @@ const expectedAmountSyncStatus = ref(1);
 const typeSyncStatus = ref(1);
 const parentTagSyncStatus = ref(1);
 
-const parentSelectRender = ref([]);
-
 const {$serverConfigs, $transactionsTagsApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.transactions.tags;
-
-const selectRender = (deep, elements, resultArray) => {
-  elements.forEach((e) => {
-    resultArray.push(
-        {
-          deep: deep,
-          item: e
-        }
-    )
-
-    if (e.childs.length > 0)
-      selectRender(deep + 1, e.childs, resultArray);
-  })
-}
-
-watch(props.tagsTree, (l, n) => {
-  parentSelectRender.value = [];
-  selectRender(0, props.tagsTree, parentSelectRender.value)
-}, {deep: true})
-
-selectRender(0, props.tagsTree, parentSelectRender.value)
 
 const close = () => {
   emit('close')
@@ -147,7 +125,7 @@ watch(() => props.opened, (selection, prevSelection) => {
     type.value = props.tag.type;
 
     const parentTagString = props.tag.parentsTree.split('.').slice(-1)[0];
-    parentTag.value = parentTagString ? Number.parseInt(parentTagString) : 0;
+    parentTag.value = parentTagString ? Number.parseInt(parentTagString) : -1;
 
     nextTick(() => {
       nameSyncStatus.value = 1;

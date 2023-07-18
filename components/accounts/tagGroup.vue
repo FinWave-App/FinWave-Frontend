@@ -43,7 +43,7 @@
     <confirmation :opened="tagDeleteModal" :name="'transactionTag-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="tagDeleteModal = false">
       <div class="flex justify-center">
         <p class="text-lg font-bold">
-          Delete tag?
+          {{ $t("modals.confirmations.deleteAccountTag") }}
         </p>
       </div>
     </confirmation>

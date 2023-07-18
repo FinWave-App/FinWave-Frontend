@@ -2,22 +2,82 @@ import {Ref} from "vue";
 
 export class TransactionsTagsApi {
     private tags: Ref<Array<any>> = ref([]);
+    private tagsMap: Ref<Map<number, any>> = ref(new Map<number, any>);
+    private tagsTreeMap: Ref<Map<number, any>> = ref(new Map<number, any>);
+    private tagsTree: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void> {
         const {data} = await useApi<any>("/user/transactions/tags/getList");
 
         this.tags.value = data.value.tags || [];
+
+        data.value.tags.forEach((tag) => {
+            this.tagsMap.value.set(tag.tagId, tag);
+        })
+
+        watch(this.tags, (old, newV) => {
+            this.buildTree()
+        }, { deep: true })
+
+        this.buildTree();
     }
 
     public getTags(): Ref<Array<any>> {
         return this.tags;
     }
 
+    public getTagsMap(): Ref<Map<number, any>> {
+        return this.tagsMap;
+    }
+
+    public getTagsTreeMap(): Ref<Map<number, any>> {
+        return this.tagsTreeMap;
+    }
+
+    public getTagsTree(): Ref<Array<any>> {
+        return this.tagsTree;
+    }
+
     private getParentTree(parentId: number) : string {
         return this.tags.value.find((t) => t.tagId === parentId).parentsTree + "." + parentId
     }
 
-    public async newTag(type: number, expectedAmount: number, parentId: number | null, name: string, description: string | null) : Promise<boolean> {
+    private buildTree() : void {
+        this.tagsTreeMap.value = new Map<number, any>;
+        this.tagsTree.value = [];
+
+        this.tags.value.forEach((t) => {
+            let treeObject = {
+                tag: t,
+                childs: []
+            };
+
+            if (this.tagsTreeMap.value.get(t.tagId) === undefined) {
+                this.tagsTreeMap.value.set(t.tagId, treeObject);
+            }else {
+                treeObject = this.tagsTreeMap.value.get(t.tagId);
+                treeObject.tag = t;
+            }
+
+            if (t.parentsTree === '') {
+                this.tagsTree.value.push(treeObject);
+            } else {
+                const tree = t.parentsTree.split('.');
+                const parent = Number.parseInt(tree.slice(-1));
+
+                if (this.tagsTreeMap.value.get(parent) === undefined) {
+                    this.tagsTreeMap.value.set(parent, {
+                        t: null,
+                        childs: []
+                    });
+                }
+
+                this.tagsTreeMap.value.get(parent).childs.push(treeObject);
+            }
+        })
+    }
+
+    public async newTag(type: number, expectedAmount: number, parentId: number, name: string, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
@@ -30,7 +90,7 @@ export class TransactionsTagsApi {
         if (description !== null && description.length > 0)
             opts.params.description = description;
 
-        if (parentId !== null)
+        if (parentId !== -1)
             opts.params.parentId = parentId;
 
         const {data: newTag, error} = await useApi<any>("/user/transactions/tags/new", opts);
@@ -43,7 +103,7 @@ export class TransactionsTagsApi {
             tagId: newTag.value.tagId,
             type: type,
             expectedAmount: expectedAmount,
-            parentsTree: parentId !== null ? this.getParentTree(parentId) : "",
+            parentsTree: parentId !== -1 ? this.getParentTree(parentId) : "",
             name: name,
             description: description
         });
@@ -91,7 +151,7 @@ export class TransactionsTagsApi {
             params: { tagId: tagId }
         };
 
-        if (parentId != 0) {
+        if (parentId !== -1) {
             opts.params.parentId = parentId;
         }else {
             opts.params.setToRoot = true;
@@ -105,7 +165,7 @@ export class TransactionsTagsApi {
 
         let parentsTree = ""
 
-        if (parentId != 0)
+        if (parentId !== -1)
             parentsTree = this.tags.value.find((t) => t.tagId == parentId).parentsTree + "." + parentId;
 
         this.tags.value.find((t) => t.tagId == tagId).parentsTree = parentsTree;

@@ -1,0 +1,222 @@
+.multiselect {
+    @apply relative h-12 mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded-lg bg-base-100 text-base leading-5 outline-none;
+}
+
+.multiselect.success {
+    @apply border-success;
+}
+
+.multiselect.is-active.success {
+    @apply outline-success;
+}
+
+.multiselect.warning {
+    @apply border-warning
+}
+
+.multiselect.is-active.warning {
+    @apply outline-warning;
+}
+
+.multiselect.error {
+    @apply border-error;
+}
+
+.multiselect.is-active.error {
+    @apply outline-error;
+}
+
+.multiselect.is-disabled {
+    @apply cursor-not-allowed border-opacity-20 bg-base-200 border-base-200 text-opacity-20;
+}
+.multiselect.is-open {
+    @apply rounded-b-none;
+}
+.multiselect.is-open-top {
+    @apply rounded-t-none;
+}
+.multiselect.is-active {
+    outline-color: hsl(var(--bc) / 0.2);
+
+    @apply outline outline-2 outline-offset-2;
+}
+
+.multiselect-wrapper {
+    @apply relative h-12 font-bold text-sm mx-auto w-full flex items-center justify-end box-border cursor-pointer outline-none;
+}
+
+.multiselect-single-label {
+    @apply flex items-center h-full max-w-full absolute left-0 top-0 pointer-events-none bg-transparent leading-snug pl-3.5 pr-16 box-border rtl:left-auto rtl:right-0 rtl:pl-0 rtl:pr-3.5;
+}
+
+.multiselect-single-label-text {
+    @apply overflow-ellipsis overflow-hidden block whitespace-nowrap max-w-full;
+}
+
+.multiselect-multiple-label {
+    @apply flex items-center h-full absolute left-0 top-0 pointer-events-none bg-transparent leading-snug pl-3.5 rtl:left-auto rtl:right-0 rtl:pl-0 rtl:pr-3.5;
+}
+
+.multiselect-search {
+    @apply w-full absolute inset-0 outline-none focus:ring-0 appearance-none box-border border-0 text-base font-sans bg-white rounded pl-3.5 rtl:pl-0 rtl:pr-3.5;
+}
+
+.multiselect-tags {
+    @apply flex-grow flex-shrink flex flex-wrap items-center mt-1 pl-2 rtl:pl-0 rtl:pr-2;
+}
+
+.multiselect-tag {
+    @apply bg-blue-500 text-white text-sm font-semibold py-0.5 pl-2 rounded mr-1 mb-1 flex items-center whitespace-nowrap rtl:pl-0 rtl:pr-2 rtl:mr-0 rtl:ml-1;
+}
+.multiselect-tag.is-disabled {
+    @apply pr-2 opacity-50 rtl:pl-2;
+}
+
+.multiselect-tag-remove {
+    @apply flex items-center justify-center p-1 mx-0.5 rounded-sm hover:bg-black hover:bg-opacity-10;
+}
+
+.multiselect-tag-remove-icon {
+    @apply bg-multiselect-remove bg-center bg-no-repeat opacity-30 inline-block w-3 h-3;
+}
+
+.multiselect-tag-remove:hover .multiselect-tag-remove-icon {
+    @apply opacity-60;
+}
+
+.multiselect-tags-search-wrapper {
+    @apply inline-block relative mx-1 mb-1 flex-grow flex-shrink h-full;
+}
+
+.multiselect-tags-search {
+    @apply absolute inset-0 border-0 outline-none focus:ring-0 appearance-none p-0 text-base font-sans box-border w-full;
+}
+
+.multiselect-tags-search-copy {
+    @apply invisible whitespace-pre-wrap inline-block h-px;
+}
+
+.multiselect-placeholder {
+    @apply flex items-center h-full absolute left-0 top-0 pointer-events-none bg-transparent leading-snug pl-3.5 text-gray-400 rtl:left-auto rtl:right-0 rtl:pl-0 rtl:pr-3.5;
+}
+
+.multiselect-caret {
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3csvg viewBox='0 0 320 512' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z'%3e%3c/path%3e%3c/svg%3e");
+
+    @apply bg-base-content bg-center bg-no-repeat w-2.5 h-4 py-px box-content mr-3.5 relative z-10 opacity-40 flex-shrink-0 flex-grow-0 transition-transform transform pointer-events-none rtl:mr-0 rtl:ml-3.5;
+}
+.multiselect-caret.is-open {
+    @apply rotate-180 pointer-events-auto;
+}
+
+.multiselect-clear {
+    @apply pr-3.5 relative z-10 opacity-40 transition duration-300 flex-shrink-0 flex-grow-0 flex hover:opacity-80 rtl:pr-0 rtl:pl-3.5;
+}
+
+.multiselect-clear-icon {
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3csvg viewBox='0 0 320 512' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z'%3e%3c/path%3e%3c/svg%3e");
+
+    @apply bg-base-content bg-center bg-no-repeat w-2.5 h-4 py-px box-content inline-block;
+}
+
+.multiselect-spinner {
+    @apply bg-multiselect-spinner bg-center bg-no-repeat w-4 h-4 z-10 mr-3.5 animate-spin flex-shrink-0 flex-grow-0 rtl:mr-0 rtl:ml-3.5;
+}
+
+.multiselect-inifite {
+    @apply flex items-center justify-center w-full;
+}
+
+.multiselect-inifite-spinner {
+    @apply bg-multiselect-spinner bg-center bg-no-repeat w-4 h-4 z-10 animate-spin flex-shrink-0 flex-grow-0 m-3.5;
+}
+
+.multiselect-dropdown {
+    @apply max-h-60 absolute -left-px -right-px bottom-0 transform translate-y-full border border-base-200 bg-base-100 -mt-px overflow-y-scroll z-50 flex flex-col rounded-b;
+}
+
+.multiselect-dropdown.is-top {
+    @apply -translate-y-full top-px bottom-auto rounded-b-none rounded-t;
+}
+
+.multiselect-dropdown.is-hidden {
+    @apply hidden;
+}
+
+.multiselect-options {
+    @apply flex flex-col p-0 m-0 list-none;
+}
+
+.multiselect-group {
+    @apply p-0 m-0;
+}
+
+.multiselect-group-label {
+    @apply flex text-sm box-border items-center justify-start text-left py-1 px-3 font-semibold bg-gray-200 cursor-default leading-normal;
+}
+.multiselect-group-label.is-pointable {
+    @apply cursor-pointer;
+}
+.multiselect-group-label.is-pointed {
+    @apply bg-gray-300 text-gray-700;
+}
+.multiselect-group-label.is-selected {
+    @apply bg-green-600 text-white;
+}
+.multiselect-group-label.is-disabled {
+    @apply bg-gray-100 text-gray-300 cursor-not-allowed;
+}
+.multiselect-group-label.is-selected.is-pointed {
+    @apply bg-green-600 text-white opacity-90;
+}
+.multiselect-group-label.is-selected.is-disabled {
+    @apply text-green-100 bg-green-600 bg-opacity-50 cursor-not-allowed;
+}
+
+.multiselect-group-options {
+    @apply p-0 m-0;
+}
+
+.multiselect-option {
+    @apply flex items-center justify-start box-border text-left cursor-pointer text-sm leading-snug py-2 px-3;
+}
+.multiselect-option.is-pointed {
+    @apply text-gray-800 bg-gray-100;
+}
+.multiselect-option.is-selected {
+    @apply text-white bg-blue-500;
+}
+.multiselect-option.is-disabled {
+    @apply bg-base-200 text-gray-300 cursor-not-allowed;
+}
+.multiselect-option.is-selected.is-pointed {
+    @apply text-white bg-blue-500 opacity-90;
+}
+.multiselect-option.is-selected.is-disabled {
+    @apply text-green-100 bg-blue-600 bg-opacity-50 cursor-not-allowed;
+}
+
+.multiselect-no-options {
+    @apply py-2 px-3 text-gray-600 bg-white text-left rtl:text-right;
+}
+
+.multiselect-no-results {
+    @apply py-2 px-3 text-gray-600 bg-white text-left rtl:text-right;
+}
+
+.multiselect-fake-input {
+    @apply bg-transparent absolute left-0 right-0 -bottom-px w-full h-px border-0 p-0 appearance-none outline-none text-transparent;
+}
+
+.multiselect-assistive-text {
+    @apply absolute -m-px w-px h-px overflow-hidden;
+    clip: rect(0 0 0 0);
+}
+
+.multiselect-spacer {
+    @apply h-9 py-px box-content;
+}

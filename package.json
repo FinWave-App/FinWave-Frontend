@@ -9,6 +9,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@neojp/tailwindcss-important-variant": "^1.0.1",
     "@types/node": "^18",
     "autoprefixer": "^10.4.14",
     "nuxt": "^3.4.3",
@@ -20,8 +21,11 @@
     "@headlessui/vue": "^1.7.13",
     "@nuxt/types": "^2.16.3",
     "@nuxtjs/i18n": "^8.0.0-beta.11",
+    "@vueform/multiselect": "^2.6.2",
     "@vueuse/core": "^10.1.2",
     "daisyui": "^3.1.0",
+    "mini-svg-data-uri": "^1.4.4",
+    "vue-multiselect": "^3.0.0-beta.2",
     "vue3-treeselect": "^0.1.10"
   }
 }

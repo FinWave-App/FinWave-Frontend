@@ -1,7 +1,11 @@
+/*
+@import '@vueform/multiselect/themes/tailwind.css';
+ */
+@import "multiselect.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 :root{
     @apply bg-base-200;
@@ -20,5 +24,5 @@
 }
 
 .page-content {
-    @apply flex justify-center mt-8;
+    @apply flex justify-center mt-8 select-bordered;
 }

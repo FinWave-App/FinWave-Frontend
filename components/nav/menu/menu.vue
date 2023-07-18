@@ -17,6 +17,10 @@ const items = computed(() => {
       text: "navigation.tags",
       url: "/tags"
     },
+    {
+      text: "navigation.transactions",
+      url: "/transactions"
+    }
   ];
 });
 /*

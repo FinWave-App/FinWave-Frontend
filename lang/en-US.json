@@ -1,11 +1,23 @@
 {
   "navigation": {
     "main": "Main",
-    "tags": "Tags"
+    "tags": "Tags",
+    "transactions": "Transactions"
   },
 
   "toasts": {
     "hide": "Hide"
+  },
+
+  "transactionsPage": {
+    "table": {
+      "amount": "Amount",
+      "tag": "Tag",
+      "account": "Account",
+      "createdAt": "Created",
+      "description": "Description",
+      "action": "Action"
+    }
   },
 
   "tagsPage": {
@@ -107,6 +119,10 @@
     }
   },
 
+  "transactionTagSelect": {
+    "withoutParent": "Root"
+  },
+
   "accountEntry": {
     "messages": {
       "hided": "Account was successfully hidden",
@@ -126,12 +142,21 @@
       "close": "Close"
     },
 
+    "confirmations": {
+      "deleteAccountTag": "Delete tag?",
+      "deleteTransaction": "Delete transaction?"
+    },
+
     "newAccount": {
       "title": "New account",
       "placeholders": {
         "accountName": "Name",
         "currencySelect": "Select currency",
         "accountDescription": "Description"
+      },
+      "messages": {
+        "success": "Account created",
+        "error": "Oops, failed to create account"
       }
     },
 
@@ -172,9 +197,45 @@
       }
     },
 
+    "newTransaction": {
+      "title": "New transaction",
+      "placeholders": {
+        "transactionAmount": "Amount",
+        "transactionDate": "Date",
+        "transactionTag": "Tag",
+        "transactionAccount": "Account",
+        "transactionDescription": "Description"
+      },
+      "messages": {
+        "success": "Transaction created",
+        "error": "Oops, failed to create transaction"
+      }
+    },
+
+    "editTransaction": {
+      "title": "Edit transaction",
+      "placeholders": {
+        "transactionAmount": "Amount",
+        "transactionDate": "Date",
+        "transactionTag": "Tag",
+        "transactionAccount": "Account",
+        "transactionDescription": "Description"
+      },
+      "messages": {
+        "success": "Transaction edited",
+        "error": "Oops, failed to edit transaction"
+      }
+    },
+
+    "deleteTransaction": {
+      "messages": {
+        "success": "Transaction deleted",
+        "error": "Oops, failed to delete transaction"
+      }
+    },
+
     "newTransactionTag": {
       "title": "New transaction tag",
-      "tagWithoutParent": "Root",
       "placeholders": {
         "tagName": "Name",
         "tagExpectedAmount": "Expected amount",

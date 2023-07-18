@@ -9,7 +9,7 @@
         <div class="text-sm breadcrumbs">
           <ul>
             <li><a @click="resetView()">Root</a></li>
-            <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item)"> {{tagsMap[item].tag.name}} </a></li>
+            <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item)"> {{tagsMap.get(item).tag.name}} </a></li>
           </ul>
         </div>
       </div>
@@ -31,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="entry in (view.length > 0 ? tagsMap[view[view.length - 1]].childs : tagsTree)">
+        <tr v-for="entry in (view.length > 0 ? tagsMap.get(view[view.length - 1]).childs : tagsTree)">
           <th class="w-64">{{entry.tag.name}}</th>
           <td class="w-32">{{formatter.format(entry.tag.expectedAmount)}}</td>
           <td class="w-32 font-bold"
@@ -53,7 +53,6 @@
     <modal-transaction-tag-edit :opened="editOpened" :tag="tagToEdit" :tags-map="tagsMap" :tags-tree="tagsTree" @close="editOpened = false"/>
     <modal-transaction-tag-create :opened="newOpened" :tags-tree="tagsTree" :tags-map="tagsMap" @close="newOpened = false"></modal-transaction-tag-create>
   </div>
-
 </template>
 
 <script setup>
@@ -73,8 +72,8 @@ const { $transactionsTagsApi } = useNuxtApp();
 
 const formatter = Intl.NumberFormat(locale.value, {});
 
-const tagsTree = ref([]);
-const tagsMap = ref({});
+const tagsTree = $transactionsTagsApi.getTagsTree();
+const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 const view = ref([]);
 const tags = $transactionsTagsApi.getTags();
 
@@ -87,47 +86,6 @@ const tagTypeToString = (type) => {
 
   return t("tagsPage.table.tagType." + text);
 }
-
-const buildTree = () => {
-  tagsMap.value = {};
-  tagsTree.value = [];
-
-  tags.value.forEach((t) => {
-    let treeObject = {
-      tag: t,
-      childs: []
-    };
-
-    if (tagsMap.value[t.tagId] === undefined) {
-      tagsMap.value[t.tagId] = treeObject;
-    }else {
-      treeObject = tagsMap.value[t.tagId]
-      treeObject.tag = t;
-    }
-
-    if (t.parentsTree === '') {
-      tagsTree.value.push(treeObject);
-    } else {
-      const tree = t.parentsTree.split('.');
-      const parent = Number.parseInt(tree.slice(-1));
-
-      if (tagsMap.value[parent] === undefined) {
-        tagsMap.value[parent] = {
-          t: null,
-          childs: []
-        }
-      }
-
-      tagsMap.value[parent].childs.push(treeObject)
-    }
-  })
-}
-
-watch(tags, (old, newV) => {
-  buildTree()
-}, { deep: true })
-
-buildTree()
 
 const pushToView = (tagId) => {
   view.value.push(tagId)
