@@ -9,9 +9,12 @@ export class TransactionsTagsApi {
     async init(): Promise<void> {
         const {data} = await useApi<any>("/user/transactions/tags/getList");
 
+        if (data.value === null)
+            return;
+
         this.tags.value = data.value.tags || [];
 
-        data.value.tags.forEach((tag) => {
+        this.tags.value.forEach((tag) => {
             this.tagsMap.value.set(tag.tagId, tag);
         })
 

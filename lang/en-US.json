@@ -10,6 +10,17 @@
   },
 
   "transactionsPage": {
+    "filterCollapse": "Open filter",
+    "placeholders": {
+      "filters": {
+        "accounts": "Filter by accounts",
+        "tags": "Filter by tags",
+        "currencies": "Filter by currencies",
+        "fromTime": "From",
+        "toTime": "To",
+        "description": "Filter by description"
+      }
+    },
     "table": {
       "amount": "Amount",
       "tag": "Tag",
@@ -119,9 +130,15 @@
     }
   },
 
-  "transactionTagSelect": {
-    "withoutParent": "Root"
+  "selects": {
+    "noResults": "No results found",
+    "noOptions": "The list is empty",
+    "transactionTagSelect": {
+      "withoutParent": "Root"
+    }
   },
+
+
 
   "accountEntry": {
     "messages": {

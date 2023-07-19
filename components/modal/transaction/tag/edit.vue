@@ -46,6 +46,7 @@
                                       v-if="tag !== null && tag !== undefined"
                                       :disabled="tagsMap.get(tag.tagId).childs.length > 0"
                                       :class="{'success' : parentTagSyncStatus === 1, 'warning' : parentTagSyncStatus === 0, 'error' : parentTagSyncStatus === -1}"
+                                      :searchable="true"
                                       v-model="parentTag"
                                       @selected="syncParent"
                                       :can-be-without-parent="true"

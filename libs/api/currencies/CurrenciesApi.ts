@@ -7,6 +7,9 @@ export class CurrenciesApi {
     async init(): Promise<void> {
         const {data} = await useApi<any>("/user/currencies/getList");
 
+        if (data.value === null)
+            return;
+
         this.currencies.value = data.value.currencies || [];
 
         this.currencies.value.forEach((currency) => {

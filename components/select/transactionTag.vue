@@ -1,17 +1,13 @@
 <template>
   <Multiselect
-      v-model.number="value"
+      v-model="value"
       :options="parentSelectRender"
+      :no-options-text="$t('selects.noOptions')"
+      :no-results-text="$t('selects.noResults')"
       >
 
-    <template v-slot:singlelabel="{ value }">
-      <p class="w-full p-4">
-        {{ value.name }}
-      </p>
-    </template>
-
     <template v-slot:option="{ option }">
-      {{ ("&nbsp;&nbsp;".repeat(option.deep)) + option.name }}
+      {{ ("&nbsp;&nbsp;".repeat(option.deep)) + option.label }}
     </template>
 
   </Multiselect>
@@ -35,7 +31,7 @@ const props = defineProps({
   },
 
   modelValue: {
-    type: Number
+
   }
 })
 
@@ -43,13 +39,13 @@ const emit = defineEmits(['update:modelValue', 'selected'])
 
 const { t } = useI18n();
 
-const value = ref(props.modelValue);
+const value = ref(props.modelValue || null);
 
 const rootParent = {
   value: -1,
   disabled: false,
   deep: 0,
-  name: t('transactionTagSelect.withoutParent')
+  label: t('selects.transactionTagSelect.withoutParent')
 };
 
 const parentSelectRender = ref([]);
@@ -64,7 +60,7 @@ const selectRender = (deep, elements, resultArray) => {
           value: e.tag.tagId,
           disabled: e.tag.tagId == props.excludeTagId,
           deep: deep,
-          name: e.tag.name
+          label: e.tag.name
         }
     )
 

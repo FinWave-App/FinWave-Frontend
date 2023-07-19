@@ -6,19 +6,21 @@
           <label class="label">
             <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAccount') }}</span>
           </label>
-          <select class="select select-bordered" v-model="account">
-            <option v-for="account in accounts" :value="account.accountId"> {{account.name}}</option>
-          </select>
+
+          <select-account class="w-full"
+                          v-model="account">
+
+          </select-account>
         </div>
         <div class="form-control w-full">
           <label class="label">
             <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
           </label>
 
-          <select-transaction-tag
+          <select-transaction-tag class="w-full"
                                         v-model.number="parentTag"
+                                        :searchable="true"
                                         :can-be-without-parent="false"
-                                        :tags-map="tagsMap"
                                         :tags-tree="tagsTree">
           </select-transaction-tag>
         </div>

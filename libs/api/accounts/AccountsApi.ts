@@ -11,6 +11,9 @@ export class AccountsApi {
     public async reloadAccounts(): Promise<void> {
         const {data} = await useApi<any>("/user/accounts/getList");
 
+        if (data.value === null)
+            return;
+
         this.accounts.value = data.value.accounts || [];
 
         this.accounts.value.forEach((account) => {

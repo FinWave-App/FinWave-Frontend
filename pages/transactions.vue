@@ -1,13 +1,62 @@
 <template>
   <div class="page-panel">
     <div class="flex flex-row justify-between gap-2">
-      <div></div>
+      <div class="flex flex-wrap gap-1 w-full">
+        <select-transaction-tag class="flex-1 h-10"
+                                mode="tags"
+                                v-model="filterTags"
+                                :searchable="true"
+                                :placeholder='$t("transactionsPage.placeholders.filters.tags")'
+                                :close-on-select="false"
+                                :tags-tree="tagsTree"
+                                :can-be-without-parent="false"
+        >
+
+        </select-transaction-tag>
+
+        <select-account class="flex-1 h-10"
+                        mode="tags"
+                        v-model="filterAccounts"
+                        :searchable="true"
+                        :placeholder='$t("transactionsPage.placeholders.filters.accounts")'
+                        :close-on-select="false">
+        </select-account>
+
+        <select-currency class="flex-1 h-10"
+                         mode="tags"
+                         v-model="filterCurrencies"
+                         :searchable="true"
+                         :placeholder='$t("transactionsPage.placeholders.filters.currencies")'
+                         :close-on-select="false">
+
+        </select-currency>
+
+        <input type="date"
+               class="input input-bordered h-10 text-sm font-bold flex-1 placeholder-opacity-50"
+               v-model="filterFromTime"
+               :placeholder='$t("transactionsPage.placeholders.filters.fromTime")'
+        >
+
+        <!-- TODO: Fix placeholders -->
+        <input type="date"
+               class="input input-bordered h-10 text-sm font-bold flex-1"
+               v-model="filterToTime"
+               :placeholder='$t("transactionsPage.placeholders.filters.toTime")'
+        >
+
+
+        <input type="text"
+               class="input input-bordered flex-1 h-10 text-sm font-bold"
+               v-model="filterDescription"
+               :placeholder='$t("transactionsPage.placeholders.filters.description")'
+        >
+      </div>
       <div>
         <plus-button class="btn btn-sm btn-ghost" @event="newOpened = true"></plus-button>
       </div>
     </div>
 
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto mt-2">
       <table class="table table-sm lg:table-md table-zebra table-pin-rows">
         <thead>
         <tr>
@@ -65,6 +114,7 @@ import PlusButton from "~/components/buttons/plusButton.vue";
 import EditButton from "~/components/buttons/editButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
 import Confirmation from "~/components/modal/confirmation.vue";
+import Multiselect from "@vueform/multiselect";
 
 definePageMeta({
   middleware: [
@@ -115,8 +165,8 @@ const fetchTransactions = async () => {
     tagsIds: filterTags.value,
     accountsIds: filterAccounts.value,
     currenciesIds: filterCurrencies.value,
-    fromTime: filterFromTime.value,
-    toTime: filterToTime.value,
+    fromTime: filterFromTime.value ? new Date(filterFromTime.value) : null,
+    toTime: filterToTime.value ? new Date(filterToTime.value) : null,
     description: filterDescription.value
   });
 }

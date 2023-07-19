@@ -6,6 +6,9 @@ export class AccountsTagsApi {
     async init(): Promise<void> {
         const {data} = await useApi<any>("/user/accounts/tags/getList");
 
+        if (data.value === null)
+            return;
+
         this.tags.value = data.value.tags || [];
     }
 
