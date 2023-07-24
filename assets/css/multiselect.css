@@ -58,7 +58,7 @@
 }
 
 .multiselect-search {
-    @apply w-full h-10 max-h-10 text-sm absolute mt-1 inset-0 outline-none focus:ring-0 appearance-none box-border border-0 font-sans bg-white rounded pl-3.5 rtl:pl-0 rtl:pr-3.5;
+    @apply w-full h-10 max-h-10 text-sm absolute mt-1 inset-0 outline-none focus:ring-0 appearance-none box-border border-0 font-sans bg-base-100 rounded pl-3.5 rtl:pl-0 rtl:pr-3.5;
 }
 
 .multiselect-tags {
@@ -94,7 +94,7 @@
 }
 
 .multiselect-tags-search {
-    @apply absolute inset-0 border-0 outline-none focus:ring-0 appearance-none p-0 text-base font-sans box-border w-full;
+    @apply absolute inset-0 border-0 outline-none focus:ring-0 appearance-none p-0 font-sans box-border w-full bg-base-100;
 }
 
 .multiselect-tags-search-copy {
@@ -161,19 +161,19 @@
 }
 
 .multiselect-group-label {
-    @apply flex text-sm box-border items-center justify-start text-left py-1 px-3 font-semibold bg-gray-200 cursor-default leading-normal;
+    @apply flex text-sm box-border items-center justify-start text-left py-1 px-3 font-semibold bg-base-200 cursor-default leading-normal;
 }
 .multiselect-group-label.is-pointable {
     @apply cursor-pointer;
 }
 .multiselect-group-label.is-pointed {
-    @apply bg-gray-300 text-gray-700;
+    @apply bg-base-300 text-gray-700;
 }
 .multiselect-group-label.is-selected {
     @apply bg-blue-600 text-white;
 }
 .multiselect-group-label.is-disabled {
-    @apply bg-gray-100 text-gray-300 cursor-not-allowed;
+    @apply bg-base-100 text-gray-300 cursor-not-allowed;
 }
 .multiselect-group-label.is-selected.is-pointed {
     @apply bg-blue-600 text-white opacity-90;
@@ -190,7 +190,7 @@
     @apply flex items-center justify-start box-border text-left cursor-pointer text-sm leading-snug py-2 px-3;
 }
 .multiselect-option.is-pointed {
-    @apply text-gray-800 bg-gray-100;
+    @apply text-base-content bg-base-200;
 }
 .multiselect-option.is-selected {
     @apply text-white bg-blue-500;
@@ -206,11 +206,11 @@
 }
 
 .multiselect-no-options {
-    @apply py-2 px-3 text-gray-600 bg-white text-left rtl:text-right;
+    @apply py-2 px-3 text-gray-600 bg-base-100 text-left rtl:text-right;
 }
 
 .multiselect-no-results {
-    @apply py-2 px-3 text-gray-600 bg-white text-left rtl:text-right;
+    @apply py-2 px-3 text-gray-600 bg-base-100 text-left rtl:text-right;
 }
 
 .multiselect-fake-input {

@@ -1,0 +1,90 @@
+@import '@vuepic/vue-datepicker/dist/main.css';
+
+.asd {
+    @apply select
+}
+
+.dp__theme_light {
+    --dp-background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+    --dp-text-color: hsl(var(--b1) / var(--tw-text-opacity));
+    --dp-hover-color: hsl(var(--b2) / var(--tw-bg-opacity));
+    --dp-hover-text-color: hsl(var(--bc) / var(--tw-text-opacity));
+    --dp-hover-icon-color: #959595;
+    --dp-primary-color: #1976d2;
+    --dp-primary-disabled-color: #6bacea;
+    --dp-primary-text-color: #f8f5f5;
+    --dp-secondary-color: hsl(var(--b3) / var(--tw-text-opacity));
+    --dp-border-color: hsl(var(--b2) / var(--tw-border-opacity));
+    --dp-menu-border-color: hsl(var(--b2) / var(--tw-border-opacity));
+    --dp-border-color-hover: hsl(var(--b2) / var(--tw-border-opacity));
+    --dp-border-radius: var(--rounded-btn, 0.5rem);
+    --dp-disabled-color: #f6f6f6;
+    --dp-scroll-bar-background: #f3f3f3;
+    --dp-scroll-bar-color: #959595;
+    --dp-success-color: #76d275;
+    --dp-success-color-disabled: #a3d9b1;
+    --dp-icon-color: #959595;
+    --dp-danger-color: #ff6f60;
+    --dp-marker-color: #ff6f60;
+    --dp-tooltip-color: #fafafa;
+    --dp-disabled-color-text: #8e8e8e;
+    --dp-highlight-color: rgb(25 118 210 / 10%);
+
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.dp__cell_offset {
+    @apply text-base-content text-opacity-40;
+}
+
+.dp__cell_disabled {
+    @apply text-base-content text-opacity-40;
+    cursor: not-allowed;
+}
+
+.dp__input {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    @apply text-sm font-bold placeholder-opacity-0 p-2 pl-9;
+}
+
+.dp-h-10 .dp__input {
+    @apply h-10;
+}
+
+.dp-h-12 .dp__input {
+    @apply h-12;
+}
+
+.dp__menu {
+    @apply shadow
+}
+
+.dp__input::placeholder{opacity:1}
+
+.dp__input_focus {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+    outline-color: hsl(var(--bc) / 0.2);
+}
+
+.dp__action_row {
+    @apply w-full flex-col gap-1;
+}
+
+.dp__action_buttons {
+    @apply w-full flex-auto flex m-0 p-1 items-center justify-between;
+}
+
+.dp__action_button {
+    @apply btn btn-sm;
+}
+
+.dp__cell_inner {
+    @apply w-0 h-0 p-4;
+}
+
+.dp__calendar_row {
+    @apply m-0;
+}

@@ -2,7 +2,7 @@
 @import '@vueform/multiselect/themes/tailwind.css';
  */
 @import "multiselect.css";
-
+@import "datepicker.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,7 +29,7 @@
 }
 
 .page-panel {
-    @apply w-11/12 lg:w-5/6 p-4 bg-base-100 rounded-2xl shadow-xl;
+    @apply w-11/12 lg:w-5/6 p-4 bg-base-100 rounded-2xl shadow-xl mb-8;
 }
 
 .page-content {

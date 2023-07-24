@@ -1,5 +1,5 @@
 <template>
-  <div class="toast toast-top toast-end">
+  <div class="toast toast-top toast-end z-50">
     <TransitionGroup name="alerts">
       <div class="alert shadow-lg" v-for="toast in toasts" :key="toast" :class="'alert-' + toast.type">
         <div class="flex justify-between w-full">

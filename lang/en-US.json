@@ -10,14 +10,12 @@
   },
 
   "transactionsPage": {
-    "filterCollapse": "Open filter",
     "placeholders": {
       "filters": {
         "accounts": "Filter by accounts",
         "tags": "Filter by tags",
         "currencies": "Filter by currencies",
-        "fromTime": "From",
-        "toTime": "To",
+        "time": "Filter by time",
         "description": "Filter by description"
       }
     },

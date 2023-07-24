@@ -60,7 +60,7 @@
           <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionDate') }}</span>
         </label>
 
-        <input type="date" class="input input-bordered" v-model="date">
+        <Datepicker class="input-bordered dp-h-12" v-model="date" :teleport="true" teleport-center/>
       </div>
 
       <div class="form-control w-full">
@@ -83,6 +83,8 @@
 </template>
 
 <script setup>
+import Datepicker from '@vuepic/vue-datepicker';
+
 const props = defineProps({
   opened: {
     required: true,
@@ -116,7 +118,7 @@ const description = ref("");
 const parentTag = ref();
 const sign = ref(1);
 const signChoice = ref(true);
-const date = ref(new Date().toISOString().substring(0, 10));
+const date = ref(new Date());
 
 watch(parentTag, () => {
   if (parentTag.value === undefined) {
@@ -163,12 +165,12 @@ const close = () => {
 }
 
 const create = () => {
-  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || date.value === "")
+  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value)
     return;
 
   close();
 
-  $transactionsApi.newTransaction(parentTag.value, account.value, new Date(date.value), amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $transactionsApi.newTransaction(parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s) {
       $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
       emit('reloadTransactions');
