@@ -56,8 +56,8 @@
             <th>{{$t("transactionsPage.table.account")}}</th>
             <th>{{$t("transactionsPage.table.description")}}</th>
             <th class="text-right">{{$t("transactionsPage.table.action")}}</th>
-            <th class="text-base text-base-content text-center">
-              <plus-button class="btn btn-sm btn-ghost p-1" @event="newOpened = true"></plus-button>
+            <th class="text-base text-base-content flex justify-center items-center">
+              <plus-button class="btn btn-sm btn-ghost px-1 h-full min-h-0" @event="newOpened = true"></plus-button>
             </th>
           </tr>
           </thead>
@@ -152,12 +152,14 @@ const transactions = ref({});
 const loadStatus = ref(0);
 
 const formatDelta = (delta, currencyId) => {
+  const currency = currenciesMap.value.get(currencyId);
   const formatter = Intl.NumberFormat(locale.value, {
     style: 'currency',
-    currency: currenciesMap.value.get(currencyId).code
+    currency: currency.code,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: currency.decimals
   });
-
-  return formatter.format(delta);
+  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
 }
 
 const filtersToObject = () => {

@@ -11,7 +11,7 @@
 
     </div>
 
-    <div v-if="tags.length > 0" class="flex flex-col gap-4 mt-2">
+    <div v-if="tags.length > 0" class="flex flex-col gap-4 mt-2 min-w-fit">
       <transition-group name="tags">
         <tag-group v-for="tag in tags.filter((t) => !t.hide)"
                    :key="tag.tagId" :tag="tag"

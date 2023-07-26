@@ -1,6 +1,6 @@
 <template>
   <li v-if="entry.url !== undefined">
-    <nuxt-link :to="entry.url" class="btn btn-ghost p-4">{{ $t(entry.text) }}</nuxt-link>
+    <nuxt-link :to="entry.url" class="">{{ $t(entry.text) }}</nuxt-link>
   </li>
   <li v-else>
     <div class="">
@@ -23,4 +23,8 @@ defineProps({
 
 <style scoped>
 
-</style>r
+.router-link-active {
+  @apply bg-base-200;
+}
+
+</style>

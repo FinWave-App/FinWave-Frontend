@@ -83,6 +83,22 @@ export class CurrenciesApi {
         return true;
     }
 
+    public async editCurrencyDecimals(decimals: number, currencyId: number) {
+        const opts = {
+            method: "POST",
+            params: { currencyId: currencyId, decimals: decimals }
+        };
+
+        const { error } = await useApi("/user/currencies/editDecimals", opts);
+
+        if (error.value !== null) {
+            return false;
+        }
+
+        this.currencies.value.find((t) => t.currencyId == currencyId).decimals = decimals;
+
+        return true;
+    }
     public async editCurrencyDescription(description: string, currencyId: number) {
         const opts = {
             method: "POST",

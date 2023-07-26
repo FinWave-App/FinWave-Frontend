@@ -1,5 +1,5 @@
 <template>
-  <ul class="gap-2">
+  <ul class="gap-2 px-1">
     <nav-menu-entry v-for="item in items" :entry="item">
     </nav-menu-entry>
   </ul>
@@ -20,6 +20,10 @@ const items = computed(() => {
     {
       text: "navigation.transactions",
       url: "/transactions"
+    },
+    {
+      text: "navigation.currencies",
+      url: "/currencies"
     }
   ];
 });

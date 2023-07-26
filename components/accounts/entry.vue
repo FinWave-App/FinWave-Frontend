@@ -25,7 +25,7 @@
         </p>
 
         <p class="font-bold">
-          {{ formatter.format(account.amount) }}
+          {{ formatAmount(account.amount) }}
         </p>
       </div>
     </div>
@@ -47,10 +47,15 @@ const { t, locale } = useI18n();
 const { $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 const currency = (await $currenciesApi.getCurrencies()).value.find(c => c.currencyId === props.account.currencyId)
 
-const formatter = Intl.NumberFormat(locale.value, {
-  style: 'currency',
-  currency: currency.code
-});
+const formatAmount = (delta) => {
+  const formatter = Intl.NumberFormat(locale.value, {
+    style: 'currency',
+    currency: currency.code,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: currency.decimals
+  });
+  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+}
 
 const hide = () => {
   $accountsApi.hideAccount(props.account.accountId).then((s) => {

@@ -2,7 +2,8 @@
   "navigation": {
     "main": "Main",
     "tags": "Tags",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "currencies": "Currencies"
   },
 
   "toasts": {
@@ -24,6 +25,16 @@
       "tag": "Tag",
       "account": "Account",
       "createdAt": "Created",
+      "description": "Description",
+      "action": "Action"
+    }
+  },
+
+  "currenciesPage": {
+    "table": {
+      "code": "Code",
+      "symbol": "Symbol",
+      "decimals": "Decimals",
       "description": "Description",
       "action": "Action"
     }
@@ -160,6 +171,34 @@
     "confirmations": {
       "deleteAccountTag": "Delete tag?",
       "deleteTransaction": "Delete transaction?"
+    },
+
+    "newCurrency": {
+      "title": "New currency",
+      "placeholders": {
+        "currencyCode": "Code",
+        "currencySymbol": "Symbol",
+        "currencyDecimals": "Decimals",
+        "currencyDescription": "Description"
+      },
+      "messages": {
+        "success": "Currency created",
+        "error": "Oops, failed to create currency"
+      }
+    },
+
+    "editCurrency": {
+      "title": "Edit currency",
+      "placeholders": {
+        "currencyCode": "Code",
+        "currencySymbol": "Symbol",
+        "currencyDecimals": "Decimals",
+        "currencyDescription": "Description"
+      },
+      "messages": {
+        "success": "Currency edited",
+        "error": "Oops, failed to edit currency"
+      }
     },
 
     "newAccount": {
