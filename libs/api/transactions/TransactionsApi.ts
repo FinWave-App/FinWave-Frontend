@@ -60,7 +60,7 @@ export class TransactionsApi {
     public async getTransactionsCount(filter: TransactionsFilter | null): Promise<number> {
         const opts = {
             method: "GET",
-            params: this.filterToOptions(filter)
+            params: filter?.toOptions()
         };
 
         const {data, error} = await useApi<any>("/user/transactions/getCount", opts);
@@ -72,24 +72,13 @@ export class TransactionsApi {
         return data.value?.count;
     }
 
-    protected filterToOptions(filter: TransactionsFilter | null): any {
-        return filter !== null ? {
-            tagsIds: filter.tagsIds && filter.tagsIds.length > 0 ? filter.tagsIds.toString() : undefined,
-            accountsIds: filter.accountsIds && filter.accountsIds.length > 0 ? filter.accountsIds.toString() : undefined,
-            currenciesIds: filter.currenciesIds && filter.currenciesIds.length > 0 ? filter.currenciesIds.toString() : undefined,
-            fromTime: filter.fromTime ? filter.fromTime.toISOString() : undefined,
-            toTime: filter.toTime ? filter.toTime.toISOString() : undefined,
-            description: filter.description && filter.description.length > 0 ? filter.description : undefined
-        } : {};
-    }
-
     public async getTransactions(offset: number, count: number, filter: TransactionsFilter | null): Promise<any> {
         const opts = {
             method: "GET",
             params: {
                 offset: offset,
                 count: count,
-                ...this.filterToOptions(filter)
+                ...filter?.toOptions()
             }
         };
 

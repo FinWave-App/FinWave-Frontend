@@ -3,7 +3,8 @@
     "main": "Main",
     "tags": "Tags",
     "transactions": "Transactions",
-    "currencies": "Currencies"
+    "currencies": "Currencies",
+    "analytics": "Analytics"
   },
 
   "toasts": {
@@ -54,6 +55,25 @@
       "description": "Description",
       "action": "Action",
       "toChilds": "To Childs"
+    }
+  },
+
+  "analyticsPage": {
+    "pie": {
+      "noData": "No data",
+      "selects": {
+        "currency": "Select currency"
+      },
+
+      "month": {
+        "expensesTitle": "Expenses for month",
+        "incomesTitle": "Incomes for month"
+      },
+
+      "year": {
+        "expensesTitle": "Expenses for year",
+        "incomesTitle": "Incomes for year"
+      }
     }
   },
 
@@ -146,8 +166,6 @@
       "withoutParent": "Root"
     }
   },
-
-
 
   "accountEntry": {
     "messages": {

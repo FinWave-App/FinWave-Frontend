@@ -60,12 +60,12 @@ const getTagAccounts = (t) => {
 }
 
 tags.value.forEach((t) => {
-  t.hide = useCache.get("hide_status_" + t.tagId).value;
+  t.hide = useStorage.get("hide_status_" + t.tagId);
 })
 
 const setHideTagStatus = (tag, status) => {
   tag.hide = status;
-  useCache.set("hide_status_" + tag.tagId, status);
+  useStorage.set("hide_status_" + tag.tagId, status);
 }
 
 const createTagModal = ref(false);

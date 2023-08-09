@@ -1,6 +1,6 @@
 import {ServerConfigs} from "~/libs/config/ServerConfigs";
 import {useCookie} from "#app";
-import {useCache} from "#imports";
+import {useStorage} from "#imports";
 
 export class ConfigManager {
     private _configs : ServerConfigs | null = null;
@@ -15,20 +15,20 @@ export class ConfigManager {
 
         this._serverAvailable = true;
 
-        const cachedHash = useCache.get<string>("configs_hash")
-        const cachedConfigs = useCache.get<ServerConfigs>("configs");
+        const cachedHash = useStorage.get<string>("configs_hash")
+        const cachedConfigs = useStorage.get<ServerConfigs>("configs");
 
-        if (cachedConfigs.value !== undefined && cachedHash.value === hash.value) {
-            this._configs = cachedConfigs.value;
-            this.hash = cachedHash.value;
+        if (cachedConfigs !== undefined && cachedHash === hash.value) {
+            this._configs = cachedConfigs;
+            this.hash = cachedHash;
 
             return;
         }
 
         const {data: configs} = await useApi<ServerConfigs>("configs/get");
 
-        useCache.set("configs", JSON.stringify(configs.value));
-        useCache.set("configs_hash", hash.value);
+        useStorage.set("configs", JSON.stringify(configs.value));
+        useStorage.set("configs_hash", hash.value);
 
         this._configs = configs.value;
         this.hash = hash.value;

@@ -25,7 +25,7 @@
 }
 
 .page-grid {
-    @apply grid grid-cols-1 lg:grid-cols-3 gap-6 w-11/12 lg:w-5/6;
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-6 w-11/12 lg:w-5/6 mb-8;
 }
 
 .page-panel {
@@ -34,4 +34,11 @@
 
 .page-content {
     @apply flex justify-center mt-8 select-bordered;
+}
+
+.apexcharts-xaxis-label {
+    @apply fill-base-content;
+}
+.apexcharts-yaxis-label {
+    @apply fill-base-content;
 }

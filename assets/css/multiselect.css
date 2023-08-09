@@ -225,3 +225,12 @@
 .multiselect-spacer {
     @apply h-9 py-px box-content;
 }
+
+.multiselect-xs .multiselect-single-label-text {
+    @apply text-xs;
+}
+
+.multiselect-xs {
+    @apply h-10;
+}
+

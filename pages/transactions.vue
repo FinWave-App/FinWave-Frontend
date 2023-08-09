@@ -1,47 +1,6 @@
 <template>
   <div class="page-panel transition transform ease-in-out duration-300">
-    <div class="flex flex-wrap gap-1 w-full">
-      <select-transaction-tag class="flex-1 h-10 min-w-48"
-                              mode="tags"
-                              v-model="filterTags"
-                              :searchable="true"
-                              :placeholder='$t("transactionsPage.placeholders.filters.tags")'
-                              :close-on-select="false"
-                              :tags-tree="tagsTree"
-                              :can-be-without-parent="false"
-      >
-
-      </select-transaction-tag>
-
-      <select-account class="flex-1 h-10 min-w-48"
-                      mode="tags"
-                      v-model="filterAccounts"
-                      :searchable="true"
-                      :placeholder='$t("transactionsPage.placeholders.filters.accounts")'
-                      :close-on-select="false">
-      </select-account>
-
-      <select-currency class="flex-1 h-10 min-w-48"
-                       mode="tags"
-                       v-model="filterCurrencies"
-                       :searchable="true"
-                       :placeholder='$t("transactionsPage.placeholders.filters.currencies")'
-                       :close-on-select="false">
-
-      </select-currency>
-
-      <Datepicker class="flex-1 min-w-48 xl:min-w-80 dp-h-10"
-                  v-model="filterTime"
-                  :placeholder='$t("transactionsPage.placeholders.filters.time")'
-                  :locale="locale"
-                  range />
-
-      <input type="text"
-             class="input input-bordered flex-1 h-10 text-sm font-bold min-w-48"
-             v-model.lazy="filterDescription"
-             :placeholder='$t("transactionsPage.placeholders.filters.description")'
-      >
-    </div>
+    <transactions-filter-div v-model="filter" />
 
     <transition-group name="status">
       <div v-if="loadStatus === 0" :key="'loadScreen'">
@@ -113,6 +72,8 @@ import DeleteButton from "~/components/buttons/deleteButton.vue";
 import Confirmation from "~/components/modal/confirmation.vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import PagesNavigation from "~/components/buttons/pagesNavigation.vue";
+import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
+import TransactionsFilterDiv from "~/components/transactions/filter.vue"
 
 definePageMeta({
   middleware: [
@@ -139,11 +100,7 @@ const currenciesMap = $currenciesApi.getCurrenciesMap();
 const page = ref(1);
 const maxPages = computed(() => Math.ceil(count.value / countAtPage));
 
-const filterTags = ref();
-const filterAccounts = ref();
-const filterCurrencies = ref();
-const filterTime = ref();
-const filterDescription = ref();
+const filter = ref();
 
 const countAtPage = 30;
 const count = ref(0);
@@ -162,30 +119,17 @@ const formatDelta = (delta, currencyId) => {
   return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
 }
 
-const filtersToObject = () => {
-  return {
-    tagsIds: filterTags.value,
-    accountsIds: filterAccounts.value,
-    currenciesIds: filterCurrencies.value,
-    fromTime: filterTime.value ? filterTime.value[0] : null,
-    toTime: filterTime.value ? filterTime.value[1] : null,
-    description: filterDescription.value
-  }
-}
-
-const fetchCount = async (filter) => {
-  count.value = await $transactionsApi.getTransactionsCount(filter ? filter : filtersToObject())
+const fetchCount = async () => {
+  count.value = await $transactionsApi.getTransactionsCount(filter.value)
 };
 
-const fetchTransactions = async (filter) => {
-  transactions.value = await $transactionsApi.getTransactions(countAtPage * (page.value - 1), countAtPage, filter ? filter : filtersToObject());
+const fetchTransactions = async () => {
+  transactions.value = await $transactionsApi.getTransactions(countAtPage * (page.value - 1), countAtPage, filter.value);
 }
 
 const fetchData = async () => {
-  const filter = filtersToObject();
-
   await Promise
-      .all([fetchCount(filter), fetchTransactions(filter)])
+      .all([fetchCount(), fetchTransactions()])
       .catch(console.log);
 }
 
@@ -202,7 +146,7 @@ const changePage = async (pageNeed) => {
   window.scrollTo(0,0);
 }
 
-watch([filterTags, filterAccounts, filterCurrencies, filterTime, filterDescription], async () => {
+watch(filter, async () => {
   loadStatus.value = 0;
   page.value = 1;
   await fetchData();

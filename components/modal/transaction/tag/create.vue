@@ -97,13 +97,13 @@ const close = () => {
 }
 
 const create = () => {
-  if (name.value.length < 1 || expectedAmount.value === null || expectedAmount.value === "") {
+  if (name.value.length < 1 || expectedAmount.value === "") {
     return;
   }
 
   close();
 
-  $transactionsTagsApi.newTag(type.value, expectedAmount.value, parentTag.value, name.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $transactionsTagsApi.newTag(type.value, expectedAmount.value === null ? 0 : expectedAmount.value, parentTag.value, name.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s)
       $toastsManager.pushToast(t("modals.newTransactionTag.messages.success"), 2500, "success")
     else

@@ -24,6 +24,10 @@ const items = computed(() => {
     {
       text: "navigation.currencies",
       url: "/currencies"
+    },
+    {
+      text: "navigation.analytics",
+      url: "/analytics"
     }
   ];
 });
