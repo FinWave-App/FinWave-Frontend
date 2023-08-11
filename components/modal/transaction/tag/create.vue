@@ -69,14 +69,6 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-
-  tagsTree: {
-    required: true
-  },
-
-  tagsMap: {
-    required: true
-  }
 })
 
 const emit = defineEmits(['close'])
@@ -91,6 +83,9 @@ const parentTag = ref(null);
 
 const {$serverConfigs, $transactionsTagsApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.transactions.tags;
+
+const tagsTree = $transactionsTagsApi.getTagsTree();
+const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const close = () => {
   emit('close')

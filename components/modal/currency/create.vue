@@ -3,9 +3,29 @@
     <div class="w-full flex flex-col gap-2">
 
       <div class="flex gap-2 w-full">
-        <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyCode')" v-model.trim="code" :maxlength="configs.maxCodeLength"/>
-        <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')" v-model.trim="symbol" :maxlength="configs.maxCodeLength"/>
-        <input type="number" min="1" :max="configs.maxDecimals" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')" v-model="decimals"/>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyCode') }}</span>
+          </label>
+
+          <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyCode')" v-model.trim="code" :maxlength="configs.maxCodeLength"/>
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencySymbol') }}</span>
+          </label>
+
+          <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')" v-model.trim="symbol" :maxlength="configs.maxCodeLength"/>
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyDecimals') }}</span>
+          </label>
+
+          <input type="number" min="1" :max="configs.maxDecimals" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')" v-model="decimals"/>
+        </div>
       </div>
 
       <textarea class="textarea input-bordered" :placeholder="$t('modals.newCurrency.placeholders.currencyDescription')" v-model.trim="description" :maxlength="configs.maxDescriptionLength">

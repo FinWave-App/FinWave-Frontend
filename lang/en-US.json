@@ -1,6 +1,7 @@
 {
   "navigation": {
     "main": "Main",
+    "notes": "Notes",
     "tags": "Tags",
     "transactions": "Transactions",
     "currencies": "Currencies",
@@ -9,6 +10,23 @@
 
   "toasts": {
     "hide": "Hide"
+  },
+
+  "mainPage": {
+    "buttons": {
+      "newTransaction": "New transaction",
+      "newTag": "New tag",
+      "newCurrency": "New currency"
+    },
+    "notes": {
+      "title": "Notes"
+    }
+  },
+
+  "notesPage": {
+    "placeholders": {
+      "find": "Find by description"
+    }
   },
 
   "transactionsPage": {
@@ -189,6 +207,30 @@
     "confirmations": {
       "deleteAccountTag": "Delete tag?",
       "deleteTransaction": "Delete transaction?"
+    },
+
+    "newNote": {
+      "title": "New note",
+      "placeholders": {
+        "noteText": "Text",
+        "noteNotificationTime": "Notification time (optional)"
+      },
+      "messages": {
+        "success": "Note created",
+        "error": "Oops, failed to create note"
+      }
+    },
+
+    "editNote": {
+      "title": "Edit note",
+      "placeholders": {
+        "noteText": "Text",
+        "noteNotificationTime": "Notification time (optional)"
+      },
+      "messages": {
+        "success": "Note edited",
+        "error": "Oops, failed to edit note"
+      }
     },
 
     "newCurrency": {

@@ -109,7 +109,7 @@ watch(filter, () => {
   buildChart();
 })
 
-await buildChart();
+buildChart();
 
 </script>
 

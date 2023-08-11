@@ -2,33 +2,52 @@
   <modal-base :title="$t('modals.editCurrency.title')" :opened="opened" :name="'currency-edit-modal'">
     <div class="w-full flex flex-col gap-2">
       <div class="flex gap-2 w-full">
-        <input type="text"
-               class="input input-bordered w-full"
-               :class="{'input-success' : codeSyncStatus === 1, 'input-warning' : codeSyncStatus === 0, 'input-error' : codeSyncStatus === -1}"
-               :placeholder="$t('modals.newCurrency.placeholders.currencyCode')"
-               :maxlength="configs.maxCodeLength"
-               v-model.trim="code"
-               @change="syncCode"
-        />
 
-        <input type="text"
-               class="input input-bordered w-full"
-               :class="{'input-success' : symbolSyncStatus === 1, 'input-warning' : symbolSyncStatus === 0, 'input-error' : symbolSyncStatus === -1}"
-               :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')"
-               :maxlength="configs.maxCodeLength"
-               v-model.trim="symbol"
-               @change="syncSymbol"
-        />
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyCode') }}</span>
+          </label>
 
-        <input type="number"
-               class="input input-bordered w-full"
-               :class="{'input-success' : decimalsSyncStatus === 1, 'input-warning' : decimalsSyncStatus === 0, 'input-error' : decimalsSyncStatus === -1}"
-               min="1"
-               :max="configs.maxDecimals"
-               :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')"
-               v-model="decimals"
-               @change="syncDecimals"
-        />
+          <input type="text"
+                 class="input input-bordered w-full"
+                 :class="{'input-success' : codeSyncStatus === 1, 'input-warning' : codeSyncStatus === 0, 'input-error' : codeSyncStatus === -1}"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencyCode')"
+                 :maxlength="configs.maxCodeLength"
+                 v-model.trim="code"
+                 @change="syncCode"
+          />
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencySymbol') }}</span>
+          </label>
+
+          <input type="text"
+                 class="input input-bordered w-full"
+                 :class="{'input-success' : symbolSyncStatus === 1, 'input-warning' : symbolSyncStatus === 0, 'input-error' : symbolSyncStatus === -1}"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')"
+                 :maxlength="configs.maxCodeLength"
+                 v-model.trim="symbol"
+                 @change="syncSymbol"
+          />
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyDecimals') }}</span>
+          </label>
+
+          <input type="number"
+                 class="input input-bordered w-full"
+                 :class="{'input-success' : decimalsSyncStatus === 1, 'input-warning' : decimalsSyncStatus === 0, 'input-error' : decimalsSyncStatus === -1}"
+                 min="1"
+                 :max="configs.maxDecimals"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')"
+                 v-model="decimals"
+                 @change="syncDecimals"
+          />
+        </div>
       </div>
 
       <textarea class="textarea input-bordered"

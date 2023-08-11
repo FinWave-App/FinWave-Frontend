@@ -14,6 +14,10 @@ const items = computed(() => {
       url: "/"
     },
     {
+      text: "navigation.notes",
+      url: "/notes"
+    },
+    {
       text: "navigation.tags",
       url: "/tags"
     },

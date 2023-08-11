@@ -232,21 +232,22 @@ const buildChart = () => {
   chartOptions.value = newOptions;
 }
 
-await reloadAnalytics();
+reloadAnalytics().then(() => {
+  buildChart();
+}).then(() => {
+  watch(date, async () => {
+    reloadAnalytics().then(() => {
+      resetView();
+      buildChart();
+    })
+  })
 
-buildChart();
-
-watch(date, async () => {
-  reloadAnalytics().then(() => {
+  watch(currency, () => {
     resetView();
     buildChart();
-  })
+  });
 })
 
-watch(currency, () => {
-  resetView();
-  buildChart();
-});
 </script>
 
 

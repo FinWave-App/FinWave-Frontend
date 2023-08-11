@@ -89,16 +89,6 @@ const props = defineProps({
   opened: {
     required: true,
     type: Boolean
-  },
-
-  tagsTree: {
-    required: true,
-    type: Array
-  },
-
-  tagsMap: {
-    required: true,
-    type: Map
   }
 })
 
@@ -111,6 +101,8 @@ const { t } = useI18n();
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
+const tagsTree = $transactionsTagsApi.getTagsTree();
+const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const account = ref();
 const amount = ref();
