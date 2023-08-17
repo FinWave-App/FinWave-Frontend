@@ -23,7 +23,6 @@
         <thead>
         <tr>
           <th>{{$t("tagsPage.table.name")}}</th>
-          <th>{{$t("tagsPage.table.expectedAmount")}}</th>
           <th>{{$t("tagsPage.table.tagType.type")}}</th>
           <th>{{$t("tagsPage.table.description")}}</th>
           <th class="text-right">{{$t("tagsPage.table.action")}}</th>
@@ -33,7 +32,6 @@
         <tbody>
         <tr v-for="entry in (view.length > 0 ? tagsMap.get(view[view.length - 1]).childs : tagsTree)">
           <th class="w-64">{{entry.tag.name}}</th>
-          <td class="w-32">{{formatter.format(entry.tag.expectedAmount)}}</td>
           <td class="w-32 font-bold"
               :class="{'text-success' : entry.tag.type == 1, 'text-error' : entry.tag.type == -1}">
             {{ tagTypeToString(entry.tag.type) }}
@@ -102,10 +100,6 @@ const resetView = () => {
 const editTag = (tag) => {
   tagToEdit.value = tag;
   editOpened.value = true;
-}
-
-const newTag = () => {
-  //$transactionsTagsApi.newTag(0, 100, 4, "Test Parent", "123")
 }
 
 </script>

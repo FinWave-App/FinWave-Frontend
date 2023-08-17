@@ -15,21 +15,14 @@
 
       <div class="form-control w-full">
         <label class="label">
-          <span class="label-text">{{ $t('modals.newTransactionTag.placeholders.tagExpectedAmount') }}</span>
+          <span class="label-text">{{ $t('modals.newTransactionTag.placeholders.tagType.type') }}</span>
         </label>
-        <div class="join">
-          <select class="select select-bordered join-item"
-                  v-model="type">
-            <option value="0">{{ $t('modals.newTransactionTag.placeholders.tagType.mixed') }}</option>
-            <option value="-1">{{ $t('modals.newTransactionTag.placeholders.tagType.expense') }}</option>
-            <option value="1">{{ $t('modals.newTransactionTag.placeholders.tagType.income') }}</option>
-          </select>
-          <input type="number"
-                 class="input input-bordered w-full join-item"
-                 :placeholder="$t('modals.newTransactionTag.placeholders.tagExpectedAmount')"
-                 v-model.trim="expectedAmount"
-          />
-        </div>
+        <select class="select select-bordered join-item"
+                v-model="type">
+          <option value="0">{{ $t('modals.newTransactionTag.placeholders.tagType.mixed') }}</option>
+          <option value="-1">{{ $t('modals.newTransactionTag.placeholders.tagType.expense') }}</option>
+          <option value="1">{{ $t('modals.newTransactionTag.placeholders.tagType.income') }}</option>
+        </select>
       </div>
 
       <div class="form-control w-full">
@@ -77,7 +70,6 @@ const { t } = useI18n();
 
 const name = ref("");
 const description = ref("");
-const expectedAmount = ref(null);
 const type = ref(0);
 const parentTag = ref(null);
 
@@ -92,13 +84,13 @@ const close = () => {
 }
 
 const create = () => {
-  if (name.value.length < 1 || expectedAmount.value === "") {
+  if (name.value.length < 1) {
     return;
   }
 
   close();
 
-  $transactionsTagsApi.newTag(type.value, expectedAmount.value === null ? 0 : expectedAmount.value, parentTag.value, name.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $transactionsTagsApi.newTag(type.value, parentTag.value, name.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s)
       $toastsManager.pushToast(t("modals.newTransactionTag.messages.success"), 2500, "success")
     else

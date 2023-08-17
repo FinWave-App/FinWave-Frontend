@@ -15,7 +15,7 @@
                       class="note-border pb-2 pt-2"
                       :entry="note"
                       :key="note.noteId"
-                      @delete="deleteNote(note)"
+                      @delete="confirmDeleteNote(note)"
                       @edit="editNote(note)"
           />
         </transition-group>
@@ -24,6 +24,13 @@
 
     <modal-note-create :opened="newOpened" @close="newOpened = false"/>
     <modal-note-edit :opened="editOpened" :note="toEdit" @close="editOpened = false" @reloadNotes="fetchNotes"/>
+    <modal-confirmation :opened="deleteConfirmOpened" :confirm-style="'error'" :name="'note-delete-confirm'" @confirm="deleteNote" @deny="deleteConfirmOpened = false">
+      <div class="flex justify-center">
+        <p class="text-lg font-bold">
+          {{ $t("modals.confirmations.deleteNote") }}
+        </p>
+      </div>
+    </modal-confirmation>
   </div>
 </template>
 
@@ -31,6 +38,7 @@
 import NoteEntry from "~/components/notes/noteEntry.vue";
 import NoteFullEntry from "~/components/notes/noteFullEntry.vue";
 import PlusButton from "~/components/buttons/plusButton.vue";
+import Confirmation from "~/components/modal/confirmation.vue";
 
 definePageMeta({
   middleware: [
@@ -38,12 +46,15 @@ definePageMeta({
   ]
 })
 
-const { $notesApi } = useNuxtApp();
+const { $notesApi, $toastsManager} = useNuxtApp();
 const {locale, t} = useI18n();
 
 const newOpened = ref(false);
 const editOpened = ref(false);
+const deleteConfirmOpened = ref(false);
+
 const toEdit = ref();
+const toDelete = ref();
 
 const allNotes = ref([]);
 const filter = ref("");
@@ -80,8 +91,21 @@ const fetchNotes = async () => {
   allNotes.value = await $notesApi.getNotes();
 }
 
-const deleteNote = (note) => {
+const confirmDeleteNote = (note) => {
+  toDelete.value = note;
+  deleteConfirmOpened.value = true;
+}
 
+const deleteNote = () => {
+  deleteConfirmOpened.value = false;
+
+  $notesApi.deleteNote(toDelete.value.noteId).then((s) => {
+    if (s) {
+      $toastsManager.pushToast(t("modals.deleteNote.messages.success"), 2500, "success")
+      fetchNotes();
+    } else
+      $toastsManager.pushToast(t("modals.deleteNote.messages.error"), 3000,"error")
+  });
 }
 
 const editNote = (note) => {

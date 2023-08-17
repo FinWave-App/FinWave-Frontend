@@ -133,7 +133,7 @@ watch(() => props.transaction, (newV, oldV) => {
   amount.value = newV.delta;
   description.value = newV.description || "";
   parentTag.value = newV.tagId;
-  date.value = newV.createdAt;
+  date.value = new Date(newV.createdAt);
   amountChanged();
 });
 

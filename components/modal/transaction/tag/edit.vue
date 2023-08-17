@@ -17,25 +17,16 @@
 
       <div class="form-control w-full">
         <label class="label">
-          <span class="label-text">{{ $t('modals.editTransactionTag.placeholders.tagExpectedAmount') }}</span>
+          <span class="label-text">{{ $t('modals.editTransactionTag.placeholders.tagType.type') }}</span>
         </label>
-        <div class="join">
-          <select class="select select-bordered join-item"
-                  :class="{'select-success' : typeSyncStatus === 1, 'select-warning' : typeSyncStatus === 0, 'select-error' : typeSyncStatus === -1}"
-                  v-model="type"
-                  @change="syncType">
-            <option value="0">{{ $t('modals.editTransactionTag.placeholders.tagType.mixed') }}</option>
-            <option value="-1">{{ $t('modals.editTransactionTag.placeholders.tagType.expense') }}</option>
-            <option value="1">{{ $t('modals.editTransactionTag.placeholders.tagType.income') }}</option>
-          </select>
-          <input type="number"
-                 class="input input-bordered w-full join-item"
-                 :class="{'input-success' : expectedAmountSyncStatus === 1, 'input-warning' : expectedAmountSyncStatus === 0, 'input-error' : expectedAmountSyncStatus === -1}"
-                 :placeholder="$t('modals.editTransactionTag.placeholders.tagExpectedAmount')"
-                 v-model.trim="expectedAmount"
-                 @change="syncExpectedAmount"
-          />
-        </div>
+        <select class="select select-bordered join-item"
+                :class="{'select-success' : typeSyncStatus === 1, 'select-warning' : typeSyncStatus === 0, 'select-error' : typeSyncStatus === -1}"
+                v-model="type"
+                @change="syncType">
+          <option value="0">{{ $t('modals.editTransactionTag.placeholders.tagType.mixed') }}</option>
+          <option value="-1">{{ $t('modals.editTransactionTag.placeholders.tagType.expense') }}</option>
+          <option value="1">{{ $t('modals.editTransactionTag.placeholders.tagType.income') }}</option>
+        </select>
       </div>
 
       <div class="form-control w-full">
@@ -107,7 +98,6 @@ const parentTag = ref();
 
 const nameSyncStatus = ref(1);
 const descriptionSyncStatus = ref(1);
-const expectedAmountSyncStatus = ref(1);
 const typeSyncStatus = ref(1);
 const parentTagSyncStatus = ref(1);
 
@@ -122,7 +112,6 @@ watch(() => props.opened, (selection, prevSelection) => {
   if (selection) {
     name.value = props.tag.name;
     description.value = props.tag.description;
-    expectedAmount.value = props.tag.expectedAmount;
     type.value = props.tag.type;
 
     const parentTagString = props.tag.parentsTree.split('.').slice(-1)[0];
@@ -131,7 +120,6 @@ watch(() => props.opened, (selection, prevSelection) => {
     nextTick(() => {
       nameSyncStatus.value = 1;
       descriptionSyncStatus.value = 1;
-      expectedAmountSyncStatus.value = 1;
       typeSyncStatus.value = 1;
       parentTagSyncStatus.value = 1;
     })
@@ -144,10 +132,6 @@ watch(name, (selection, prevSelection) => {
 
 watch(description, (selection, prevSelection) => {
   descriptionSyncStatus.value = 0;
-})
-
-watch(expectedAmount, (selection, prevSelection) => {
-  expectedAmountSyncStatus.value = 0;
 })
 
 watch(type, (selection, prevSelection) => {
@@ -187,20 +171,6 @@ const syncDescription = () => {
       $toastsManager.pushToast(t("modals.editTransactionTag.messages.success"), 2500, "success");
     } else {
       descriptionSyncStatus.value = -1;
-      $toastsManager.pushToast(t("modals.editTransactionTag.messages.error"), 3000,"error")
-    }
-  })
-}
-
-const syncExpectedAmount = () => {
-  expectedAmountSyncStatus.value = 0;
-
-  $transactionsTagsApi.editTagExpectedAmount(expectedAmount.value, props.tag.tagId).then((r) => {
-    if (r) {
-      expectedAmountSyncStatus.value = 1;
-      $toastsManager.pushToast(t("modals.editTransactionTag.messages.success"), 2500, "success");
-    } else {
-      expectedAmountSyncStatus.value = -1;
       $toastsManager.pushToast(t("modals.editTransactionTag.messages.error"), 3000,"error")
     }
   })

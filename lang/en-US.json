@@ -16,7 +16,8 @@
     "buttons": {
       "newTransaction": "New transaction",
       "newTag": "New tag",
-      "newCurrency": "New currency"
+      "newCurrency": "New currency",
+      "newNote": "New note"
     },
     "notes": {
       "title": "Notes"
@@ -63,7 +64,6 @@
     "path": "Path:",
     "table": {
       "name": "Name",
-      "expectedAmount": "Expected Amount",
       "tagType": {
         "type": "Type",
         "expense": "Expense",
@@ -93,6 +93,12 @@
         "incomesTitle": "Incomes for year"
       }
     }
+  },
+
+  "errorPage": {
+    "title": "Server Error",
+    "description": "Error connecting to the server. Check the console for details",
+    "tryAgain": "Try again"
   },
 
   "loginPage": {
@@ -206,7 +212,8 @@
 
     "confirmations": {
       "deleteAccountTag": "Delete tag?",
-      "deleteTransaction": "Delete transaction?"
+      "deleteTransaction": "Delete transaction?",
+      "deleteNote": "Delete note?"
     },
 
     "newNote": {
@@ -230,6 +237,13 @@
       "messages": {
         "success": "Note edited",
         "error": "Oops, failed to edit note"
+      }
+    },
+
+    "deleteNote": {
+      "messages": {
+        "success": "Note deleted",
+        "error": "Oops, failed to delete note"
       }
     },
 
@@ -352,7 +366,6 @@
       "title": "New transaction tag",
       "placeholders": {
         "tagName": "Name",
-        "tagExpectedAmount": "Expected amount",
         "tagType": {
           "type": "Type",
           "expense": "Expense",

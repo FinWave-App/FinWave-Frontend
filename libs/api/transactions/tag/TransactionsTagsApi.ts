@@ -80,12 +80,11 @@ export class TransactionsTagsApi {
         })
     }
 
-    public async newTag(type: number, expectedAmount: number, parentId: number, name: string, description: string | null) : Promise<boolean> {
+    public async newTag(type: number, parentId: number, name: string, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
                 type: type,
-                expectedAmount: expectedAmount,
                 name: name
             }
         }
@@ -105,7 +104,6 @@ export class TransactionsTagsApi {
         this.tags.value?.push({
             tagId: newTag.value.tagId,
             type: type,
-            expectedAmount: expectedAmount,
             parentsTree: parentId !== -1 ? this.getParentTree(parentId) : "",
             name: name,
             description: description
@@ -127,23 +125,6 @@ export class TransactionsTagsApi {
         }
 
         this.tags.value.find((t) => t.tagId == tagId).type = type;
-
-        return true;
-    }
-
-    public async editTagExpectedAmount(expectedAmount: number, tagId: number) {
-        const opts = {
-            method: "POST",
-            params: { tagId: tagId, expectedAmount: expectedAmount }
-        };
-
-        const { error } = await useApi("/user/transactions/tags/editExpectedAmount", opts);
-
-        if (error.value !== null) {
-            return false;
-        }
-
-        this.tags.value.find((t) => t.tagId == tagId).expectedAmount = expectedAmount;
 
         return true;
     }
