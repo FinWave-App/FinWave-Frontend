@@ -23,14 +23,18 @@
       </div>
     </div>
 
-    <div class="navbar-end">
+    <div class="navbar-end mr-4">
+      <user/>
     </div>
   </div>
 </template>
 
 <script>
+import User from "~/components/nav/user/user.vue";
+
 export default {
-  name: "navigation"
+  name: "navigation",
+  components: {User}
 }
 </script>
 

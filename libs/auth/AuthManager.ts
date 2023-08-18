@@ -1,4 +1,4 @@
-import {NuxtApp, useCookie, useNuxtApp} from "#app";
+import {navigateTo, NuxtApp, useCookie, useNuxtApp} from "#app";
 import {AuthState} from "~/libs/auth/AuthState";
 import {integer} from "vscode-languageserver-types";
 
@@ -31,5 +31,11 @@ export class AuthManager {
 
         tokenCookie.value = token;
         this._state.update(token);
+    }
+
+    public logout() {
+        useCookie<string | undefined>("session_token").value = undefined;
+        this._state.update(null)
+        navigateTo("/login");
     }
 }

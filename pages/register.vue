@@ -1,7 +1,7 @@
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content w-full">
-      <div class="panel w-1/3">
+      <div class="panel lg:w-1/3">
         <p class="font-bold text-xl text-center">{{ $t('registerPage.title') }}</p>
 
         <form class="flex gap-4 flex-col mt-2">
@@ -25,24 +25,7 @@
               <span class="label-text">{{ $t('registerPage.passwordField.label') }}</span>
             </label>
 
-
-            <div class="dropdown dropdown-right">
-              <input type="password"
-                     tabindex="0"
-                     :disabled="loading"
-                     autocomplete="current-password"
-                     v-model="password"
-                     :placeholder="$t('loginPage.passwordField.placeholder')"
-                     class="input input-bordered w-full"
-                     :class=" { 'input-success' : passwordMatch && password.length > 0, 'input-error' : !passwordMatch && password.length > 0}"
-              />
-              <div tabindex="0" class="dropdown-content ml-2 flex flex-col gap-4 min-w-max">
-                <div class="badge badge-md badge-error gap-2 shadow-xl" v-for="error in passwordRequirements">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  {{ $t(error) }}
-                </div>
-              </div>
-            </div>
+            <misc-new-password-input v-model="password" :disabled="loading" v-model:passwordMatch="passwordMatch"/>
 
           </div>
 
@@ -113,6 +96,8 @@ const timezones = [
 
 const login = ref("");
 const password = ref("");
+const passwordMatch = ref(false);
+
 const timezoneNumber = (-new Date().getTimezoneOffset() / 60);
 
 const timezone = ref("UTC" + (timezoneNumber >= 0 ? "+" : "") + timezoneNumber);
@@ -128,34 +113,6 @@ const loginMatch = computed(() => {
   return regex.test(login.value) &&
   login.value.length >= userConfig.minLoginLength &&
   login.value.length <= userConfig.maxLoginLength
-});
-
-const passwordMatch = computed(() => {
-  const regex = new RegExp(userConfig.registration.passwordRegexFilter)
-
-  return regex.test(password.value) &&
-      password.value.length >= userConfig.minPasswordLength &&
-      password.value.length <= userConfig.maxPasswordLength
-});
-
-const passwordRequirements = computed(() => {
-  const result = [];
-  const symbols = /\W/;
-  const numbers = /\d/;
-
-  if (password.value.length < userConfig.minPasswordLength)
-    result.push("registerPage.errors.password.tooShort");
-
-  if (password.value.length > userConfig.maxPasswordLength)
-    result.push("registerPage.errors.password.tooLong");
-
-  if (!symbols.test(password.value))
-    result.push("registerPage.errors.password.missingSpecials");
-
-  if (!numbers.test(password.value))
-    result.push("registerPage.errors.password.missingNumbers");
-
-  return result;
 });
 
 const { locale, locales } = useI18n();

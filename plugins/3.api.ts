@@ -5,9 +5,12 @@ import {TransactionsTagsApi} from "~/libs/api/transactions/tag/TransactionsTagsA
 import {TransactionsApi} from "~/libs/api/transactions/TransactionsApi";
 import {AnalyticsApi} from "~/libs/api/analytics/AnalyticsApi";
 import {NotesApi} from "~/libs/api/notes/NotesApi";
+import {UserApi} from "~/libs/api/user/UserApi";
 
 export default defineNuxtPlugin(async nuxtApp => {
     const {$auth} = nuxtApp;
+
+    const userApi = new UserApi();
 
     const accountsApi = new AccountsApi();
     const accountsTagsApi = new AccountsTagsApi();
@@ -21,6 +24,7 @@ export default defineNuxtPlugin(async nuxtApp => {
 
     const preloadAll = async () => {
         await Promise.all([
+            userApi.init(),
             accountsApi.init(),
             accountsTagsApi.init(),
             transactionsTagsApi.init(),
@@ -33,13 +37,15 @@ export default defineNuxtPlugin(async nuxtApp => {
 
     if ($auth.state().authed.value) {
         await preloadAll();
-    } else {
-        watch($auth.state().authed, async (selection, prevSelection) => {
-            await preloadAll();
-        });
     }
 
+
+    watch($auth.state().authed, async (selection, prevSelection) => {
+        if (selection)
+            await preloadAll();
+    });
+
     return {
-        provide: {accountsApi, accountsTagsApi, transactionsTagsApi, transactionsApi, currenciesApi, analyticsApi, notesApi}
+        provide: {accountsApi, accountsTagsApi, transactionsTagsApi, transactionsApi, currenciesApi, analyticsApi, notesApi, userApi}
     }
 })

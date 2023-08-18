@@ -1,7 +1,7 @@
 <template>
   <div class="hero min-h-screen">
     <div class="hero-content w-full">
-      <div class="panel w-1/3">
+      <div class="panel lg:w-1/3">
         <p class="font-bold text-xl text-center">{{ $t('loginPage.title') }}</p>
 
         <form class="flex gap-4 flex-col mt-2">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="alert alert-error shadow-lg mt-4" v-if="(errorMessage !== '')">
-          <div>
+          <div class="flex gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>{{ $t(errorMessage) }}</span>
           </div>
@@ -97,7 +97,7 @@ const singIn = async () => {
   if (error.value !== null) {
     loading.value = false;
 
-    if (error.value.statusCode === 400) {
+    if (error.value.statusCode === 401) {
       errorMessage.value = "loginPage.errors.invalidCredentials";
       password.value = "";
     } else {

@@ -49,7 +49,7 @@
     </div>
 
     <modal-transaction-tag-edit :opened="editOpened" :tag="tagToEdit" :tags-map="tagsMap" :tags-tree="tagsTree" @close="editOpened = false"/>
-    <modal-transaction-tag-create :opened="newOpened" :tags-tree="tagsTree" :tags-map="tagsMap" @close="newOpened = false"></modal-transaction-tag-create>
+    <modal-transaction-tag-create :opened="newOpened" @close="newOpened = false"></modal-transaction-tag-create>
   </div>
 </template>
 

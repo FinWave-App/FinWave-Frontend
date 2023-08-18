@@ -5,7 +5,12 @@
     "tags": "Tags",
     "transactions": "Transactions",
     "currencies": "Currencies",
-    "analytics": "Analytics"
+    "analytics": "Analytics",
+
+    "userButtons": {
+      "changePassword": "Change password",
+      "logout": "Logout"
+    }
   },
 
   "toasts": {
@@ -214,6 +219,19 @@
       "deleteAccountTag": "Delete tag?",
       "deleteTransaction": "Delete transaction?",
       "deleteNote": "Delete note?"
+    },
+
+    "changePassword": {
+      "title": "Change password",
+      "warning": "As soon as you change your password, all sessions will be terminated and you will have to log in again",
+      "placeholders": {
+        "newPassword": "New password",
+        "newPasswordConfirm": "Retype new password"
+      },
+      "messages": {
+        "success": "Password changed",
+        "error": "Oops, failed to change password"
+      }
     },
 
     "newNote": {

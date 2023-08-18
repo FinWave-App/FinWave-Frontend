@@ -52,7 +52,7 @@
       <pages-navigation :max-pages="maxPages" :page="page" @change-page="changePage"/>
     </div>
 
-    <modal-transaction-create :opened="newOpened" @close="newOpened = false" @reloadTransactions="fetchData()" :tags-tree="tagsTree" :tags-map="tagsMap"/>
+    <modal-transaction-create :opened="newOpened" @close="newOpened = false" @reloadTransactions="fetchData()" />
     <modal-transaction-edit :opened="editOpened" @close="editOpened = false" @reloadTransactions="fetchData()" :tags-tree="tagsTree" :tags-map="tagsMap" :transaction="transactionToEdit"/>
 
     <confirmation :opened="deleteModal" :name="'transaction-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="deleteModal = false">
