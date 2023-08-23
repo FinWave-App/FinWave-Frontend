@@ -30,8 +30,8 @@
     </div>
 
     <div class="modal-action">
-      <button @click="close" class="btn btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="apply" :disabled="!passwordMatches || newPassword.length === 0 || !newPasswordValid" class="btn btn-success">{{ $t('modals.buttons.apply') }}</button>
+      <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
+      <button @click="apply" :disabled="!passwordMatches || newPassword.length === 0 || !newPasswordValid" class="btn btn-sm btn-success">{{ $t('modals.buttons.apply') }}</button>
     </div>
   </modal-base>
 </template>

@@ -76,8 +76,8 @@
     </div>
 
     <div class="modal-action">
-      <button @click="close" class="btn btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="create" class="btn btn-success">{{ $t('modals.buttons.create') }}</button>
+      <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
+      <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
     </div>
   </modal-base>
 </template>

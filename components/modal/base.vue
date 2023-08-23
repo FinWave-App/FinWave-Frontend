@@ -1,8 +1,8 @@
 <template>
   <Teleport to="body">
     <input type="checkbox" :id="name" class="modal-toggle" :checked="opened" />
-    <div class="modal modal-bottom sm:modal-middle">
-      <div v-if="title.length > 0" class="modal-box p-0">
+    <div class="modal" :class="modalClass">
+      <div v-if="title.length > 0" class="modal-box p-0" :class="modalBoxClass">
         <div class="px-6 pt-4 pb-2 border-b border-b-base-200 font-bold text-lg">
           {{ title }}
         </div>
@@ -11,7 +11,7 @@
           </slot>
         </div>
       </div>
-      <div v-else class="modal-box">
+      <div v-else class="modal-box" :class="modalBoxClass">
         <slot>
         </slot>
       </div>
@@ -35,6 +35,16 @@ defineProps({
     type: Boolean,
     required: true
   },
+
+  modalBoxClass: {
+    type: String,
+    default: ""
+  },
+
+  modalClass: {
+    type: String,
+    default: "modal-bottom sm:modal-middle"
+  }
 })
 
 </script>

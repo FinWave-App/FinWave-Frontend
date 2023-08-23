@@ -77,8 +77,8 @@
     </div>
 
     <div class="modal-action">
-      <button @click="close" class="btn btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="create" class="btn btn-success">{{ $t('modals.buttons.apply') }}</button>
+      <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
+      <button @click="apply" class="btn btn-sm btn-success">{{ $t('modals.buttons.apply') }}</button>
     </div>
   </modal-base>
 </template>
@@ -181,7 +181,7 @@ const close = () => {
   emit('close')
 }
 
-const create = () => {
+const apply = () => {
   if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value)
     return;
 

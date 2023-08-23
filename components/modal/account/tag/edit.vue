@@ -20,7 +20,7 @@
     </div>
 
     <div class="modal-action">
-      <button @click="close" class="btn">{{ $t('modals.buttons.close') }}</button>
+      <button @click="close" class="btn btn-sm">{{ $t('modals.buttons.close') }}</button>
     </div>
   </modal-base>
 </template>

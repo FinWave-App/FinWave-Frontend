@@ -9,6 +9,7 @@
 
     "userButtons": {
       "changePassword": "Change password",
+      "sessions": "Sessions",
       "logout": "Logout"
     }
   },
@@ -231,6 +232,23 @@
       "messages": {
         "success": "Password changed",
         "error": "Oops, failed to change password"
+      }
+    },
+
+    "sessions": {
+      "title": "Sessions",
+      "warning": "Sessions allow you to log in, as well as use third-party clients. Don't share tokens if you don't know what it's for!",
+      "newSession": "New session:",
+      "placeholders": {
+        "description": "Description"
+      },
+      "messages": {
+        "successCreate": "Session created",
+        "errorCreate": "Oops, failed to create session",
+        "successDelete": "Session deleted",
+        "errorDelete": "Oops, failed to delete session",
+        "successCopy": "Session copied",
+        "errorCopy": "Oops, failed to copy session"
       }
     },
 
