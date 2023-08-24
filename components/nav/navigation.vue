@@ -11,7 +11,7 @@
       </div>
 
       <div class="normal-case text-xl font-bold flex items-start gap-1 ml-2">
-        FinTrack
+        FinWave
         <div class="badge badge-info badge-sm font-normal">Beta</div>
       </div>
     </div>

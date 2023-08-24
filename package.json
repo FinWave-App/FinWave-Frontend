@@ -1,5 +1,5 @@
 {
-  "name": "fintrack",
+  "name": "finwave",
   "private": true,
   "scripts": {
     "build": "nuxt build",
