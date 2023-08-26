@@ -1,20 +1,13 @@
-# Nuxt 3 Minimal Starter
+# FinWave App Frontend
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is the frontend of a web application for financial accounting. The application is designed to help users track and manage their financial data.
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
-yarn install
-
-# npm
 npm install
-
-# pnpm
-pnpm install
 ```
 
 ## Development Server
@@ -25,18 +18,4 @@ Start the development server on `http://localhost:3000`
 npm run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+You will also need to start a [backend](https://github.com/FinWave-App/FinWave-Backend) server
