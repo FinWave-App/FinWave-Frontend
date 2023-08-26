@@ -26,7 +26,8 @@
       "newNote": "New note"
     },
     "notes": {
-      "title": "Notes"
+      "title": "Notes",
+      "allNotesButton": "All notes"
     }
   },
 

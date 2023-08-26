@@ -1,14 +1,115 @@
 {
   "navigation": {
-    "main": "Главная"
+    "main": "Главная",
+    "notes": "Заметки",
+    "tags": "Теги",
+    "transactions": "Транзакции",
+    "currencies": "Валюты",
+    "analytics": "Аналитка",
+
+    "userButtons": {
+      "changePassword": "Сменить пароль",
+      "sessions": "Сеансы",
+      "logout": "Выйти"
+    }
   },
 
   "toasts": {
-    "hide": "Закрыть"
+    "hide": "Скрыть"
+  },
+
+  "mainPage": {
+    "buttons": {
+      "newTransaction": "Новая транзакция",
+      "newTag": "Новый тег",
+      "newCurrency": "Новая валюта",
+      "newNote": "Новая заметка"
+    },
+    "notes": {
+      "title": "Заметки",
+      "allNotesButton": "Все заметки"
+    }
+  },
+
+  "notesPage": {
+    "placeholders": {
+      "find": "Найти по описанию"
+    }
+  },
+
+  "transactionsPage": {
+    "placeholders": {
+      "filters": {
+        "accounts": "Фильтр по счетам",
+        "tags": "Фильтр по тегам",
+        "currencies": "Фильтр по валютам",
+        "time": "Фильтр по времени",
+        "description": "Фильтр по описанию"
+      }
+    },
+    "table": {
+      "amount": "Сумма",
+      "tag": "Тег",
+      "account": "Счет",
+      "createdAt": "Создан",
+      "description": "Описание",
+      "action": "Действие"
+    }
+  },
+
+  "currenciesPage": {
+    "table": {
+      "code": "Код",
+      "symbol": "Символ",
+      "decimals": "Десятичные",
+      "description": "Описание",
+      "action": "Действие"
+    }
+  },
+
+  "tagsPage": {
+    "path": "Путь:",
+    "table": {
+      "name": "Имя",
+      "tagType": {
+        "type": "Тип",
+        "expense": "Расходы",
+        "income": "Доход",
+        "mixed": "Разное"
+      },
+      "description": "Описание",
+      "action": "Действие",
+      "toChilds": "To Childs"
+    }
+  },
+
+  "analyticsPage": {
+    "pie": {
+      "noData": "Нет данных",
+      "selects": {
+        "currency": "Выбрать валюту"
+      },
+
+      "month": {
+        "expensesTitle": "Расходы за месяц",
+        "incomesTitle": "Доходы за месяц"
+      },
+
+      "year": {
+        "expensesTitle": "Расходы за год",
+        "incomesTitle": "Доходы за год"
+      }
+    }
+  },
+
+  "errorPage": {
+    "title": "Ошибка сервера",
+    "description": "Ошибка при соединении к серверу. Подробности в консоли.",
+    "tryAgain": "Попробовать еще раз"
   },
 
   "loginPage": {
-    "title": "Вход",
+    "title": "Логин",
 
     "loginField": {
       "label": "Имя пользователя",
@@ -55,15 +156,14 @@
 
     "errors" : {
       "password": {
-        "tooShort": "Слишком короткий!",
+        "tooShort": "Сликом короткий!",
         "tooLong": "Слишком длинный!",
-        "missingSpecials": "Отсутствуют спец. символы!",
-        "missingNumbers": "Отсуствуют цифры!"
+        "missingSpecials": "Нет спец. символов!",
+        "missingNumbers": "Нет цифр!"
       },
-
       "needUsername": "Введите имя пользователя!",
       "needPassword": "Введите пароль!",
-      "userExists": "Имя пользователя занято!",
+      "userExists": "Имя занято!",
       "serverError": "Ошибка сервера"
     },
 
@@ -77,6 +177,265 @@
   },
 
   "accountsPanel": {
-    "label": "Счета"
+    "label": "Счета",
+    "newTag": "Новый тег",
+    "newAccount": "Новый аккаунт"
+  },
+
+  "accountTagEntry": {
+    "messages": {
+      "deleted": "Тег счета удален",
+      "deleteFail": "Ошибка при удалении тега",
+      "edited": "Тег счета успешно изменен"
+    }
+  },
+
+  "selects": {
+    "noResults": "Нет результатов",
+    "noOptions": "Список пуст",
+    "transactionTagSelect": {
+      "withoutParent": "Без родителя"
+    }
+  },
+
+  "accountEntry": {
+    "messages": {
+      "hided": "Счет скрыт",
+      "hideFail": "Ошибка при скрытии счета",
+      "showed": "Счет восстановлен",
+      "showFail": "Ошибка при восстановлении счета"
+    }
+  },
+
+  "modals": {
+    "buttons": {
+      "create": "Создать",
+      "deny": "Отказаться",
+      "cancel": "Отмена",
+      "confirm": "Подтвердить",
+      "apply": "Применить",
+      "close": "Закрыть"
+    },
+
+    "confirmations": {
+      "deleteAccountTag": "Удалить тег?",
+      "deleteTransaction": "Удалить транзакцию?",
+      "deleteNote": "Удалить заметку?"
+    },
+
+    "changePassword": {
+      "title": "Смена пароля",
+      "warning": "Как только вы смените свой пароль, все сеансы будут прерваны, и вам придется снова войти в систему",
+      "placeholders": {
+        "newPassword": "Новый пароль",
+        "newPasswordConfirm": "Подтвердите новый пароль"
+      },
+      "messages": {
+        "success": "Пароль изменен",
+        "error": "Ошибка смены пароля"
+      }
+    },
+
+    "sessions": {
+      "title": "Сеансы",
+      "warning": "Сеансы позволяют вам входить в систему, а также использовать сторонние клиенты. Не делитесь токенами, если вы не знаете, для чего они нужны!",
+      "newSession": "Новый сеанс:",
+      "placeholders": {
+        "description": "Описание"
+      },
+      "messages": {
+        "successCreate": "Сеанс создан",
+        "errorCreate": "Ошибка создания сеанса",
+        "successDelete": "Сеанс удален",
+        "errorDelete": "Ошибка удаления сеанса",
+        "successCopy": "Токен скопирован",
+        "errorCopy": "Ошибка копирования токена"
+      }
+    },
+
+    "newNote": {
+      "title": "Новая заметка",
+      "placeholders": {
+        "noteText": "Текст",
+        "noteNotificationTime": "Напомнить (не обязательно)"
+      },
+      "messages": {
+        "success": "Заметка создана",
+        "error": "Ошибка создания заметки"
+      }
+    },
+
+    "editNote": {
+      "title": "Изменение заметки",
+      "placeholders": {
+        "noteText": "Текст",
+        "noteNotificationTime": "Напомнить (не обязательно)"
+      },
+      "messages": {
+        "success": "Заметка изменена",
+        "error": "Ошибка изменении заметки"
+      }
+    },
+
+    "deleteNote": {
+      "messages": {
+        "success": "Заметка удалена",
+        "error": "Ошибка удалении заметки"
+      }
+    },
+
+    "newCurrency": {
+      "title": "Новая валюта",
+      "placeholders": {
+        "currencyCode": "Код",
+        "currencySymbol": "Символ",
+        "currencyDecimals": "Десятичные",
+        "currencyDescription": "Описание"
+      },
+      "messages": {
+        "success": "Валюта создана",
+        "error": "Ошибка создании валюты"
+      }
+    },
+
+    "editCurrency": {
+      "title": "Изменить валюту",
+      "placeholders": {
+        "currencyCode": "Код",
+        "currencySymbol": "Символ",
+        "currencyDecimals": "Десятичные",
+        "currencyDescription": "Описание"
+      },
+      "messages": {
+        "success": "Валюта изменена",
+        "error": "Ошибка изменении валюты"
+      }
+    },
+
+    "newAccount": {
+      "title": "Новый счет",
+      "placeholders": {
+        "accountName": "Название",
+        "currencySelect": "Выбрать валюту",
+        "accountDescription": "Описание"
+      },
+      "messages": {
+        "success": "Счет создан",
+        "error": "Ошибка создания счета"
+      }
+    },
+
+    "newAccountTag": {
+      "title": "Новый тег счета",
+      "placeholders": {
+        "tagName": "Название",
+        "tagDescription": "Описание"
+      },
+      "messages": {
+        "success": "Тег аккаунта создан",
+        "error": "Ошибка создания тега"
+      }
+    },
+
+    "editAccountTag": {
+      "title": "Редактирование тега счета",
+      "placeholders": {
+        "tagName": "Название",
+        "tagDescription": "Описание"
+      },
+      "messages": {
+        "success": "Тег аккаунта изменен",
+        "error": "Ошибка изменения тега"
+      }
+    },
+
+    "editAccount": {
+      "title": "Редактирование счета",
+      "placeholders": {
+        "accountName": "Название",
+        "accountDescription": "Описание",
+        "tagSelect": "Выбрать тег"
+      },
+      "messages": {
+        "success": "Счет изменен",
+        "error": "Ошибка изменения счета"
+      }
+    },
+
+    "newTransaction": {
+      "title": "Новая транзакция",
+      "placeholders": {
+        "transactionAmount": "Сумма",
+        "transactionDate": "Дата",
+        "transactionTag": "Тег",
+        "transactionAccount": "Счет",
+        "transactionDescription": "Описание"
+      },
+      "messages": {
+        "success": "Транзакция создана",
+        "error": "Ошибка создания транзакции"
+      }
+    },
+
+    "editTransaction": {
+      "title": "Редактирование транзакции",
+      "placeholders": {
+        "transactionAmount": "Сумма",
+        "transactionDate": "Дата",
+        "transactionTag": "Тег",
+        "transactionAccount": "Счет",
+        "transactionDescription": "Описание"
+      },
+      "messages": {
+        "success": "Транзакция редактирована",
+        "error": "Ошибка изменения транзакции"
+      }
+    },
+
+    "deleteTransaction": {
+      "messages": {
+        "success": "Транзакция удалена",
+        "error": "Ошибка удаления транзакции"
+      }
+    },
+
+    "newTransactionTag": {
+      "title": "Новый тег транзакций",
+      "placeholders": {
+        "tagName": "Название",
+        "tagType": {
+          "type": "Тип",
+          "expense": "Расходы",
+          "income": "Доходы",
+          "mixed": "Разное"
+        },
+        "tagParent": "Родитель",
+        "tagDescription": "Описание"
+      },
+      "messages": {
+        "success": "Тег транзакций создан",
+        "error": "Ошибка создания тега транзакций"
+      }
+    },
+
+    "editTransactionTag": {
+      "title": "Редактирование тега транзакций",
+      "tagWithoutParent": "Без родителя",
+      "placeholders": {
+        "tagName": "Название",
+        "tagType": {
+          "type": "Тип",
+          "expense": "Расходы",
+          "income": "Доходы",
+          "mixed": "Разное"
+        },
+        "tagParent": "Родитель",
+        "tagDescription": "Описание"
+      },
+      "messages": {
+        "success": "Тег транзакций изменен",
+        "error": "Ошибка изменения тега транзакций"
+      }
+    }
   }
 }
