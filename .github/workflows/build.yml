@@ -47,5 +47,5 @@ jobs:
 
       - name: 'Build & Push Container'
         run: |
-            docker build . --tag ghcr.io/FinWave-App/frontend:latest
-            docker push ghcr.io/FinWave-App/frontend:latest
+            docker build . --tag ghcr.io/finwave-app/frontend:latest
+            docker push ghcr.io/finwave-app/frontend:latest
