@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: home-laboratory-runner
 
     steps:
       - uses: actions/checkout@v3
