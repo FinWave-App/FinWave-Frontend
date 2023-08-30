@@ -43,7 +43,7 @@ const config: NuxtConfig = {
 
     runtimeConfig: {
         public: {
-            baseURL: process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:8080/',
+            apiURL: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:8080/',
         },
     }
 }

@@ -53,4 +53,3 @@ jobs:
           tags: ghcr.io/finwave-app/frontend:latest
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
-          public: true

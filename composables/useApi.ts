@@ -7,5 +7,5 @@ export const useApi = function <T> (request : any, opts : any = {}) {
         opts.headers.Authorization = 'Bearer ' + auth.token;
     }
 
-    return useFetch<T>(request, { baseURL: config.public.baseURL, ...opts })
+    return useFetch<T>(request, { baseURL: config.public.apiURL, ...opts })
 }
