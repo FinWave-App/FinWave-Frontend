@@ -39,17 +39,23 @@ jobs:
         with:
           name: FinWave Frontend
           path: .output/
+
+      - name: Extract version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
+
       - name: Push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/finwave-app/frontend:latest
+          tags: ghcr.io/finwave-app/frontend:${{ steps.get_version.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
