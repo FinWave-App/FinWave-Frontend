@@ -118,7 +118,7 @@ watch(parentTag, () => {
     return;
   }
 
-  const parentTagObject = props.tagsMap.get(parentTag.value);
+  const parentTagObject = tagsMap.value.get(parentTag.value);
 
   if (parentTagObject === undefined || parentTagObject.tag === undefined) {
     signChoice.value = true;
