@@ -61,7 +61,7 @@
 
         <button class="btn w-full btn-success mt-8" :disabled="loading || !loginMatch || !passwordMatch" :class=" { 'loading' : loading }" @click="register">{{ $t('registerPage.actions.singUp') }}</button>
         <div class="w-full flex justify-end mt-2">
-          <div class="text-neutral text-sm underline" :class="{ 'text-opacity-50' : loading}">
+          <div class="text-base-content text-sm underline" :class="{ 'text-opacity-50' : loading}">
 
             <nuxt-link v-if="!loading" to="/login">
               {{ $t('registerPage.actions.singIn') }}
