@@ -60,7 +60,7 @@
           <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionDate') }}</span>
         </label>
 
-        <Datepicker class="input-bordered dp-h-12" v-model="date" :teleport="true" teleport-center/>
+        <Datepicker class="input-bordered dp-h-12" v-model="date" :teleport="true" :locale="locale" teleport-center/>
       </div>
 
       <div class="form-control w-full">
@@ -96,7 +96,7 @@ const {$serverConfigs, $transactionsTagsApi, $transactionsApi, $currenciesApi, $
 const configs = $serverConfigs.configs.transactions;
 
 const emit = defineEmits(['close', 'reloadTransactions']);
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();

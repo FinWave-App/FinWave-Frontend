@@ -9,7 +9,7 @@
           <span class="label-text">{{ $t('modals.newNote.placeholders.noteNotificationTime') }}</span>
         </label>
 
-        <Datepicker class="input-bordered dp-h-12" v-model="notificationTime" :teleport="true" teleport-center/>
+        <Datepicker class="input-bordered dp-h-12" v-model="notificationTime" :teleport="true" :locale="locale" teleport-center/>
       </div>
     </div>
 
@@ -30,7 +30,7 @@ const props = defineProps({
   }
 })
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const emit = defineEmits(['close', 'reloadNotes'])
 

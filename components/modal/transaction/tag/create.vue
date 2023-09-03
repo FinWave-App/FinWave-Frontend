@@ -71,7 +71,7 @@ const { t } = useI18n();
 const name = ref("");
 const description = ref("");
 const type = ref(0);
-const parentTag = ref(null);
+const parentTag = ref(-1);
 
 const {$serverConfigs, $transactionsTagsApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.transactions.tags;
@@ -84,7 +84,7 @@ const close = () => {
 }
 
 const create = () => {
-  if (name.value.length < 1) {
+  if (name.value.length < 1 || parentTag.value === null) {
     return;
   }
 

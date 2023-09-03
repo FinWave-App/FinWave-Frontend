@@ -73,16 +73,43 @@ const filterCurrencies = ref();
 const filterTime = ref();
 const filterDescription = ref();
 
+function adjustDates(date1, date2, maxDays) {
+  let d1 = date1;
+  let d2 = date2 ? date2 : null;
+
+  if (d2) {
+    let timeDiff = Math.abs(d2.getTime() - d1.getTime());
+    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    if (diffDays > maxDays) {
+      d2 = new Date(d1.getTime() + maxDays*24*60*60*1000);
+    }
+  } else {
+    let timeDiff = Math.abs(new Date().getTime() - d1.getTime());
+    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    if (diffDays > maxDays) {
+      d1 = new Date(new Date().getTime() - maxDays*24*60*60*1000);
+    }
+  }
+
+  return [d1, d2];
+}
+
+
 watch([filterTags, filterAccounts, filterCurrencies, filterTime, filterDescription], () => {
+  const dates = filterTime.value ? adjustDates(filterTime.value[0], filterTime.value[1], props.calendarMaxRange) : null;
+  console.log(props.calendarMaxRange)
   emit("update:modelValue", new TransactionsFilter(
       filterTags.value,
       filterAccounts.value,
       filterCurrencies.value,
-      filterTime.value ? filterTime.value[0] : null,
-      filterTime.value ? filterTime.value[1] : null,
+      dates ? dates[0] : null,
+      dates? dates[1] : null,
       filterDescription.value
   ))
 })
+
 
 </script>
 

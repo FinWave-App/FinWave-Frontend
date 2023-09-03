@@ -6,8 +6,8 @@
       <div class="w-full border-y py-2 border-base-200 mt-2">
         <div class="flex gap-2 w-full">
           <select-currency v-model="currency" :placeholder='$t("analyticsPage.pie.selects.currency")'/>
-          <Datepicker v-if="mode" class="input-bordered dp-h-12" v-model="date" month-picker/>
-          <Datepicker v-else class="input-bordered dp-h-12" v-model="date" year-picker/>
+          <Datepicker v-if="mode" class="input-bordered dp-h-12" v-model="date" :locale="locale" month-picker/>
+          <Datepicker v-else class="input-bordered dp-h-12" v-model="date" :locale="locale" year-picker/>
         </div>
 
         <div class="text-sm breadcrumbs pl-3 mt-2 bg-base-200 rounded-xl">

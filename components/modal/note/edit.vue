@@ -18,6 +18,7 @@
                     v-model="notificationTime"
                     :class="{'input-success' : notificationTimeSyncStatus === 1, 'input-warning' : notificationTimeSyncStatus === 0, 'input-error' : notificationTimeSyncStatus === -1}"
                     @update:model-value="syncNotificationTime"
+                    :locale="locale"
                     :teleport="true" teleport-center
         />
       </div>
@@ -42,7 +43,7 @@ const props = defineProps({
   }
 })
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const {$serverConfigs, $notesApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.notes;
 

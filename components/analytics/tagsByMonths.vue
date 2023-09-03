@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transactions-filter-div v-model="filter" :calendar-max-range="configs.maxTimeRangeDays"/>
+    <transactions-filter-div v-model="filter" :calendar-max-range="configs.maxTimeRangeDaysForMonths"/>
 
     <ApexChart class="w-full max-h-36 mt-4"
                type="area"
