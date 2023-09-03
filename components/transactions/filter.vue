@@ -99,7 +99,6 @@ function adjustDates(date1, date2, maxDays) {
 
 watch([filterTags, filterAccounts, filterCurrencies, filterTime, filterDescription], () => {
   const dates = filterTime.value ? adjustDates(filterTime.value[0], filterTime.value[1], props.calendarMaxRange) : null;
-  console.log(props.calendarMaxRange)
   emit("update:modelValue", new TransactionsFilter(
       filterTags.value,
       filterAccounts.value,
