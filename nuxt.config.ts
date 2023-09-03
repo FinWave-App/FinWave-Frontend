@@ -26,12 +26,19 @@ const config: NuxtConfig = {
         locales: [
             {
                 code: 'en',
+                name: 'English',
                 file: 'en-US.json'
             },
             {
                 code: 'ru',
+                name: 'Russian',
                 file: 'ru-RU.json'
-            }
+            },
+            {
+                code: 'ro',
+                name: 'Romanian',
+                file: 'ro-RO.json'
+            },
         ],
 
         lazy: true,

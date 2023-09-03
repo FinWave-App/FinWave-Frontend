@@ -35,8 +35,8 @@
                 <span class="label-text">{{ $t('registerPage.lang.label') }}</span>
               </label>
               <select class="select select-bordered w-full " :disabled="loading" v-model="selected" @change="langChanged">
-                <option disabled selected>{{ locale }}</option>
-                <option v-for="locale in availableLocales"> {{locale.code}} </option>
+                <option disabled selected :value="locale">{{ codeToName(locale) }}</option>
+                <option v-for="locale in availableLocales" :value="locale.code"> {{locale.name}} </option>
               </select>
             </div>
 
@@ -122,6 +122,10 @@ const availableLocales = computed(() => {
 })
 
 const selected = ref(locale.value);
+
+const codeToName = (code) => {
+  return (locales.value).find(i => i.code === code).name
+}
 
 const langChanged = () => {
   useNuxtApp().$i18n.setLocale(selected.value)
