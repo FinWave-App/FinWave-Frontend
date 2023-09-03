@@ -1,0 +1,442 @@
+{
+  "navigation": {
+    "main": "Acasă",
+    "notes": "Notițe",
+    "tags": "Etichete",
+    "transactions": "Tranzacții",
+    "currencies": "Valute",
+    "analytics": "Analitice",
+
+    "userButtons": {
+      "changePassword": "Schimbă parola",
+      "sessions": "Sesiuni",
+      "logout": "Deconectare"
+    }
+  },
+
+  "toasts": {
+    "hide": "Ascunde"
+  },
+
+  "mainPage": {
+    "buttons": {
+      "newTransaction": "Tranzacție nouă",
+      "newTag": "Etichetă nouă",
+      "newCurrency": "Valută nouă",
+      "newNote": "Notiță nouă"
+    },
+    "notes": {
+      "title": "Notițe",
+      "allNotesButton": "Toate notițele"
+    }
+  },
+
+  "notesPage": {
+    "placeholders": {
+      "find": "Caută după descriere"
+    }
+  },
+
+  "transactionsPage": {
+    "placeholders": {
+      "filters": {
+        "accounts": "Filtrează după cont",
+        "tags": "Filtrează după etichetă",
+        "currencies": "Filtrează după valută",
+        "time": "Filtrează după timp",
+        "description": "Filtrează după descriere"
+      }
+    },
+    "table": {
+      "amount": "Sumă",
+      "tag": "Etichetă",
+      "account": "Cont",
+      "createdAt": "Creat",
+      "description": "Descriere",
+      "action": "Acțiune"
+    }
+  },
+
+  "currenciesPage": {
+    "table": {
+      "code": "Cod",
+      "symbol": "Simbol",
+      "decimals": "Zecimale",
+      "description": "Descriere",
+      "action": "Acțiune"
+    }
+  },
+
+  "tagsPage": {
+    "path": "Cale:",
+    "table": {
+      "name": "Nume",
+      "tagType": {
+        "type": "Tip",
+        "expense": "Cheltuială",
+        "income": "Venit",
+        "mixed": "Mixt"
+      },
+      "description": "Descriere",
+      "action": "Acțiune",
+      "toChilds": "Spre copil"
+    }
+  },
+
+  "analyticsPage": {
+    "pie": {
+      "noData": "Nu există date",
+      "selects": {
+        "currency": "Selectează valuta"
+      },
+
+      "month": {
+        "expensesTitle": "Cheltuieli per lună",
+        "incomesTitle": "Venituri per lună"
+      },
+
+      "year": {
+        "expensesTitle": "Cheltuieli per an",
+        "incomesTitle": "Venituri per an"
+      }
+    }
+  },
+
+  "errorPage": {
+    "title": "Eroare de Server",
+    "description": "Eroare la conectarea la server. Verifică consola pentru detalii",
+    "tryAgain": "Încearca din nou"
+  },
+
+  "loginPage": {
+    "title": "Conectare",
+
+    "loginField": {
+      "label": "Nume de utilizator",
+      "placeholder": "Nume de utilizator"
+    },
+
+    "passwordField": {
+      "label": "Parolă",
+      "placeholder": "Parolă"
+    },
+
+    "rememberMe": "Ține-mă minte",
+
+    "actions": {
+      "singIn": "Conectează-te",
+      "singUp": "Sau înregistrează-te"
+    },
+
+    "errors" : {
+      "invalidCredentials": "Credențiale invalide!",
+      "needUsername": "Introdu numele de utilizator",
+      "needPassword": "Introdu parola",
+      "serverError": "Eroare de server"
+    }
+  },
+
+  "registerPage": {
+    "title": "Înregistrare",
+
+    "loginField": {
+      "label": "Nume de utilizator",
+      "placeholder": "Nume de utilizator"
+    },
+
+    "passwordField": {
+      "label": "Parolă",
+      "placeholder": "Parolă"
+    },
+
+    "actions": {
+      "singUp": "Înregistrează-te",
+      "singIn": "Sau conectează-te"
+    },
+
+    "errors" : {
+      "password": {
+        "tooShort": "Prea scurt",
+        "tooLong": "Prea lung",
+        "missingSpecials": "Nu există caractere speciale",
+        "missingNumbers": "Nu există numere"
+      },
+      "needUsername": "Introdu-ți numele de utilizator!",
+      "needPassword": "Introdu-ți parola!",
+      "userExists": "Numele de utilizator există deja",
+      "serverError": "Eroare de server"
+    },
+
+    "lang": {
+      "label": "Limbă"
+    },
+
+    "timezone": {
+      "label": "Fus orar"
+    }
+  },
+
+  "accountsPanel": {
+    "label": "Conturi",
+    "newTag": "Etichetă nouă",
+    "newAccount": "Cont nou"
+  },
+
+  "accountTagEntry": {
+    "messages": {
+      "deleted": "Eticheta contului a fost ștearsă cu succes",
+      "deleteFail": "Ștergerea etichetei a eșuat",
+      "edited": "Eticheta contului a fost modificată cu succes"
+    }
+  },
+
+  "selects": {
+    "noResults": "Niciun rezultat găsit",
+    "noOptions": "Lista este goală",
+    "transactionTagSelect": {
+      "withoutParent": "Radăcină"
+    }
+  },
+
+  "accountEntry": {
+    "messages": {
+      "hided": "Contul a fost ascuns cu succes",
+      "hideFail": "Ascunderea contului a eșuat",
+      "showed": "Contul a fost afișat cu succes",
+      "showFail": "Afișarea contului a esuat"
+    }
+  },
+
+  "modals": {
+    "buttons": {
+      "create": "Crează",
+      "deny": "Respinge",
+      "cancel": "Anulează",
+      "confirm": "Confirmă",
+      "apply": "Aplică",
+      "close": "Închide"
+    },
+
+    "confirmations": {
+      "deleteAccountTag": "Șterge eticheta?",
+      "deleteTransaction": "Șterge tranzacția?",
+      "deleteNote": "Șterge notița?"
+    },
+
+    "changePassword": {
+      "title": "Schimbă parola",
+      "warning": "Imediat ce îți schimbi parola, toate sesiunile vor fi terminate și va trebui să te reconectezi",
+      "placeholders": {
+        "newPassword": "Parolă nouă",
+        "newPasswordConfirm": "Reintrodu parola nouă"
+      },
+      "messages": {
+        "success": "Parolă schimbată",
+        "error": "Oops, schimbarea parolei a eșuat"
+      }
+    },
+
+    "sessions": {
+      "title": "Sesiuni",
+      "warning": "Sesiunile îți permit să te conectezi, precum și să folosești clienți terți. Nu partaja tokeni dacă nu știi pentru ce sunt",
+      "newSession": "Sesiune nouă:",
+      "placeholders": {
+        "description": "Descriere"
+      },
+      "messages": {
+        "successCreate": "Sesiune creată",
+        "errorCreate": "Oops, crearea sesiunii a eșuat",
+        "successDelete": "Sesiune ștearsa",
+        "errorDelete": "Oops, ștergerea sesiunii a eșuat",
+        "successCopy": "Sesiune copiată",
+        "errorCopy": "Oops, copierea sesiunii a eșuat"
+      }
+    },
+
+    "newNote": {
+      "title": "Notiță nouă",
+      "placeholders": {
+        "noteText": "Text",
+        "noteNotificationTime": "Timpul de notificare (opțional)"
+      },
+      "messages": {
+        "success": "Notiță creată",
+        "error": "Oops, crearea notiței a eșuat"
+      }
+    },
+
+    "editNote": {
+      "title": "Modifică notița",
+      "placeholders": {
+        "noteText": "Text",
+        "noteNotificationTime": "Timpul de notificare (opțional)"
+      },
+      "messages": {
+        "success": "Notiță modificată",
+        "error": "Oops, modificarea notiței a eșuat"
+      }
+    },
+
+    "deleteNote": {
+      "messages": {
+        "success": "Notiță ștearsă",
+        "error": "Oops, ștergerea notiței a eșuat"
+      }
+    },
+
+    "newCurrency": {
+      "title": "Valută nouă",
+      "placeholders": {
+        "currencyCode": "Cod",
+        "currencySymbol": "Simbol",
+        "currencyDecimals": "Zecimale",
+        "currencyDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Valută creată",
+        "error": "Oops, crearea valutei a eșuat"
+      }
+    },
+
+    "editCurrency": {
+      "title": "Modifică valuta",
+      "placeholders": {
+        "currencyCode": "Cod",
+        "currencySymbol": "Simbol",
+        "currencyDecimals": "Zecimale",
+        "currencyDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Valută modificată",
+        "error": "Oops, modificarea valutei a eșuat"
+      }
+    },
+
+    "newAccount": {
+      "title": "Cont nou",
+      "placeholders": {
+        "accountName": "Nume",
+        "currencySelect": "Selectează valuta",
+        "accountDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Cont creat",
+        "error": "Oops, crearea contului a eșuat"
+      }
+    },
+
+    "newAccountTag": {
+      "title": "Etichetă de cont nouă",
+      "placeholders": {
+        "tagName": "Nume",
+        "tagDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Etichetă de cont creată",
+        "error": "Oops, crearea etichetei de cont a eșuat"
+      }
+    },
+
+    "editAccountTag": {
+      "title": "Modifică eticheta contului",
+      "placeholders": {
+        "tagName": "Nume",
+        "tagDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Etichetă de cont modificată",
+        "error": "Oops, modificarea etichetei de cont a eșuat"
+      }
+    },
+
+    "editAccount": {
+      "title": "Modifică cont",
+      "placeholders": {
+        "accountName": "Numele contului",
+        "accountDescription": "Descrierea contului",
+        "tagSelect": "Selectează eticheta"
+      },
+      "messages": {
+        "success": "Cont modificat",
+        "error": "Oops, modificarea contului a eșuat"
+      }
+    },
+
+    "newTransaction": {
+      "title": "Tranzacție nouă",
+      "placeholders": {
+        "transactionAmount": "Sumă",
+        "transactionDate": "Dată",
+        "transactionTag": "Etichetă",
+        "transactionAccount": "Cont",
+        "transactionDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Tranzacție creată",
+        "error": "Oops, crearea tranzacției a eșuat"
+      }
+    },
+
+    "editTransaction": {
+      "title": "Modifică tranzacție",
+      "placeholders": {
+        "transactionAmount": "Sumă",
+        "transactionDate": "Dată",
+        "transactionTag": "Etichetă",
+        "transactionAccount": "Cont",
+        "transactionDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Tranzacție modificată",
+        "error": "Oops, modificarea tranzacției a eșuat"
+      }
+    },
+
+    "deleteTransaction": {
+      "messages": {
+        "success": "Tranzacție ștearsă",
+        "error": "Oops, ștergerea tranzacției a eșuat"
+      }
+    },
+
+    "newTransactionTag": {
+      "title": "Etichetă de tranzacție nouă",
+      "placeholders": {
+        "tagName": "Nume",
+        "tagType": {
+          "type": "Tip",
+          "expense": "Cheltuială",
+          "income": "Venit",
+          "mixed": "Mixt"
+        },
+        "tagParent": "Părinte",
+        "tagDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Etichetă de tranzacție creată",
+        "error": "Oops, crearea etichetei de tranzacție a eșuat"
+      }
+    },
+
+    "editTransactionTag": {
+      "title": "Modifică eticheta tranzacției",
+      "tagWithoutParent": "Rădăcină",
+      "placeholders": {
+        "tagName": "Nume",
+        "tagExpectedAmount": "Sumă așteptată",
+        "tagType": {
+          "type": "Tip",
+          "expense": "Cheltuială",
+          "income": "Venit",
+          "mixed": "Mixt"
+        },
+        "tagParent": "Părinte",
+        "tagDescription": "Descriere"
+      },
+      "messages": {
+        "success": "Etichetă de tranzacție modificată",
+        "error": "Oops, modificarea etichetei de tranzacție a eșuat"
+      }
+    }
+  }
+}
