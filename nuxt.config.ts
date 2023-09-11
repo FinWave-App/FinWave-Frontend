@@ -17,6 +17,8 @@ const config: NuxtConfig = {
     ],
 
     i18n: {
+        defaultLocale: 'en',
+
         detectBrowserLanguage: {
             useCookie: true,
             cookieKey: 'i18n_lang',
@@ -41,10 +43,8 @@ const config: NuxtConfig = {
             },
         ],
 
-        lazy: true,
         langDir: 'lang/',
-        defaultLocale: 'en',
-
+        vueI18n: './i18n.options.js',
         strategy: "no_prefix"
     },
 

@@ -12,9 +12,17 @@ export class CurrenciesApi {
 
         this.currencies.value = data.value.currencies || [];
 
+        this.rebuildMap();
+    }
+
+    private rebuildMap() {
+        const newMap = new Map<number, any>();
+
         this.currencies.value.forEach((currency) => {
-            this.currenciesMap.value.set(currency.currencyId, currency);
+            newMap.set(currency.currencyId, currency);
         });
+
+        this.currenciesMap.value = newMap;
     }
 
     public getCurrencies(): Ref<Array<any>> {
@@ -45,6 +53,8 @@ export class CurrenciesApi {
             decimals: decimals,
             description: description
         });
+
+        this.rebuildMap();
 
         return true;
     }

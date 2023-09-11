@@ -364,6 +364,10 @@
 
     "newTransaction": {
       "title": "New transaction",
+      "tabs": {
+        "default": "Default",
+        "internalTransfer": "Internal Transfer"
+      },
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",

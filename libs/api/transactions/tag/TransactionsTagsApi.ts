@@ -14,15 +14,21 @@ export class TransactionsTagsApi {
 
         this.tags.value = data.value.tags || [];
 
-        this.tags.value.forEach((tag) => {
-            this.tagsMap.value.set(tag.tagId, tag);
-        })
-
         watch(this.tags, (old, newV) => {
             this.buildTree()
         }, { deep: true })
 
         this.buildTree();
+    }
+
+    private rebuildMap() {
+        const newMap = new Map<number, any>();
+
+        this.tags.value.forEach((tag) => {
+            newMap.set(tag.tagId, tag);
+        })
+
+        this.tagsMap.value = newMap;
     }
 
     public getTags(): Ref<Array<any>> {
@@ -46,6 +52,8 @@ export class TransactionsTagsApi {
     }
 
     private buildTree() : void {
+        this.rebuildMap();
+
         this.tagsTreeMap.value = new Map<number, any>;
         this.tagsTree.value = [];
 
@@ -108,6 +116,8 @@ export class TransactionsTagsApi {
             name: name,
             description: description
         });
+
+        this.rebuildMap();
 
         return true;
     }

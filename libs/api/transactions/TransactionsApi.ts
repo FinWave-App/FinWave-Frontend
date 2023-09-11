@@ -24,6 +24,27 @@ export class TransactionsApi {
         return error.value === null;
     }
 
+    public async newInternalTransfer(tagId: number, fromAccountId: number, toAccountId: number, createdAt: Date, fromDelta: number, toDelta: number, description: string | null) : Promise<boolean> {
+        const opts = {
+            method: "POST",
+            params: {
+                tagId: tagId,
+                fromAccountId: fromAccountId,
+                toAccountId: toAccountId,
+                createdAt: createdAt.toISOString(),
+                fromDelta: fromDelta,
+                toDelta: toDelta
+            }
+        };
+
+        if (description !== null && description.length > 0)
+            opts.params.description = description;
+
+        const {error} = await useApi("/user/transactions/newInternal", opts);
+
+        return error.value === null;
+    }
+
     public async deleteTransaction(transactionId: number) : Promise<boolean> {
         const opts = {
             method: "POST",

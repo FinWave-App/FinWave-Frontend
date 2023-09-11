@@ -8,6 +8,16 @@ export class AccountsApi {
         await this.reloadAccounts();
     }
 
+    private reloadMap() {
+        const newMap = new Map<number, any>();
+
+        this.accounts.value.forEach((account) => {
+            newMap.set(account.accountId, account);
+        })
+
+        this.accountsMap.value = newMap;
+    }
+
     public async reloadAccounts(): Promise<void> {
         const {data} = await useApi<any>("/user/accounts/getList");
 
@@ -16,9 +26,7 @@ export class AccountsApi {
 
         this.accounts.value = data.value.accounts || [];
 
-        this.accounts.value.forEach((account) => {
-            this.accountsMap.value.set(account.accountId, account);
-        })
+        this.reloadMap();
     }
 
     public getAccounts(): Ref<Array<any>> {
@@ -142,6 +150,8 @@ export class AccountsApi {
             name: name,
             description: description
         });
+
+        this.reloadMap();
 
         return true;
     }

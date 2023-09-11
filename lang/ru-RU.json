@@ -364,6 +364,10 @@
 
     "newTransaction": {
       "title": "Новая транзакция",
+      "tabs": {
+        "default": "Стандартная",
+        "internalTransfer": "Перевод"
+      },
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
