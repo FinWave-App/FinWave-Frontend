@@ -40,11 +40,11 @@
                 <th class="w-32">
                   <div class="flex gap-4 items-center">
                     <div class="w-fit">
-                      <p :class="{'text-success' : transaction.delta > 0, 'text-error' : transaction.delta < 0}">
+                      <p class="opacity-80">
                         {{ formatDelta(transaction.delta, transaction.currencyId) }}
                       </p>
 
-                      <p class="text-xs opacity-80 hover:opacity-100" :class="{'text-success' : transaction.metadata.linkedTransaction.delta > 0, 'text-error' : transaction.metadata.linkedTransaction.delta < 0}">
+                      <p class="text-xs opacity-50">
                         {{ formatDelta(transaction.metadata.linkedTransaction.delta, transaction.metadata.linkedTransaction.currencyId) }}
                       </p>
                     </div>

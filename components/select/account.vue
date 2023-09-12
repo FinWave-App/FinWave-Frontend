@@ -16,6 +16,10 @@ import {useArrayFilter} from "@vueuse/core";
 
 const props = defineProps({
   modelValue: {
+  },
+
+  excludeAccount: {
+    type: Number
   }
 })
 
@@ -37,6 +41,9 @@ const options = computed(() => {
 
   tags.value.forEach((t) => {
     const options = getTagAccounts(t).map((a) => {
+      if (props.excludeAccount && props.excludeAccount === a.accountId)
+        return null;
+
       return {
         label: a.name,
         value: a.accountId
@@ -45,7 +52,7 @@ const options = computed(() => {
 
     resultArray.push({
       label: t.name,
-      options: options
+      options: options.filter(a => a !== null)
     });
 
   });

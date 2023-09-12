@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full flex flex-col gap-2">
+  <div class="w-full flex flex-col gap-4">
     <div class="w-full flex gap-2 justify-between items-center">
       <div class="flex flex-col gap-2 w-full">
-        <select-account class="w-full" v-model="fromAccount"/>
+        <select-account class="w-full" v-model="fromAccount" :exclude-account="toAccount"/>
 
         <div v-if="separateAmounts" class="join w-full">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -21,12 +21,12 @@
         </div>
       </div>
 
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" @click="swapAccounts" class="btn btn-sm w-8 h-8 btn-ghost p-1">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
       </svg>
 
       <div class="flex flex-col gap-2 w-full">
-        <select-account class="w-full" v-model="toAccount"/>
+        <select-account class="w-full" v-model="toAccount" :exclude-account="fromAccount"/>
 
         <div v-if="separateAmounts" class="join w-full">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -46,32 +46,34 @@
       </div>
     </div>
 
-    <div v-if="!separateAmounts" class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAmount') }}</span>
-      </label>
+    <div class="flex gap-2">
+      <div v-if="!separateAmounts" class="form-control w-full">
+        <label class="label">
+          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAmount') }}</span>
+        </label>
 
-      <div class="join w-full">
-        <input type="number" min="0" class="input input-bordered join-item w-full" v-model.number="fromDelta">
-        <div v-if="fromCurrency" class="join-item flex justify-center items-center px-4 bg-base-200">
-          <p class="font-bold">
-            {{ fromCurrency.symbol }}
-          </p>
+        <div class="join w-full">
+          <input type="number" min="0" class="input input-bordered join-item w-full" v-model.number="fromDelta">
+          <div v-if="fromCurrency" class="join-item flex justify-center items-center px-4 bg-base-200">
+            <p class="font-bold">
+              {{ fromCurrency.symbol }}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
-      </label>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
+        </label>
 
-      <select-transaction-tag class="w-full"
-                              v-model.number="tag"
-                              :searchable="true"
-                              :can-be-without-parent="false"
-                              :tags-tree="tagsTree">
-      </select-transaction-tag>
+        <select-transaction-tag class="w-full"
+                                v-model.number="tag"
+                                :searchable="true"
+                                :can-be-without-parent="false"
+                                :tags-tree="tagsTree">
+        </select-transaction-tag>
+      </div>
     </div>
 
     <div class="form-control w-full">
@@ -156,6 +158,19 @@ const separateAmounts = computed(() => {
   return fromCurrency.value && toCurrency.value && fromCurrency.value.currencyId !== toCurrency.value.currencyId;
 });
 
+const swapAccounts = () => {
+  let a = toAccount.value;
+
+  toAccount.value = fromAccount.value;
+  fromAccount.value = a;
+
+  if (!separateAmounts.value)
+    return;
+
+  a = toDelta.value;
+  toDelta.value = fromDelta.value;
+  fromDelta.value = a;
+}
 
 const close = () => {
   emit('close')
