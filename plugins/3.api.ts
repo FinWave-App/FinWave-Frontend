@@ -25,8 +25,12 @@ export default defineNuxtPlugin(async nuxtApp => {
     const notesApi = new NotesApi();
 
     const preloadAll = async () => {
+        userApi.init().then((result) => {
+            if (!result)
+                $auth.logout();
+        });
+
         await Promise.all([
-            userApi.init(),
             sessionsApi.init(),
             accountsApi.init(),
             accountsTagsApi.init(),

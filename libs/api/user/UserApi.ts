@@ -3,13 +3,15 @@ import {Ref} from "vue";
 export class UserApi {
     private username: Ref<string | null> = ref(null);
 
-    async init(): Promise<void> {
+    async init(): Promise<boolean> {
         const {data} = await useApi<any>("/user/getUsername");
 
         if (data.value === null)
-            return;
+            return false;
 
         this.username.value = data.value.username;
+
+        return true;
     }
 
     public getUsername(): Ref<string | null> {
