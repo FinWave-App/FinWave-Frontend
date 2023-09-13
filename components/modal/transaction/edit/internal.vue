@@ -14,9 +14,9 @@
 
           <select-account class="w-full"
                           :searchable="true"
-                          v-model="account">
-
-          </select-account>
+                          v-model="account"
+                          :exclude-account="excludeAccount"
+          />
         </div>
         <div class="form-control w-full">
           <label class="label">
@@ -110,6 +110,13 @@ const currenciesMap = $currenciesApi.getCurrenciesMap();
 const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
+const excludeAccount = computed(() => {
+  if (!props.transaction)
+    return null;
+
+  return tab.value === 1 ? props.transaction.accountId : (props.transaction.metadata ? props.transaction.metadata.linkedTransaction.accountId : -1);
+})
+
 const account = ref();
 const amount = ref();
 const description = ref("");
@@ -125,6 +132,9 @@ watch(() => props.opened, (newV, oldV) => {
 })
 
 const transactionToEdit = computed(() => {
+  if (!props.transaction)
+    return null;
+
   return tab.value === 0 ? props.transaction : (props.transaction.metadata ? props.transaction.metadata.linkedTransaction : null);
 });
 
