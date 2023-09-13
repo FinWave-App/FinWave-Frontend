@@ -1,5 +1,10 @@
 <template>
-  <modal-base :title="$t('modals.editTransaction.title')" :opened="opened" :name="'transaction-edit-modal'">
+  <modal-tabbed-base-modal
+      :title="$t('modals.editTransaction.title')"
+      :opened="opened"
+      :name="'internal-transaction-edit-modal'"
+      :tabs="[$t('modals.editTransaction.tabs.main'), $t('modals.editTransaction.tabs.linked')]"
+      v-model:tab="tab">
     <div class="w-full flex flex-col gap-2">
       <div class="w-full flex gap-2">
         <div class="form-control w-full">
@@ -34,7 +39,7 @@
         </label>
 
         <div class="join w-full">
-          <div v-if="!signChoice" class="join-item flex justify-center items-center px-4 bg-base-200">
+          <div class="join-item flex justify-center items-center px-4 bg-base-200">
             <svg v-if="sign > 0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
             </svg>
@@ -42,10 +47,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
             </svg>
           </div>
-          <select v-else class="select select-bordered join-item" v-model.number="sign">
-            <option :value="-1"> - </option>
-            <option :value="1"> + </option>
-          </select>
 
           <input type="number" class="input input-bordered join-item w-full" v-model.number="amount" @change="amountChanged">
           <div v-if="currency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -80,7 +81,7 @@
       <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
       <button @click="apply" class="btn btn-sm btn-success">{{ $t('modals.buttons.apply') }}</button>
     </div>
-  </modal-base>
+  </modal-tabbed-base-modal>
 </template>
 
 <script setup>
@@ -90,16 +91,6 @@ const props = defineProps({
   opened: {
     required: true,
     type: Boolean
-  },
-
-  tagsTree: {
-    required: true,
-    type: Array
-  },
-
-  tagsMap: {
-    required: true,
-    type: Map
   },
 
   transaction: {
@@ -116,44 +107,38 @@ const { t, locale } = useI18n();
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
+const tagsTree = $transactionsTagsApi.getTagsTree();
+const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const account = ref();
 const amount = ref();
 const description = ref("");
 const parentTag = ref(-1);
 const sign = ref(1);
-const signChoice = ref(true);
 const date = ref(new Date());
 
-watch(() => props.transaction, (newV, oldV) => {
-  if (newV === undefined)
+const tab = ref(0);
+
+watch(() => props.opened, (newV, oldV) => {
+  if (newV)
+    tab.value = 0;
+})
+
+const transactionToEdit = computed(() => {
+  return tab.value === 0 ? props.transaction : (props.transaction.metadata ? props.transaction.metadata.linkedTransaction : null);
+});
+
+watch(transactionToEdit, (newV, oldV) => {
+  if (!newV)
     return;
 
   account.value = newV.accountId;
-  amount.value = newV.delta;
   description.value = newV.description || "";
   parentTag.value = newV.tagId;
   date.value = new Date(newV.createdAt);
-  amountChanged();
-});
 
-watch(parentTag, () => {
-  if (parentTag.value === undefined) {
-    signChoice.value = true;
-    return;
-  }
-
-  const parentTagObject = props.tagsMap.get(parentTag.value);
-
-  if (parentTagObject === undefined || parentTagObject.tag === undefined) {
-    signChoice.value = true;
-    return;
-  }
-
-  if (parentTagObject.tag.type !== 0)
-    sign.value = parentTagObject.tag.type
-
-  signChoice.value = parentTagObject.tag.type === 0;
+  sign.value = Math.sign(newV.delta);
+  amount.value = Math.abs(newV.delta);
 });
 
 const currency = computed(() => {
@@ -171,9 +156,6 @@ const currency = computed(() => {
 });
 
 const amountChanged = () => {
-  if (signChoice.value)
-    sign.value = Math.sign(amount.value);
-
   amount.value = Math.abs(amount.value);
 }
 
@@ -187,7 +169,7 @@ const apply = () => {
 
   close();
 
-  $transactionsApi.editTransaction(props.transaction.transactionId, parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $transactionsApi.editTransaction(transactionToEdit.value.transactionId, parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s) {
       $toastsManager.pushToast(t("modals.editTransaction.messages.success"), 2500, "success");
       emit('reloadTransactions');

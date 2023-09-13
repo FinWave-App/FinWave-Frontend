@@ -72,7 +72,13 @@
                   <p class="text-xs opacity-80 hover:opacity-100"> {{ accountsMap.get(transaction.metadata.linkedTransaction.accountId).name }} </p>
                 </td>
                 <td>
-                  {{ transaction.description }}
+                  <p>
+                    {{ transaction.description }}
+                  </p>
+
+                  <p class="text-xs opacity-80 hover:opacity-100" v-if="transaction.description !== transaction.metadata.linkedTransaction.description">
+                    {{ transaction.metadata.linkedTransaction.description }}
+                  </p>
                 </td>
               </template>
               <td class="text-right">
@@ -93,7 +99,7 @@
     </div>
 
     <modal-transaction-create :opened="newOpened" @close="newOpened = false" @reloadTransactions="fetchData()" />
-    <modal-transaction-edit :opened="editOpened" @close="editOpened = false" @reloadTransactions="fetchData()" :tags-tree="tagsTree" :tags-map="tagsMap" :transaction="transactionToEdit"/>
+    <modal-transaction-edit :opened="editOpened" @close="editOpened = false" @reloadTransactions="fetchData()" :transaction="transactionToEdit"/>
 
     <confirmation :opened="deleteModal" :name="'transaction-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="deleteModal = false">
       <div class="flex justify-center">

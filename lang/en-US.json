@@ -383,6 +383,10 @@
 
     "editTransaction": {
       "title": "Edit transaction",
+      "tabs": {
+        "main": "Main",
+        "linked": "Linked"
+      },
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",

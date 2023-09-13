@@ -383,6 +383,10 @@
 
     "editTransaction": {
       "title": "Редактирование транзакции",
+      "tabs": {
+        "main": "Основная",
+        "linked": "Связанная"
+      },
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
