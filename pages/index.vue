@@ -15,7 +15,7 @@
     </div>
 
     <total-panel class="col-span-1 lg:col-span-2 row-span-2"/>
-    <notes-panel class="col-span-1 lg:col-span-2 row-span-2"/>
+    <notes-panel class="col-span-1 lg:col-span-2 row-span-2" :notes="notes" @new-note="newNote = true"/>
   </div>
 </template>
 
@@ -34,10 +34,20 @@ definePageMeta({
   ]
 })
 
+const { $notesApi } = useNuxtApp();
+
 const newTransaction = ref(false);
 const newTag = ref(false);
 const newCurrency = ref(false);
 const newNote = ref(false);
+
+const notes = ref([]);
+
+const reloadNotes = async () => {
+  notes.value = await $notesApi.getImportantNotes()
+}
+
+reloadNotes();
 
 </script>
 

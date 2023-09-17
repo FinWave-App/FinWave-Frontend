@@ -52,8 +52,8 @@ import { useArrayFilter } from '@vueuse/core'
 
 const {$accountsApi, $accountsTagsApi} = useNuxtApp();
 
-const tags = await $accountsTagsApi.getTags();
-const accounts = await $accountsApi.getAccounts();
+const tags = $accountsTagsApi.getTags();
+const accounts = $accountsApi.getAccounts();
 
 const getTagAccounts = (t) => {
   return useArrayFilter(accounts, a => a.tagId === t.tagId).value

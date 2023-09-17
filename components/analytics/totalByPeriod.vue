@@ -122,7 +122,7 @@ watch([() => props.currencyId,() =>  props.period], () => {
   buildChart();
 });
 
-await buildChart();
+buildChart();
 
 </script>
 
