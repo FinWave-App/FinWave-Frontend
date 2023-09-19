@@ -2,7 +2,11 @@
   <div class="w-full flex flex-col gap-4">
     <div class="w-full flex gap-2 justify-between items-center">
       <div class="flex flex-col gap-2 w-full">
-        <select-account class="w-full" v-model="fromAccount" :exclude-account="toAccount"/>
+        <select-account class="w-full"
+                        v-model="fromAccount"
+                        :exclude-account="toAccount"
+                        :class="{'input-error' : highlightErrors && fromAccount === undefined}"
+        />
 
         <div v-if="separateAmounts" class="join w-full">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -11,7 +15,12 @@
             </svg>
           </div>
 
-          <input type="number" min="0" class="input input-bordered join-item w-full" v-model.number="fromDelta">
+          <input type="number"
+                 min="0"
+                 class="input input-bordered join-item w-full"
+                 v-model.number="fromDelta"
+                 :class="{'input-error' : highlightErrors && (fromDelta === undefined || fromDelta === 0)}"
+          >
 
           <div v-if="fromCurrency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
             <p class="font-bold">
@@ -26,7 +35,11 @@
       </svg>
 
       <div class="flex flex-col gap-2 w-full">
-        <select-account class="w-full" v-model="toAccount" :exclude-account="fromAccount"/>
+        <select-account class="w-full"
+                        v-model="toAccount"
+                        :exclude-account="fromAccount"
+                        :class="{'input-error' : highlightErrors && toAccount === undefined}"
+        />
 
         <div v-if="separateAmounts" class="join w-full">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -35,7 +48,12 @@
             </svg>
           </div>
 
-          <input type="number" min="0" class="input input-bordered join-item w-full" v-model.number="toDelta">
+          <input type="number"
+                 min="0"
+                 class="input input-bordered join-item w-full"
+                 v-model.number="toDelta"
+                 :class="{'input-error' : highlightErrors && (toDelta === undefined || toDelta === 0)}"
+          >
 
           <div v-if="toCurrency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
             <p class="font-bold">
@@ -53,7 +71,11 @@
         </label>
 
         <div class="join w-full">
-          <input type="number" min="0" class="input input-bordered join-item w-full" v-model.number="fromDelta">
+          <input type="number"
+                 min="0"
+                 class="input input-bordered join-item w-full"
+                 v-model.number="fromDelta"
+                 :class="{'input-error' : highlightErrors && fromDelta === undefined}">
           <div v-if="fromCurrency" class="join-item flex justify-center items-center px-4 bg-base-200">
             <p class="font-bold">
               {{ fromCurrency.symbol }}
@@ -71,8 +93,9 @@
                                 v-model.number="tag"
                                 :searchable="true"
                                 :can-be-without-parent="false"
-                                :tags-tree="tagsTree">
-        </select-transaction-tag>
+                                :tags-tree="tagsTree"
+                                :class="{'input-error' : highlightErrors && tag === undefined}"
+        />
       </div>
     </div>
 
@@ -81,7 +104,13 @@
         <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionDate') }}</span>
       </label>
 
-      <Datepicker class="input-bordered dp-h-12" v-model="date" :teleport="true" :locale="locale" teleport-center/>
+      <Datepicker class="input-bordered dp-h-12"
+                  v-model="date"
+                  :teleport="true"
+                  :locale="locale"
+                  :class="{'input-error' : highlightErrors && !date}"
+                  teleport-center
+      />
     </div>
 
     <div class="form-control w-full">
@@ -125,6 +154,8 @@ const date = ref(new Date());
 const fromDelta = ref();
 const toDelta = ref();
 const description = ref("");
+
+const highlightErrors = ref(false);
 
 const fromCurrency = computed(() => {
   if (fromAccount.value === undefined)
@@ -181,16 +212,15 @@ const create = () => {
     toDelta.value = fromDelta.value;
   }
 
-  if (fromAccount.value === undefined ||
-      toAccount.value === undefined ||
-      fromDelta.value === undefined ||
-      toDelta.value === undefined ||
-      fromDelta.value === 0 ||
-      toDelta.value === 0 ||
-      tag.value === undefined ||
-      !date.value)
-    return;
+  if (fromAccount.value === undefined || toAccount.value === undefined || fromDelta.value === undefined ||
+      toDelta.value === undefined || fromDelta.value === 0 || toDelta.value === 0 ||
+      tag.value === undefined || !date.value) {
+    highlightErrors.value = true;
 
+    return;
+  }
+
+  highlightErrors.value = false;
   close();
 
   $transactionsApi.newInternalTransfer(tag.value, fromAccount.value, toAccount.value, date.value, fromDelta.value * -1, toDelta.value, description.value.length > 0 ? description.value : null).then((s) => {

@@ -7,9 +7,9 @@
         </label>
 
         <select-account class="w-full"
-                        v-model="account">
-
-        </select-account>
+                        v-model="account"
+                        :class="{'input-error' : highlightErrors && account === undefined}"
+        />
       </div>
       <div class="form-control w-full">
         <label class="label">
@@ -20,8 +20,9 @@
                                 v-model.number="parentTag"
                                 :searchable="true"
                                 :can-be-without-parent="false"
-                                :tags-tree="tagsTree">
-        </select-transaction-tag>
+                                :tags-tree="tagsTree"
+                                :class="{'input-error' : highlightErrors && parentTag === undefined}"
+        />
       </div>
 
     </div>
@@ -45,7 +46,12 @@
           <option :value="1"> + </option>
         </select>
 
-        <input type="number" class="input input-bordered join-item w-full" v-model.number="amount" @change="amountChanged">
+        <input type="number"
+               class="input input-bordered join-item w-full"
+               v-model.number="amount"
+               @change="amountChanged"
+               :class="{'input-error' : highlightErrors && (amount === undefined || amount === 0)}"
+        >
         <div v-if="currency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
           <p class="font-bold">
             {{ currency.symbol }}
@@ -59,7 +65,13 @@
         <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionDate') }}</span>
       </label>
 
-      <Datepicker class="input-bordered dp-h-12" v-model="date" :teleport="true" :locale="locale" teleport-center/>
+      <Datepicker class="input-bordered dp-h-12"
+                  v-model="date"
+                  :teleport="true"
+                  :locale="locale"
+                  :class="{'input-error' : highlightErrors && !date}"
+                  teleport-center
+      />
     </div>
 
     <div class="form-control w-full">
@@ -103,6 +115,8 @@ const parentTag = ref();
 const sign = ref(1);
 const signChoice = ref(true);
 const date = ref(new Date());
+
+const highlightErrors = ref(false);
 
 watch(parentTag, () => {
   if (parentTag.value === undefined) {
@@ -149,9 +163,13 @@ const close = () => {
 }
 
 const create = () => {
-  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value)
-    return;
+  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value) {
+    highlightErrors.value = true;
 
+    return;
+  }
+
+  highlightErrors.value = false;
   close();
 
   $transactionsApi.newTransaction(parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {

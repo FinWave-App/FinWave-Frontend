@@ -1,7 +1,13 @@
 <template>
   <modal-base :title="$t('modals.newAccountTag.title')" :opened="opened" :name="'account-transactionTag-create-modal'">
     <div class="w-full flex flex-col gap-2">
-      <input type="text" class="input input-bordered" :placeholder="$t('modals.newAccountTag.placeholders.tagName')" v-model.trim="name" :maxlength="tagsConfigs.maxNameLength"/>
+      <input type="text"
+             class="input input-bordered"
+             :placeholder="$t('modals.newAccountTag.placeholders.tagName')"
+             v-model.trim="name"
+             :maxlength="tagsConfigs.maxNameLength"
+             :class="{'input-error' : highlightErrors && name.length < 1}"
+      />
 
       <textarea class="textarea input-bordered" :placeholder="$t('modals.newAccountTag.placeholders.tagDescription')" v-model.trim="description" :maxlength="tagsConfigs.maxDescriptionLength">
       </textarea>
@@ -37,6 +43,8 @@ const tagsConfigs = $serverConfigs.configs.accounts.tags;
 const name = ref("");
 const description = ref("");
 
+const highlightErrors = ref(false);
+
 watch(() => props.opened, (selection, prevSelection) => {
   if (selection) {
     name.value = "";
@@ -46,9 +54,12 @@ watch(() => props.opened, (selection, prevSelection) => {
 
 const create = () => {
   if (name.value.length < 1) {
+    highlightErrors.value = true;
+
     return;
   }
 
+  highlightErrors.value = false;
   close();
 
   $accountsTagsApi.newTag(name.value, description.value.length > 0 ? description.value : null).then((s) => {

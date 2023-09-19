@@ -8,7 +8,13 @@
             <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyCode') }}</span>
           </label>
 
-          <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyCode')" v-model.trim="code" :maxlength="configs.maxCodeLength"/>
+          <input type="text"
+                 class="input input-bordered w-full"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencyCode')"
+                 v-model.trim="code"
+                 :maxlength="configs.maxCodeLength"
+                 :class="{'input-error' : highlightErrors && code.length < 1}"
+          />
         </div>
 
         <div class="form-control w-full">
@@ -16,7 +22,13 @@
             <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencySymbol') }}</span>
           </label>
 
-          <input type="text" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')" v-model.trim="symbol" :maxlength="configs.maxCodeLength"/>
+          <input type="text"
+                 class="input input-bordered w-full"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencySymbol')"
+                 v-model.trim="symbol"
+                 :maxlength="configs.maxCodeLength"
+                 :class="{'input-error' : highlightErrors && symbol.length < 1}"
+          />
         </div>
 
         <div class="form-control w-full">
@@ -24,7 +36,14 @@
             <span class="label-text">{{ $t('modals.newCurrency.placeholders.currencyDecimals') }}</span>
           </label>
 
-          <input type="number" min="1" :max="configs.maxDecimals" class="input input-bordered w-full" :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')" v-model="decimals"/>
+          <input type="number"
+                 min="1"
+                 :max="configs.maxDecimals"
+                 class="input input-bordered w-full"
+                 :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')"
+                 v-model.number="decimals"
+                 :class="{'input-error' : highlightErrors && decimals === undefined}"
+          />
         </div>
       </div>
 
@@ -56,6 +75,8 @@ const symbol = ref("");
 const decimals = ref(2);
 const description = ref("");
 
+const highlightErrors = ref(false);
+
 const close = () => {
   emit('close')
 }
@@ -65,9 +86,12 @@ const configs = $serverConfigs.configs.currencies;
 
 const create = () => {
   if (code.value.length < 1 || symbol.value.length < 1 || decimals.value === "") {
+    highlightErrors.value = true;
+
     return;
   }
 
+  highlightErrors.value = false;
   close();
 
   $currenciesApi.newCurrency(code.value, symbol.value, decimals.value, description.value.length > 0 ? description.value : null).then((s) => {

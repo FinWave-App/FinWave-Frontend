@@ -10,6 +10,7 @@
                :placeholder="$t('modals.editTransactionTag.placeholders.tagName')"
                v-model.trim="name"
                :maxlength="configs.maxNameLength"
+               :class="{'input-error' : highlightErrors && name.length < 1}"
         />
       </div>
 
@@ -31,10 +32,12 @@
         </label>
 
         <select-transaction-tag class="w-full select-bordered"
-                                      v-model.number="parentTag"
-                                      :can-be-without-parent="true"
-                                      :tags-tree="tagsTree">
-        </select-transaction-tag>
+                                v-model.number="parentTag"
+                                :can-be-without-parent="true"
+                                :tags-tree="tagsTree"
+                                :class="{'input-error' : highlightErrors && parentTag === undefined}"
+        />
+
       </div>
 
       <div class="form-control w-full">
@@ -79,15 +82,20 @@ const configs = $serverConfigs.configs.transactions.tags;
 const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
+const highlightErrors = ref(false);
+
 const close = () => {
   emit('close')
 }
 
 const create = () => {
   if (name.value.length < 1 || parentTag.value === null) {
+    highlightErrors.value = true;
+
     return;
   }
 
+  highlightErrors.value = false;
   close();
 
   $transactionsTagsApi.newTag(type.value, parentTag.value, name.value, description.value.length > 0 ? description.value : null).then((s) => {
