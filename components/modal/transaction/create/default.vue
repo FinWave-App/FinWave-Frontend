@@ -88,7 +88,7 @@
 
   <div class="modal-action">
     <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-    <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
+    <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
   </div>
 </template>
 
@@ -117,6 +117,7 @@ const signChoice = ref(true);
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
+const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
 
 watch(parentTag, () => {
   if (parentTag.value === undefined) {
@@ -163,7 +164,7 @@ const close = () => {
 }
 
 const create = () => {
-  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value) {
+  if (!allValid.value) {
     highlightErrors.value = true;
 
     return;

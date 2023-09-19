@@ -90,7 +90,7 @@
 
     <div class="modal-action">
       <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="apply" class="btn btn-sm btn-success">{{ $t('modals.buttons.apply') }}</button>
+      <button @click="apply" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.apply') }}</button>
     </div>
   </modal-base>
 </template>
@@ -130,6 +130,7 @@ const signChoice = ref(true);
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
+const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
 
 watch(() => props.transaction, (newV, oldV) => {
   if (!newV)
@@ -188,7 +189,7 @@ const close = () => {
 }
 
 const apply = () => {
-  if (account.value === undefined || amount.value === undefined || amount.value === 0 || parentTag.value === undefined || !date.value) {
+  if (!allValid.value) {
     highlightErrors.value = true;
 
     return;

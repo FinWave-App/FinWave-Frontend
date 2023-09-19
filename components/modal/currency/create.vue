@@ -53,7 +53,7 @@
 
     <div class="modal-action">
       <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
+      <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
     </div>
   </modal-base>
 </template>
@@ -77,6 +77,8 @@ const description = ref("");
 
 const highlightErrors = ref(false);
 
+const allValid = computed(() => code.value.length >= 1 && symbol.value.length >= 1 && decimals.value !== "")
+
 const close = () => {
   emit('close')
 }
@@ -85,7 +87,7 @@ const {$serverConfigs, $currenciesApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.currencies;
 
 const create = () => {
-  if (code.value.length < 1 || symbol.value.length < 1 || decimals.value === "") {
+  if (!allValid.value) {
     highlightErrors.value = true;
 
     return;

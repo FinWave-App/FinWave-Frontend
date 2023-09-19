@@ -127,7 +127,7 @@
 
   <div class="modal-action">
     <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-    <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
+    <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
   </div>
 </template>
 
@@ -156,6 +156,11 @@ const toDelta = ref();
 const description = ref("");
 
 const highlightErrors = ref(false);
+const allValid = computed(() =>
+    fromAccount.value !== undefined && toAccount.value !== undefined && fromDelta.value !== undefined &&
+    toDelta.value !== undefined && fromDelta.value !== 0 && toDelta.value !== 0 &&
+    tag.value !== undefined && date.value
+)
 
 const fromCurrency = computed(() => {
   if (fromAccount.value === undefined)
@@ -212,9 +217,7 @@ const create = () => {
     toDelta.value = fromDelta.value;
   }
 
-  if (fromAccount.value === undefined || toAccount.value === undefined || fromDelta.value === undefined ||
-      toDelta.value === undefined || fromDelta.value === 0 || toDelta.value === 0 ||
-      tag.value === undefined || !date.value) {
+  if (!allValid.value) {
     highlightErrors.value = true;
 
     return;

@@ -54,7 +54,7 @@
 
     <div class="modal-action">
       <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
+      <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
     </div>
   </modal-base>
 </template>
@@ -83,13 +83,14 @@ const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const highlightErrors = ref(false);
+const allValid = computed(() => name.value.length >= 1 && parentTag.value !== null)
 
 const close = () => {
   emit('close')
 }
 
 const create = () => {
-  if (name.value.length < 1 || parentTag.value === null) {
+  if (!allValid.value) {
     highlightErrors.value = true;
 
     return;

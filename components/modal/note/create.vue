@@ -26,7 +26,7 @@
 
     <div class="modal-action">
       <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-      <button @click="create" class="btn btn-sm btn-success">{{ $t('modals.buttons.create') }}</button>
+      <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
     </div>
   </modal-base>
 </template>
@@ -49,6 +49,7 @@ const text = ref("");
 const notificationTime = ref();
 
 const highlightErrors = ref(false);
+const allValid = computed(() => text.value.length >= 1)
 
 const close = () => {
   emit('close')
@@ -58,7 +59,7 @@ const {$serverConfigs, $notesApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.notes;
 
 const create = () => {
-  if (text.value.length < 1) {
+  if (!allValid.value) {
     highlightErrors.value = true;
     return;
   }
