@@ -58,6 +58,28 @@
         </p>
       </td>
     </template>
+    <template v-else-if="transaction.metadata.type === 2">
+      <th class="w-32">
+        <div class="flex gap-2 items-center">
+          <p :class="{'text-success' : transaction.delta > 0, 'text-error' : transaction.delta < 0}">
+            {{ formatDelta(transaction.delta, transaction.currencyId) }}
+          </p>
+
+          <div class="tooltip z-10" :data-tip="$t('transactionsPage.placeholders.recurring')">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+            </svg>
+          </div>
+        </div>
+      </th>
+
+      <td class="w-48">{{ tagsMap.get(transaction.tagId).tag.name }}</td>
+      <td class="w-48">{{ new Date(transaction.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
+      <td class="w-48">{{ accountsMap.get(transaction.accountId).name }}</td>
+      <td>
+        {{ transaction.description }}
+      </td>
+    </template>
     <slot/>
   </tr>
 </template>

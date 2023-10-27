@@ -4,6 +4,7 @@
     "notes": "Notes",
     "tags": "Tags",
     "transactions": "Transactions",
+    "recurring": "Recurring",
     "currencies": "Currencies",
     "analytics": "Analytics",
 
@@ -45,13 +46,28 @@
         "currencies": "Filter by currencies",
         "time": "Filter by time",
         "description": "Filter by description"
-      }
+      },
+      "recurring": "Recurring"
     },
     "table": {
       "amount": "Amount",
       "tag": "Tag",
       "account": "Account",
       "createdAt": "Created",
+      "description": "Description",
+      "action": "Action"
+    }
+  },
+
+  "recurringPage": {
+    "table": {
+      "amount": "Amount",
+      "tag": "Tag",
+      "account": "Account",
+      "lastRepeat": "Last repeat",
+      "nextRepeat": "Next repeat",
+      "repeatMode": "Repeat mode",
+      "notificationMode": "Notification mode",
       "description": "Description",
       "action": "Action"
     }
@@ -220,6 +236,7 @@
     "confirmations": {
       "deleteAccountTag": "Delete tag?",
       "deleteTransaction": "Delete transaction?",
+      "deleteRecurring": "Delete recurring transaction?",
       "deleteNote": "Delete note?"
     },
 
@@ -359,6 +376,41 @@
       "messages": {
         "success": "Account edited",
         "error": "Oops, failed to edit account"
+      }
+    },
+
+    "newRecurring": {
+      "title": "New recurring transaction",
+      "placeholders": {
+        "recurringAmount": "Amount",
+        "recurringRepeatMode": "Repeat mode",
+        "recurringNextRepeat": "Next repeat",
+        "recurringNotificationMode": "Notification mode",
+        "recurringTag": "Tag",
+        "recurringAccount": "Account",
+        "recurringDescription": "Description"
+      },
+      "repeatModes": {
+        "every": "Every",
+        "days": "days",
+        "weeks": "weeks",
+        "months": "months"
+      },
+      "notificationModes": {
+        "without": "Without",
+        "silent": "Silent",
+        "normal": "Normal"
+      },
+      "messages": {
+        "success": "Recurring created",
+        "error": "Oops, failed to create recurring"
+      }
+    },
+
+    "deleteRecurring": {
+      "messages": {
+        "success": "Recurring deleted",
+        "error": "Oops, failed to delete recurring"
       }
     },
 

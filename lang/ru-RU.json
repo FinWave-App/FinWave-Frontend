@@ -4,6 +4,7 @@
     "notes": "Заметки",
     "tags": "Теги",
     "transactions": "Транзакции",
+    "recurring": "Автоматизация",
     "currencies": "Валюты",
     "analytics": "Аналитика",
 
@@ -45,13 +46,30 @@
         "currencies": "Фильтр по валютам",
         "time": "Фильтр по времени",
         "description": "Фильтр по описанию"
-      }
+      },
+
+      "recurring": "Автоматическая"
     },
     "table": {
       "amount": "Сумма",
       "tag": "Тег",
       "account": "Счет",
       "createdAt": "Создан",
+      "description": "Описание",
+      "action": "Действие"
+    }
+  },
+
+  "recurringPage": {
+    "table": {
+      "amount": "Сумма",
+      "tag": "Тег",
+      "account": "Счет",
+      "lastRepeat": "Предыдущий повтор",
+      "nextRepeat": "Следующий повтор",
+      "repeatMode": "Режим",
+      "repeatArg": "Аргумент",
+      "notificationMode": "Оповещение",
       "description": "Описание",
       "action": "Действие"
     }
@@ -220,6 +238,7 @@
     "confirmations": {
       "deleteAccountTag": "Удалить тег?",
       "deleteTransaction": "Удалить транзакцию?",
+      "deleteRecurring": "Удалить автоматизацию?",
       "deleteNote": "Удалить заметку?"
     },
 
@@ -359,6 +378,41 @@
       "messages": {
         "success": "Счет изменен",
         "error": "Ошибка изменения счета"
+      }
+    },
+
+    "newRecurring": {
+      "title": "Новая повторяющаяся транзакция",
+      "placeholders": {
+        "recurringAmount": "Сумма",
+        "recurringRepeatMode": "Режим повтора",
+        "recurringNextRepeat": "Следующее повторение",
+        "recurringNotificationMode": "Режим уведомлений",
+        "recurringTag": "Тег",
+        "recurringAccount": "Счет",
+        "recurringDescription": "Описание"
+      },
+      "repeatModes": {
+        "every": "Каждые",
+        "days": "дней",
+        "weeks": "недель",
+        "months": "месяцев"
+      },
+      "notificationModes": {
+        "without": "Без",
+        "silent": "Бесшумный",
+        "normal": "Обычный"
+      },
+      "messages": {
+        "success": "Повтор создан",
+        "error": "Ошибка создания повтора"
+      }
+    },
+
+    "deleteRecurring": {
+      "messages": {
+        "success": "Повтор удален",
+        "error": "Ошибка удаления повтора"
       }
     },
 

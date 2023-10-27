@@ -1,7 +1,8 @@
 <template>
   <ul class="gap-2 px-1">
-    <nav-menu-entry v-for="item in items" :entry="item">
-    </nav-menu-entry>
+    <li v-for="item in items">
+      <nuxt-link :to="item.url" class="">{{ $t(item.text) }}</nuxt-link>
+    </li>
   </ul>
 </template>
 
@@ -26,6 +27,10 @@ const items = computed(() => {
       url: "/transactions"
     },
     {
+      text: "navigation.recurring",
+      url: "/recurring"
+    },
+    {
       text: "navigation.currencies",
       url: "/currencies"
     },
@@ -35,44 +40,6 @@ const items = computed(() => {
     }
   ];
 });
-/*
-  return [
-    {
-      text: "Test 1",
-      subMenu: [
-
-      ]
-    },
-    {
-      text: "Test 1",
-      subMenu: [
-        {
-          text: "Test 1",
-          subMenu: [
-            {
-              text: "Test 11",
-              url: "/register"
-            },
-            {
-              text: "Test 12",
-              url: "/123"
-            }
-          ]
-        },
-        {
-          text: "Test 12",
-          url: "/123"
-        }
-      ]
-    },
-
-    {
-      text: "Test 3",
-      url: "/login"
-    }
-  ]
- */
-
 </script>
 
 <style scoped>

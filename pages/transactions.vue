@@ -88,8 +88,6 @@ const tagsTree = $transactionsTagsApi.getTagsTree();
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 
-
-
 const page = ref(1);
 const maxPages = computed(() => Math.ceil(count.value / countAtPage));
 
