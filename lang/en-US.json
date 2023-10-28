@@ -407,6 +407,34 @@
       }
     },
 
+    "editRecurring": {
+      "title": "Edit recurring transaction",
+      "placeholders": {
+        "recurringAmount": "Amount",
+        "recurringRepeatMode": "Repeat mode",
+        "recurringNextRepeat": "Next repeat",
+        "recurringNotificationMode": "Notification mode",
+        "recurringTag": "Tag",
+        "recurringAccount": "Account",
+        "recurringDescription": "Description"
+      },
+      "repeatModes": {
+        "every": "Every",
+        "days": "days",
+        "weeks": "weeks",
+        "months": "months"
+      },
+      "notificationModes": {
+        "without": "Without",
+        "silent": "Silent",
+        "normal": "Normal"
+      },
+      "messages": {
+        "success": "Recurring edited",
+        "error": "Oops, failed to edit recurring"
+      }
+    },
+
     "deleteRecurring": {
       "messages": {
         "success": "Recurring deleted",

@@ -51,11 +51,7 @@
 
     <modal-recurring-create :opened="newOpened" @close="newOpened = false" />
 
-    <!--
-        <modal-transaction-create :opened="newOpened" @close="newOpened = false" @reloadTransactions="fetchData()" />
-    <modal-transaction-edit :opened="editOpened" @close="editOpened = false" @reloadTransactions="fetchData()" :transaction="transactionToEdit"/>
-
-    -->
+    <modal-recurring-edit :opened="editOpened" @close="editOpened = false" :recurring="recurringToEdit"/>
 
     <confirmation :opened="deleteModal" :name="'recurring-transaction-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="deleteModal = false">
       <div class="flex justify-center">
@@ -72,6 +68,8 @@ import PlusButton from "~/components/buttons/plusButton.vue";
 import EditButton from "~/components/buttons/editButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
 import Confirmation from "~/components/modal/confirmation.vue";
+
+import ModalRecurringEdit from "~/components/modal/recurring/edit.vue"
 import Datepicker from '@vuepic/vue-datepicker';
 import PagesNavigation from "~/components/buttons/pagesNavigation.vue";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";

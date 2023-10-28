@@ -409,6 +409,34 @@
       }
     },
 
+    "editRecurring": {
+      "title": "Изменить автоматизацию",
+      "placeholders": {
+        "recurringAmount": "Сумма",
+        "recurringRepeatMode": "Режим повтора",
+        "recurringNextRepeat": "Следующее повторение",
+        "recurringNotificationMode": "Режим уведомлений",
+        "recurringTag": "Тег",
+        "recurringAccount": "Счет",
+        "recurringDescription": "Описание"
+      },
+      "repeatModes": {
+        "every": "Каждые",
+        "days": "дней",
+        "weeks": "недель",
+        "months": "месяцев"
+      },
+      "notificationModes": {
+        "without": "Без",
+        "silent": "Бесшумный",
+        "normal": "Обычный"
+      },
+      "messages": {
+        "success": "Повтор изменен",
+        "error": "Ошибка изменения повтора"
+      }
+    },
+
     "deleteRecurring": {
       "messages": {
         "success": "Повтор удален",

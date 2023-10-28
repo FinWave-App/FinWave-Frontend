@@ -102,7 +102,22 @@ export class RecurringTransactionsApi {
 
         const {error} = await useApi("/user/transactions/recurring/edit", opts);
 
-        return error.value === null;
+        if (error.value !== null)
+            return false;
+
+        const edited = this.recurring.value.find((r) => r.recurringTransactionId === recurringTransactionId);
+
+        edited.tagId = tagId;
+        edited.accountId = accountId;
+        edited.currencyId = this.accountsApi.getAccountsMap().value.get(accountId).currencyId;
+        edited.nextRepeat = nextRepeat;
+        edited.repeatType = repeatType;
+        edited.repeatArg = repeatArg;
+        edited.notificationMode = notificationMode;
+        edited.delta = delta;
+        edited.description = description;
+
+        return true;
     }
 
     public async deleteRecurringTransaction(recurringTransactionId: number) : Promise<boolean> {
