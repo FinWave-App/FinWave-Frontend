@@ -370,10 +370,15 @@
 
     "editAccount": {
       "title": "Редактирование счета",
+      "tabs": {
+        "general": "Основное",
+        "amount": "Сумма"
+      },
       "placeholders": {
         "accountName": "Название",
         "accountDescription": "Описание",
-        "tagSelect": "Выбрать тег"
+        "tagSelect": "Выбрать тег",
+        "amount": "Сумма"
       },
       "messages": {
         "success": "Счет изменен",

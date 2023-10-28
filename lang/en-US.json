@@ -368,10 +368,16 @@
 
     "editAccount": {
       "title": "Edit account",
+      "tabs": {
+        "general": "General",
+        "amount": "Amount"
+      },
+
       "placeholders": {
         "accountName": "Account name",
         "accountDescription": "Account description",
-        "tagSelect": "Select tag"
+        "tagSelect": "Select tag",
+        "amount": "Amount"
       },
       "messages": {
         "success": "Account edited",
