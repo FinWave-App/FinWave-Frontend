@@ -98,11 +98,7 @@ const tagsTree = $transactionsTagsApi.getTagsTree();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const recurringTransactions = $recurringTransactionsApi.getRecurring();
 
-const modes = [
-  t('modals.newRecurring.repeatModes.days'),
-  t('modals.newRecurring.repeatModes.weeks'),
-  t('modals.newRecurring.repeatModes.months')
-]
+const modes = ["days", "weeks", "months"]
 
 const notificationModes = [
   t('modals.newRecurring.notificationModes.without'),
@@ -111,7 +107,7 @@ const notificationModes = [
 ]
 
 const formatMode = (mode, arg) => {
-  return t('modals.newRecurring.repeatModes.every') + " " + arg + " " + modes[mode];
+  return t('modals.newRecurring.repeatModes.' + modes[mode], arg);
 }
 
 const formatDelta = (delta, currencyId) => {

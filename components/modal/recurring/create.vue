@@ -69,7 +69,7 @@
         <div class="join">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
             <p class="font-bold">
-              {{  $t('modals.newRecurring.repeatModes.every') }}
+              {{ repeatModeText(repeatFunc)[0] }}
             </p>
           </div>
 
@@ -78,13 +78,13 @@
                  min="1"
                  max="512"
                  v-model.number="repeatArg"
-                 :class="{'input-error' : highlightErrors && (repeatArg === undefined)}"
+                 :class="{'input-error' : highlightErrors && (repeatArg === undefined || repeatArg < 1 || repeatArg > 512)}"
           >
 
           <select class="select select-bordered join-item" v-model.number="repeatFunc">
-            <option :value="0"> {{ $t('modals.newRecurring.repeatModes.days') }} </option>
-            <option :value="1"> {{ $t('modals.newRecurring.repeatModes.weeks') }} </option>
-            <option :value="2"> {{ $t('modals.newRecurring.repeatModes.months') }} </option>
+            <option :value="0"> {{ repeatModeText(0)[2] }} </option>
+            <option :value="1"> {{ repeatModeText(1)[2] }} </option>
+            <option :value="2"> {{ repeatModeText(2)[2] }} </option>
           </select>
         </div>
       </div>
@@ -158,6 +158,12 @@ const currenciesMap = $currenciesApi.getCurrenciesMap();
 const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
+const repeatModeText = (func) => {
+  const type = ["days", "weeks", "months"][func];
+
+  return t('modals.newRecurring.repeatModes.' + type, repeatArg.value).split(" ")
+}
+
 const account = ref();
 const amount = ref();
 const description = ref("");
@@ -177,6 +183,7 @@ const allValid = computed(() => account.value !== undefined &&
     nextRepeat.value &&
     repeatFunc.value !== undefined &&
     repeatArg.value !== undefined &&
+    repeatArg.value >= 1 && repeatArg.value <= 512 &&
     notificationMode !== undefined
 );
 

@@ -69,7 +69,7 @@
         <div class="join">
           <div class="join-item flex justify-center items-center px-4 bg-base-200">
             <p class="font-bold">
-              {{  $t('modals.editRecurring.repeatModes.every') }}
+              {{ repeatModeText(repeatFunc)[0] }}
             </p>
           </div>
 
@@ -82,9 +82,9 @@
           >
 
           <select class="select select-bordered join-item" v-model.number="repeatFunc">
-            <option :value="0"> {{ $t('modals.editRecurring.repeatModes.days') }} </option>
-            <option :value="1"> {{ $t('modals.editRecurring.repeatModes.weeks') }} </option>
-            <option :value="2"> {{ $t('modals.editRecurring.repeatModes.months') }} </option>
+            <option :value="0"> {{ repeatModeText(0)[2] }} </option>
+            <option :value="1"> {{ repeatModeText(1)[2] }} </option>
+            <option :value="2"> {{ repeatModeText(2)[2] }} </option>
           </select>
         </div>
       </div>
@@ -161,6 +161,12 @@ const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+
+const repeatModeText = (func) => {
+  const type = ["days", "weeks", "months"][func];
+
+  return t('modals.newRecurring.repeatModes.' + type, repeatArg.value).split(" ")
+}
 
 const account = ref();
 const amount = ref();

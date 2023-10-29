@@ -397,10 +397,9 @@
         "recurringDescription": "Description"
       },
       "repeatModes": {
-        "every": "Every",
-        "days": "days",
-        "weeks": "weeks",
-        "months": "months"
+        "days": "Every {n} day | Every {n} days",
+        "weeks": "Every {n} week | Every {n} weeks",
+        "months": "Every {n} month | Every {n} months"
       },
       "notificationModes": {
         "without": "Without",
@@ -425,10 +424,9 @@
         "recurringDescription": "Description"
       },
       "repeatModes": {
-        "every": "Every",
-        "days": "days",
-        "weeks": "weeks",
-        "months": "months"
+        "days": "Every {n} day | Every {n} days",
+        "weeks": "Every {n} week | Every {n} weeks",
+        "months": "Every {n} month | Every {n} months"
       },
       "notificationModes": {
         "without": "Without",
