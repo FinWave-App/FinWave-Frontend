@@ -9,6 +9,7 @@
     "analytics": "Analytics",
 
     "userButtons": {
+      "admin": "Admin",
       "changePassword": "Change password",
       "sessions": "Sessions",
       "logout": "Logout"

@@ -1,10 +1,19 @@
 <template>
-  <div>
+  <div class="flex flex-col justify-center items-center">
     <div class="dropdown dropdown-end">
       <label tabindex="0" class="cursor-pointer">
         <avatar :avatar-letter="avatarLetter" :username="username"/>
       </label>
-      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul tabindex="0" class="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li v-if="adminAllowed">
+          <nuxt-link to="admin">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+
+            {{ $t("navigation.userButtons.admin") }}
+          </nuxt-link>
+        </li>
         <li>
           <a @click="changePasswordOpened = true">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -43,7 +52,9 @@
 <script setup>
 import Avatar from "~/components/nav/user/avatar.vue";
 
-const { $userApi } = useNuxtApp();
+const { $userApi, $adminApi } = useNuxtApp();
+
+const adminAllowed = $adminApi.getAllowed();
 
 const username = $userApi.getUsername();
 const avatarLetter = username.value.charAt(0).toUpperCase();

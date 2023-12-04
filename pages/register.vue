@@ -29,26 +29,14 @@
 
           </div>
 
-          <div class="flex flex-row gap-2">
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">{{ $t('registerPage.lang.label') }}</span>
-              </label>
-              <select class="select select-bordered w-full " :disabled="loading" v-model="selected" @change="langChanged">
-                <option disabled selected :value="locale">{{ codeToName(locale) }}</option>
-                <option v-for="locale in availableLocales" :value="locale.code"> {{locale.name}} </option>
-              </select>
-            </div>
-
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">{{ $t('registerPage.timezone.label') }}</span>
-              </label>
-              <select class="select select-bordered w-full " :disabled="loading" v-model="timezone">
-                <option selected disabled> {{timezone}} </option>
-                <option v-for="tz in timezones"> {{tz}} </option>
-              </select>
-            </div>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ $t('registerPage.lang.label') }}</span>
+            </label>
+            <select class="select select-bordered w-full " :disabled="loading" v-model="selected" @change="langChanged">
+              <option disabled selected :value="locale">{{ codeToName(locale) }}</option>
+              <option v-for="locale in availableLocales" :value="locale.code"> {{locale.name}} </option>
+            </select>
           </div>
         </form>
 
@@ -89,18 +77,10 @@ definePageMeta({
   layout: false
 })
 
-const timezones = [
-  "UTC-11",  "UTC-10",  "UTC-9",  "UTC-8",  "UTC-7",  "UTC-6",  "UTC-5",  "UTC-4",  "UTC-3",  "UTC-2",  "UTC-1",  "UTC+0",
-  "UTC+1",   "UTC+2",   "UTC+3",  "UTC+4",  "UTC+5",  "UTC+6",  "UTC+7",  "UTC+8",  "UTC+9",  "UTC+10", "UTC+11", "UTC+12",
-]
-
 const login = ref("");
 const password = ref("");
 const passwordMatch = ref(false);
 
-const timezoneNumber = (-new Date().getTimezoneOffset() / 60);
-
-const timezone = ref("UTC" + (timezoneNumber >= 0 ? "+" : "") + timezoneNumber);
 const errorMessage = ref("");
 const loading = ref(false);
 
@@ -150,7 +130,7 @@ const register = async () => {
 
   const {error: errorRegister} = await useApi('auth/register', {
     method: "POST",
-    query: {login: login.value, password: password.value, lang: locale, timezone: timezone.value}
+    query: {login: login.value, password: password.value}
   })
 
   if (errorRegister.value !== null) {

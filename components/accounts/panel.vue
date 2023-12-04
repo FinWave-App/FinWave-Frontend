@@ -74,10 +74,6 @@ const createTagModal = ref(false);
 
 <style scoped>
 
-.templateBorder {
-  @apply border-4 border-dashed;
-}
-
 .tags-move,
 .tags-enter-active,
 .tags-leave-active {

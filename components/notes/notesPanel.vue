@@ -55,8 +55,4 @@ const {locale, t} = useI18n();
 .note-border:not(:last-child) {
   @apply border-b border-base-200;
 }
-
-.templateBorder {
-  @apply border-4 border-dashed;
-}
 </style>
