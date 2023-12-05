@@ -8,20 +8,23 @@
         <li>
           <div class="flex gap-2 rounded-xl" :class="{ 'bg-base-200' : currentTheme === 'system' }" @click="currentTheme = 'system'">
             <theme-icon :theme="'system'"/>
-            System
+
+            {{ $t("navigation.themes.system") }}
           </div>
         </li>
         <li>
 
           <div class="flex gap-2 rounded-xl" :class="{ 'bg-base-200' : currentTheme === 'dark' }" @click="currentTheme = 'dark'">
             <theme-icon :theme="'dark'"/>
-            Dark
+
+            {{ $t("navigation.themes.dark") }}
           </div>
         </li>
         <li>
           <div class="flex gap-2 rounded-xl" :class="{ 'bg-base-200' : currentTheme === 'light' }" @click="currentTheme = 'light'">
             <theme-icon :theme="'light'"/>
-            Light
+
+            {{ $t("navigation.themes.light") }}
           </div>
         </li>
       </ul>

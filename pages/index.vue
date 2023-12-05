@@ -15,7 +15,8 @@
     </div>
 
     <total-panel class="col-span-1 lg:col-span-2 row-span-2"/>
-    <notes-panel class="col-span-1 lg:col-span-2 row-span-2" :notes="notes" @new-note="newNote = true"/>
+    <notes-panel class="col-span-1 lg:col-span-1 row-span-2" :notes="notes" @new-note="newNote = true"/>
+    <accounts-summary class="col-span-1 lg:col-span-1 row-span-2" />
   </div>
 </template>
 

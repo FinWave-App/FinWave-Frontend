@@ -13,6 +13,12 @@
       "changePassword": "Change password",
       "sessions": "Sessions",
       "logout": "Logout"
+    },
+
+    "themes": {
+      "system": "System",
+      "dark": "Dark",
+      "light": "Light"
     }
   },
 
@@ -30,6 +36,9 @@
     "notes": {
       "title": "Notes",
       "allNotesButton": "All notes"
+    },
+    "summary": {
+      "emptyMessage": "There will be a general summary of the accounts"
     }
   },
 
@@ -182,14 +191,6 @@
       "needPassword": "Enter your password!",
       "userExists": "Username is busy!",
       "serverError": "Server error"
-    },
-
-    "lang": {
-      "label": "Language"
-    },
-
-    "timezone": {
-      "label": "Timezone"
     }
   },
 
@@ -212,6 +213,9 @@
     "noOptions": "The list is empty",
     "transactionTagSelect": {
       "withoutParent": "Root"
+    },
+    "langSelect": {
+      "label": "Language"
     }
   },
 

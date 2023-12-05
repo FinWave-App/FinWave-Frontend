@@ -9,9 +9,16 @@
     "analytics": "Аналитика",
 
     "userButtons": {
+      "admin": "Админка",
       "changePassword": "Сменить пароль",
       "sessions": "Сеансы",
       "logout": "Выйти"
+    },
+
+    "themes": {
+      "system": "Системная",
+      "dark": "Темная",
+      "light": "Светлая"
     }
   },
 
@@ -29,6 +36,9 @@
     "notes": {
       "title": "Заметки",
       "allNotesButton": "Все заметки"
+    },
+    "summary": {
+      "emptyMessage": "Здесь будет общая сводка счетов"
     }
   },
 
@@ -213,6 +223,9 @@
     "noOptions": "Список пуст",
     "transactionTagSelect": {
       "withoutParent": "Без родителя"
+    },
+    "langSelect": {
+      "label": "Язык"
     }
   },
 
