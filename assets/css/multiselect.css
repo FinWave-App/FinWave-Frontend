@@ -1,5 +1,5 @@
 .multiselect {
-    @apply relative h-12 mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-base-200 rounded-lg bg-base-100 text-base leading-5 outline-none;
+    @apply relative h-12 mx-auto w-full flex items-center justify-end box-border cursor-pointer border input-bordered rounded-lg bg-base-100 text-base leading-5 outline-none;
 }
 
 .multiselect.success {

@@ -16,6 +16,19 @@ const config: NuxtConfig = {
         '@nuxtjs/i18n',
     ],
 
+    buildModules: [
+        '@nuxtjs/pwa',
+    ],
+
+    pwa: {
+        manifest: {
+            name: 'FinWave',
+            shortName: 'FinWave',
+            lang: 'en',
+            useWebmanifestExtension: false
+        }
+    },
+
     i18n: {
         defaultLocale: 'en',
 

@@ -5,18 +5,18 @@
 }
 
 .dp__theme_light {
-    --dp-background-color: hsl(var(--b1) / var(--tw-bg-opacity));
-    --dp-text-color: hsl(var(--b1) / var(--tw-text-opacity));
-    --dp-hover-color: hsl(var(--b2) / var(--tw-bg-opacity));
-    --dp-hover-text-color: hsl(var(--bc) / var(--tw-text-opacity));
+    --dp-background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+    --dp-text-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
+    --dp-hover-color:var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+    --dp-hover-text-color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
     --dp-hover-icon-color: #959595;
     --dp-primary-color: #1976d2;
     --dp-primary-disabled-color: #6bacea;
     --dp-primary-text-color: #f8f5f5;
-    --dp-secondary-color: hsl(var(--b3) / var(--tw-text-opacity));
-    --dp-border-color: hsl(var(--b2) / var(--tw-border-opacity));
-    --dp-menu-border-color: hsl(var(--b2) / var(--tw-border-opacity));
-    --dp-border-color-hover: hsl(var(--b2) / var(--tw-border-opacity));
+    --dp-secondary-color: var(--fallback-a,oklch(var(--a)/var(--tw-bg-opacity)));
+    --dp-border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+    --dp-menu-border-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+    --dp-border-color-hover: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
     --dp-border-radius: var(--rounded-btn, 0.5rem);
     --dp-disabled-color: #f6f6f6;
     --dp-scroll-bar-background: #f3f3f3;
