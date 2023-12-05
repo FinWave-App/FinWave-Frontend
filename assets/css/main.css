@@ -46,3 +46,6 @@
 .apexcharts-yaxis-label {
     @apply fill-base-content;
 }
+.apexcharts-toolbar {
+    z-index: 1 !important;
+}

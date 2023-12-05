@@ -46,9 +46,7 @@ const props = defineProps({
 
 const emit = defineEmits(['newNote']);
 
-const { $notesApi } = useNuxtApp();
 const {locale, t} = useI18n();
-
 </script>
 
 <style scoped>

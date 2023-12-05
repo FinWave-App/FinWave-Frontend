@@ -2,12 +2,12 @@
   <div class="page-panel">
     <div class="flex gap-2">
       <input class="input input-bordered input-sm w-full" v-model.trim.lazy="filter" :placeholder="$t('notesPage.placeholders.find')">
-      <plus-button class="btn btn-sm" @event="newOpened = true" @reloadNotes="fetchNotes()"/>
+      <plus-button class="btn btn-sm" @event="newOpened = true"/>
     </div>
 
     <div v-for="[date, noteArray] in notes" class="my-4">
       <p class="text-xl font-bold">
-        {{ date }}
+        {{ capitalizeFirstLetter(date) }}
       </p>
       <div class="flex flex-col pl-4 p-2">
         <transition-group>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <modal-note-create :opened="newOpened" @close="newOpened = false"/>
+    <modal-note-create :opened="newOpened" @close="newOpened = false" @reloadNotes="fetchNotes()"/>
     <modal-note-edit :opened="editOpened" :note="toEdit" @close="editOpened = false" @reloadNotes="fetchNotes"/>
     <modal-confirmation :opened="deleteConfirmOpened" :confirm-style="'error'" :name="'note-delete-confirm'" @confirm="deleteNote" @deny="deleteConfirmOpened = false">
       <div class="flex justify-center">
@@ -86,6 +86,11 @@ const notes = computed(() => {
 
   return new Map(Object.entries(result));
 })
+
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase()
+      + string.slice(1)
+}
 
 const fetchNotes = async () => {
   allNotes.value = await $notesApi.getNotes();
