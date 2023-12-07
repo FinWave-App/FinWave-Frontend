@@ -9,6 +9,7 @@ import {UserApi} from "~/libs/api/user/UserApi";
 import {SessionsApi} from "~/libs/api/sessions/SessionsApi";
 import {RecurringTransactionsApi} from "~/libs/api/transactions/recurring/RecurringTransactionsApi";
 import {AdminApi} from "~/libs/api/admin/AdminApi";
+import {NotificationApi} from "~/libs/api/notification/NotificationApi";
 
 export default defineNuxtPlugin(async nuxtApp => {
     const {$auth} = nuxtApp;
@@ -26,6 +27,7 @@ export default defineNuxtPlugin(async nuxtApp => {
     const currenciesApi = new CurrenciesApi();
     const analyticsApi = new AnalyticsApi();
     const notesApi = new NotesApi();
+    const notificationsApi = new NotificationApi();
 
     const adminApi = new AdminApi();
 
@@ -45,6 +47,7 @@ export default defineNuxtPlugin(async nuxtApp => {
             currenciesApi.init(),
             analyticsApi.init(),
             notesApi.init(),
+            notificationsApi.init(),
             adminApi.init()
         ]);
     }
@@ -59,6 +62,6 @@ export default defineNuxtPlugin(async nuxtApp => {
     });
 
     return {
-        provide: {accountsApi, accountsTagsApi, transactionsTagsApi, transactionsApi, recurringTransactionsApi, currenciesApi, analyticsApi, notesApi, userApi, sessionsApi, adminApi}
+        provide: {accountsApi, accountsTagsApi, transactionsTagsApi, transactionsApi, recurringTransactionsApi, currenciesApi, analyticsApi, notesApi, userApi, sessionsApi, notificationsApi, adminApi}
     }
 })

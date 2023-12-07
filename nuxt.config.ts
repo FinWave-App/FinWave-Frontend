@@ -5,6 +5,16 @@ const config: NuxtConfig = {
 
     css: ['~/assets/css/main.css'],
 
+    app: {
+        head: {
+            charset: 'utf-8',
+            viewport: 'width=device-width, initial-scale=1',
+            link: [
+                {rel: 'manifest', href: '/manifest.json'}
+            ]
+        }
+    },
+
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -17,17 +27,7 @@ const config: NuxtConfig = {
     ],
 
     buildModules: [
-        '@nuxtjs/pwa',
     ],
-
-    pwa: {
-        manifest: {
-            name: 'FinWave',
-            shortName: 'FinWave',
-            lang: 'en',
-            useWebmanifestExtension: false
-        }
-    },
 
     i18n: {
         defaultLocale: 'en',

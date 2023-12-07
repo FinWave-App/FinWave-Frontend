@@ -8,7 +8,7 @@
         <p class="py-6">
           {{ $t("errorPage.description") }}
         </p>
-        <nuxt-link to="/" class="btn btn-neutral">{{ $t("errorPage.tryAgain") }}</nuxt-link>
+        <a href="/" class="btn btn-neutral">{{ $t("errorPage.tryAgain") }}</a>
       </div>
     </div>
   </div>

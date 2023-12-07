@@ -12,6 +12,7 @@
       "admin": "Админка",
       "changePassword": "Сменить пароль",
       "sessions": "Сеансы",
+      "notifications": "Уведомления",
       "logout": "Выйти"
     },
 
@@ -253,6 +254,49 @@
       "deleteTransaction": "Удалить транзакцию?",
       "deleteRecurring": "Удалить автоматизацию?",
       "deleteNote": "Удалить заметку?"
+    },
+
+    "notifications": {
+      "title": "Пункты уведомлений",
+
+      "newPoint": "Новый пункт:",
+      "placeholders": {
+        "description": "Описание"
+      },
+      "table": {
+        "type": "Тип",
+        "createdAt": "Создан",
+        "primary": "Важный",
+        "description": "Описание",
+        "actions": "Действия",
+
+        "types": {
+          "webPush": "Браузер",
+          "other": "Другое"
+        },
+
+        "primaryValues": {
+          "false": "Нет",
+          "true": "Да"
+        }
+      },
+
+      "testNotificationText": "Это тестовое уведомление. Все работает!",
+
+      "messages": {
+        "pointCreate": "Пункт создан",
+        "errorCreate": "Ошибка при создании пункта",
+        "successDelete": "Пункт удален",
+        "errorDelete": "Ошибка при удалении пункта",
+        "pointEdited": "Пункт изменен",
+        "errorEdit": "Ошибка при изменении пункта",
+
+        "errorPermissionGet": "Для создания пункта требуется разрешить уведомления",
+        "errorServiceWorker": "Service worker недоступен",
+        "errorSomething": "Что-то пошло не так",
+
+        "testSent": "Тестовое уведомление отправлено"
+      }
     },
 
     "changePassword": {

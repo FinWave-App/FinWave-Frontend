@@ -1,0 +1,14 @@
+{
+  "name": "FinWave App",
+  "short_name": "FinWave",
+  "start_url": "/",
+  "display": "fullscreen",
+  "gcm_sender_id": "103953800507",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

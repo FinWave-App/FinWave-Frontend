@@ -12,6 +12,7 @@
       "admin": "Admin",
       "changePassword": "Change password",
       "sessions": "Sessions",
+      "notifications": "Notifications",
       "logout": "Logout"
     },
 
@@ -243,6 +244,49 @@
       "deleteTransaction": "Delete transaction?",
       "deleteRecurring": "Delete recurring transaction?",
       "deleteNote": "Delete note?"
+    },
+
+    "notifications": {
+      "title": "Notification Points",
+
+      "newPoint": "New point:",
+      "placeholders": {
+        "description": "Description"
+      },
+      "table": {
+        "type": "Type",
+        "createdAt": "Created At",
+        "primary": "Primary",
+        "description": "Description",
+        "actions": "Actions",
+
+        "types": {
+          "webPush": "WebPush",
+          "other": "Other"
+        },
+
+        "primaryValues": {
+          "false": "No",
+          "true": "Yes"
+        }
+      },
+
+      "testNotificationText": "This is a test notification. Everything works!",
+
+      "messages": {
+        "pointCreate": "Point created",
+        "errorCreate": "Oops, failed to create point",
+        "successDelete": "Point deleted",
+        "errorDelete": "Oops, failed to delete point",
+        "pointEdited": "Point edited",
+        "errorEdit": "Oops, failed to edit point",
+
+        "errorPermissionGet": "Notification permission is required for a new point",
+        "errorServiceWorker": "Service worker not available",
+        "errorSomething": "Something went wrong",
+
+        "testSent": "Test notification sent"
+      }
     },
 
     "changePassword": {
