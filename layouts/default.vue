@@ -23,6 +23,7 @@ useSeoMeta({
   description: 'A convenient open source service for financial accounting',
   ogDescription: 'A convenient open source service for financial accounting'
 })
+
 </script>
 
 <style scoped>

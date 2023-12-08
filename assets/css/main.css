@@ -20,6 +20,10 @@
     @apply bg-base-200;
 }
 
+body {
+    @apply bg-base-200;
+}
+
 .templateBorder {
     @apply border-4 border-dashed border-base-content border-opacity-30;
 }
