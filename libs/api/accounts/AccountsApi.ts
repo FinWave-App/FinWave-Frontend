@@ -1,10 +1,11 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class AccountsApi {
+export class AccountsApi extends AbstractApi {
     private accounts: Ref<Array<any>> = ref([]);
     private accountsMap: Ref<Map<number, any>> = ref(new Map<number, any>);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         await this.reloadAccounts();
     }
 

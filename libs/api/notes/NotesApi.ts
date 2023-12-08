@@ -1,7 +1,8 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class NotesApi {
-    async init(): Promise<void> {
+export class NotesApi extends AbstractApi {
+    async init(): Promise<void | boolean> {
 
     }
 

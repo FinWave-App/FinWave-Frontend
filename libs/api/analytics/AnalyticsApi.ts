@@ -1,7 +1,8 @@
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class AnalyticsApi {
-    async init(): Promise<void> {
+export class AnalyticsApi extends AbstractApi {
+    async init(): Promise<void | boolean> {
 
     }
 

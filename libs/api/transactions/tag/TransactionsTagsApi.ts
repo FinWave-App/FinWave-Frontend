@@ -1,12 +1,13 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class TransactionsTagsApi {
+export class TransactionsTagsApi extends AbstractApi {
     private tags: Ref<Array<any>> = ref([]);
     private tagsMap: Ref<Map<number, any>> = ref(new Map<number, any>);
     private tagsTreeMap: Ref<Map<number, any>> = ref(new Map<number, any>);
     private tagsTree: Ref<Array<any>> = ref([]);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/transactions/tags/getList");
 
         if (data.value === null)

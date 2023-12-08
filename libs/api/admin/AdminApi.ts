@@ -1,17 +1,21 @@
 import {Ref} from "vue";
 import {password} from "iron-webcrypto";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class AdminApi {
+export class AdminApi extends AbstractApi {
     private allowed: Ref<Boolean> = ref(false);
     private usersCount: Ref<number> = ref(0);
     private activeUsersCount: Ref<number> = ref(0);
     private transactionsCount: Ref<number> = ref(0);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {error} = await useApi("/admin/check");
 
-        if (error.value)
+        if (error.value) {
+            this.allowed.value = false;
+
             return;
+        }
 
         this.allowed.value = true;
 

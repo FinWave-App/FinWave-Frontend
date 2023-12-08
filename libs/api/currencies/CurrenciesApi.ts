@@ -1,10 +1,11 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class CurrenciesApi {
+export class CurrenciesApi extends AbstractApi {
     private currencies: Ref<Array<any>> = ref([]);
     private currenciesMap: Ref<Map<number, any>> = ref(new Map<number, any>);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/currencies/getList");
 
         if (data.value === null)

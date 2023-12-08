@@ -1,9 +1,10 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class NotificationApi {
-    private publicVapidKey: Ref<string | null> = ref();
+export class NotificationApi extends AbstractApi {
+    private publicVapidKey: Ref<string | null> = ref(null);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/notifications/points/vapidKey");
 
         if (data.value === null)

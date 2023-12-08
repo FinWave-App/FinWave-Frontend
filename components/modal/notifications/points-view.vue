@@ -197,7 +197,10 @@ const arrayBufferToBase64Url = (buffer) => {
       .replace(/=+$/, '');
 }
 
-fetchPoints();
+watch(() => props.opened, (value) => {
+  if (value)
+    fetchPoints();
+})
 
 </script>
 

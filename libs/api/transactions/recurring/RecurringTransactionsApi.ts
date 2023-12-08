@@ -1,17 +1,19 @@
 import {Ref} from "vue";
 import {AccountsApi} from "~/libs/api/accounts/AccountsApi";
 import recurring from "~/pages/recurring.vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class RecurringTransactionsApi {
+export class RecurringTransactionsApi extends AbstractApi {
     private recurring: Ref<Array<any>> = ref([]);
     private recurringMap: Ref<Map<number, any>> = ref(new Map<number, any>);
     private accountsApi: any;
 
     constructor(accountsApi: any) {
+        super();
         this.accountsApi = accountsApi;
     }
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/transactions/recurring/getList");
 
         if (data.value === null)

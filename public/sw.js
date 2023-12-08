@@ -1,21 +1,16 @@
 self.addEventListener('push', (event) => {
-    const handler = async () => {
-        let options = json.options.args;
+    const data = event.data.json();
+    let args = data.options.args;
 
-        if (!options) {
-            options = {
-                'icon': "/icon.png",
-                'badge': "/favicon.ico",
-                'url': "/"
-            };
-        }
-
-        await self.registration.showNotification(json.text, options);
+    if (!args) {
+        args = {
+            'icon': "/icon.png",
+            'badge': "/favicon.ico",
+            'url': "/"
+        };
     }
 
-    const json = event.data.json();
-    if (!json.validate)
-        event.waitUntil(handler());
+    event.waitUntil(self.registration.showNotification(data.text, args));
 });
 
 self.addEventListener('notificationclick', (event) => {

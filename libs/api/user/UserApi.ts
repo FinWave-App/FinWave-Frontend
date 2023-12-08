@@ -1,9 +1,10 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class UserApi {
+export class UserApi extends AbstractApi {
     private username: Ref<string | null> = ref(null);
 
-    async init(): Promise<boolean> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/getUsername");
 
         if (data.value === null)

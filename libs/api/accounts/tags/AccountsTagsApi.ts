@@ -1,9 +1,10 @@
 import {Ref} from "vue";
+import {AbstractApi} from "~/libs/api/AbstractApi";
 
-export class AccountsTagsApi {
+export class AccountsTagsApi extends AbstractApi {
     private tags: Ref<Array<any>> = ref([]);
 
-    async init(): Promise<void> {
+    async init(): Promise<void | boolean> {
         const {data} = await useApi<any>("/user/accounts/tags/getList");
 
         if (data.value === null)
