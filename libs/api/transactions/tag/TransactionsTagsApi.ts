@@ -89,7 +89,7 @@ export class TransactionsTagsApi extends AbstractApi {
         })
     }
 
-    public async newTag(type: number, parentId: number, name: string, description: string | null) : Promise<boolean> {
+    public async newTag(type: number, parentId: number, name: string, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
@@ -107,7 +107,7 @@ export class TransactionsTagsApi extends AbstractApi {
         const {data: newTag, error} = await useApi<any>("/user/transactions/tags/new", opts);
 
         if (error.value !== null) {
-            return false;
+            return -1;
         }
 
         this.tags.value?.push({
@@ -120,7 +120,7 @@ export class TransactionsTagsApi extends AbstractApi {
 
         this.rebuildMap();
 
-        return true;
+        return newTag.value.tagId;
     }
 
     public async editTagType(type: number, tagId: number) {

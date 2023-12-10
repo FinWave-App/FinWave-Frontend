@@ -213,7 +213,8 @@
     "noResults": "No results found",
     "noOptions": "The list is empty",
     "transactionTagSelect": {
-      "withoutParent": "Root"
+      "withoutParent": "Root",
+      "new": "New"
     },
     "langSelect": {
       "label": "Language"

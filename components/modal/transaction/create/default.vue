@@ -17,9 +17,10 @@
         </label>
 
         <select-transaction-tag class="w-full"
-                                v-model.number="parentTag"
+                                v-model="parentTag"
                                 :searchable="true"
                                 :can-be-without-parent="false"
+                                :allow-new="true"
                                 :tags-tree="tagsTree"
                                 :class="{'input-error' : highlightErrors && parentTag === undefined}"
         />
@@ -173,16 +174,31 @@ const create = () => {
   highlightErrors.value = false;
   close();
 
-  $transactionsApi.newTransaction(parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
-    if (s) {
-      $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
-      emit('reloadTransactions');
-      $accountsApi.reloadAccounts();
-    }else {
-      $toastsManager.pushToast(t("modals.newTransaction.messages.error"), 3000, "error");
-    }
-  });
+  const callApi = (tagId) => {
+    $transactionsApi.newTransaction(tagId, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+      if (s) {
+        $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
+        emit('reloadTransactions');
+        $accountsApi.reloadAccounts();
+      }else {
+        $toastsManager.pushToast(t("modals.newTransaction.messages.error"), 3000, "error");
+      }
+    });
+  }
 
+  if (typeof parentTag.value === "string") {
+    $transactionsTagsApi.newTag(0, -1, parentTag.value, null).then((s) => {
+      if (s !== -1) {
+        callApi(s);
+      }else {
+        $toastsManager.pushToast(t("modals.newTransaction.messages.error"), 3000, "error");
+      }
+    });
+
+    return;
+  }
+
+  callApi(parentTag.value);
 }
 
 </script>

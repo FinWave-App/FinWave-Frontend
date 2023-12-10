@@ -4,10 +4,17 @@
       :options="parentSelectRender"
       :no-options-text="$t('selects.noOptions')"
       :no-results-text="$t('selects.noResults')"
+      @search-change="search"
       >
 
     <template v-slot:option="{ option }">
       {{ ("&nbsp;&nbsp;".repeat(option.deep)) + option.label }}
+    </template>
+
+    <template v-slot:singlelabel="{ value }">
+      <div class="multiselect-single-label flex gap-1">
+        <div v-if="value.newTag" class="badge badge-success badge-sm">{{ $t('selects.transactionTagSelect.new') }}</div> {{ value.label }}
+      </div>
     </template>
 
   </Multiselect>
@@ -28,6 +35,11 @@ const props = defineProps({
 
   excludeTagId: {
     required: false
+  },
+
+  allowNew: {
+    type: Boolean,
+    default: false
   },
 
   modelValue: {
@@ -52,6 +64,33 @@ const parentSelectRender = ref([]);
 
 if (props.canBeWithoutParent)
   parentSelectRender.value.push(rootParent);
+
+let lastSearch = {
+  text: "",
+  noResults: false
+}
+
+const search = (e, ms) => {
+  if (!props.allowNew)
+    return;
+
+  if (!e && lastSearch.noResults) {
+    const result = {
+      value: lastSearch.text,
+      disabled: false,
+      deep: 0,
+      label: lastSearch.text,
+      newTag: true
+    }
+
+    ms.select(result);
+
+    return;
+  }
+
+  lastSearch.text = e;
+  lastSearch.noResults = ms.noResults;
+}
 
 const selectRender = (deep, elements, resultArray) => {
   elements.forEach((e) => {

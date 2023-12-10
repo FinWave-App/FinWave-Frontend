@@ -223,7 +223,8 @@
     "noResults": "Нет результатов",
     "noOptions": "Список пуст",
     "transactionTagSelect": {
-      "withoutParent": "Без родителя"
+      "withoutParent": "Без родителя",
+      "new": "Новый"
     },
     "langSelect": {
       "label": "Язык"
