@@ -74,7 +74,9 @@ const search = (e, ms) => {
   if (!props.allowNew)
     return;
 
-  if (!e && lastSearch.noResults) {
+  const noResults = lastSearch.noResults || parentSelectRender.value.length === (props.canBeWithoutParent ? 1 : 0);
+
+  if (!e && noResults) {
     const result = {
       value: lastSearch.text,
       disabled: false,
