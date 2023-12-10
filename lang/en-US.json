@@ -12,6 +12,7 @@
       "admin": "Admin",
       "changePassword": "Change password",
       "sessions": "Sessions",
+      "language": "Language",
       "notifications": "Notifications",
       "logout": "Logout"
     },
@@ -317,6 +318,13 @@
         "errorDelete": "Oops, failed to delete session",
         "successCopy": "Session copied",
         "errorCopy": "Oops, failed to copy session"
+      }
+    },
+
+    "editLanguage": {
+      "title": "Change language",
+      "placeholders": {
+        "language": "Language"
       }
     },
 

@@ -1,12 +1,13 @@
 <template>
-  <div class="tabs">
-    <div v-for="(item, index) in tabs"
-       class="tab tab-lifted flex-1"
+  <div role="tablist" class="tabs tabs-lifted">
+    <a v-for="(item, index) in tabs"
+       role="tab"
+       class="tab flex-1"
        :class="{ 'tab-active' : index === modelValue }"
        @click="tabSelected(index)">
 
       {{ item }}
-    </div>
+    </a>
   </div>
 </template>
 

@@ -12,6 +12,7 @@
       "admin": "Админка",
       "changePassword": "Сменить пароль",
       "sessions": "Сеансы",
+      "language": "Язык",
       "notifications": "Уведомления",
       "logout": "Выйти"
     },
@@ -327,6 +328,13 @@
         "errorDelete": "Ошибка удаления сеанса",
         "successCopy": "Токен скопирован",
         "errorCopy": "Ошибка копирования токена"
+      }
+    },
+
+    "editLanguage": {
+      "title": "Сменить язык",
+      "placeholders": {
+        "language": "Язык"
       }
     },
 
