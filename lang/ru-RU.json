@@ -60,7 +60,8 @@
         "description": "Фильтр по описанию"
       },
 
-      "recurring": "Автоматическая"
+      "recurring": "Автоматическая",
+      "accumulation": "Применено Автонакопление"
     },
     "table": {
       "amount": "Сумма",
@@ -248,6 +249,7 @@
       "cancel": "Отмена",
       "confirm": "Подтвердить",
       "apply": "Применить",
+      "set": "Установить",
       "close": "Закрыть"
     },
 
@@ -369,6 +371,24 @@
       }
     },
 
+    "setAccumulation": {
+      "title": "Настроить Автонакопление",
+      "placeholders": {
+        "targetAccount": "Куда",
+        "tag": "Тег",
+        "stepEntry": {
+          "from": "От",
+          "to": "До",
+          "step": "Шаг"
+        }
+      },
+      "messages": {
+        "success": "Автонакопление настроено",
+        "deleted": "Автонакопление удалено",
+        "error": "Ошибка настройки автонакопления"
+      }
+    },
+
     "newCurrency": {
       "title": "Новая валюта",
       "placeholders": {
@@ -440,6 +460,9 @@
         "general": "Основное",
         "amount": "Сумма"
       },
+
+      "accumulation": "Настройки Автонакопления",
+
       "placeholders": {
         "accountName": "Название",
         "accountDescription": "Описание",
@@ -546,7 +569,7 @@
         "transactionDescription": "Описание"
       },
       "messages": {
-        "success": "Транзакция редактирована",
+        "success": "Транзакция отредактирована",
         "error": "Ошибка изменения транзакции"
       }
     },

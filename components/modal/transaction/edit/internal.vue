@@ -123,7 +123,7 @@ const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const excludeAccount = computed(() => {
-  if (!props.transaction)
+  if (!props.transaction || !props.opened)
     return null;
 
   return tab.value === 1 ? props.transaction.accountId : (props.transaction.metadata ? props.transaction.metadata.linkedTransaction.accountId : -1);
@@ -147,7 +147,7 @@ watch(() => props.opened, (newV, oldV) => {
 })
 
 const transactionToEdit = computed(() => {
-  if (!props.transaction)
+  if (!props.transaction || !props.opened)
     return null;
 
   return tab.value === 0 ? props.transaction : (props.transaction.metadata ? props.transaction.metadata.linkedTransaction : null);

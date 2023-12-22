@@ -14,6 +14,7 @@ import {NotificationApi} from "~/libs/api/notification/NotificationApi";
 import {AdminApi} from "~/libs/api/admin/AdminApi";
 import {ConfigManager} from "~/libs/config/ConfigManager";
 import {ServerConfigs} from "~/libs/config/ServerConfigs";
+import {AccumulationsApi} from "~/libs/api/accumulations/AccumulationsApi";
 
 export const useApiLoader = new class ApiLoader {
     private serverConfigs: ConfigManager;
@@ -33,6 +34,7 @@ export const useApiLoader = new class ApiLoader {
     private notificationsApi : NotificationApi;
 
     private adminApi : AdminApi;
+    protected accumulationsApi: AccumulationsApi;
 
     constructor() {
         this.serverConfigs = new ConfigManager();
@@ -50,6 +52,7 @@ export const useApiLoader = new class ApiLoader {
         this.analyticsApi = new AnalyticsApi();
         this.notesApi = new NotesApi();
         this.notificationsApi = new NotificationApi();
+        this.accumulationsApi = new AccumulationsApi();
 
         this.adminApi = new AdminApi();
     }
@@ -74,6 +77,7 @@ export const useApiLoader = new class ApiLoader {
             this.analyticsApi.init(),
             this.notesApi.init(),
             this.notificationsApi.init(),
+            this.accumulationsApi.init(),
             this.adminApi.init()
         ]).then(results => {
             return results.map(r => typeof r == "boolean" ? r : true).find((v) => !v) === undefined;
@@ -95,6 +99,7 @@ export const useApiLoader = new class ApiLoader {
                 userApi: this.userApi,
                 sessionsApi: this.sessionsApi,
                 notificationsApi: this.notificationsApi,
+                accumulationsApi: this.accumulationsApi,
                 adminApi: this.adminApi
             }
         }

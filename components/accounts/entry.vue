@@ -14,7 +14,7 @@
             {{account.name}}
           </p>
 
-          <div  class="flex gap-1">
+          <div class="flex gap-1" v-if="!hideButtons">
             <hide-button class="btn btn-xs btn-ghost m-0 p-0.5" :hide-status="account.hidden" @hide="hide" @unHide="unHide"/>
             <edit-button v-if="!account.hidden" class="btn btn-xs btn-ghost m-0 p-0.5" @event="emit('edit-modal')"/>
           </div>
@@ -36,16 +36,23 @@
 import HideButton from "~/components/buttons/hideButton.vue";
 import EditButton from "~/components/buttons/editButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
+import WalletButton from "~/components/buttons/walletButton.vue";
 
-const emit = defineEmits(['edit-modal']);
+const emit = defineEmits(['edit-modal', 'accumulation-modal']);
 
 const props = defineProps({
-  account: {}
+  account: {
+    required: true
+  },
+  hideButtons: {
+    default: false,
+    required: false
+  }
 })
 
 const { t, locale } = useI18n();
 const { $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
-const currency = (await $currenciesApi.getCurrencies()).value.find(c => c.currencyId === props.account.currencyId)
+const currency = $currenciesApi.getCurrencies().value.find(c => c.currencyId === props.account.currencyId)
 
 const formatAmount = (delta) => {
   const formatter = Intl.NumberFormat(locale.value, {

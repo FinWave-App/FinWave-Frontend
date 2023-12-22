@@ -22,9 +22,17 @@
     <div v-if="!hideStatus" class="bg-base-300 rounded-b-2xl p-2">
       <div v-if="accounts.length > 0" class="flex flex-col gap-2">
         <transition-group name="accounts">
-          <entry v-for="account in showedAccounts" :account="account" @edit-modal="openEditAccountModal(account)" :key="account.accountId"/>
+          <entry v-for="account in showedAccounts"
+                 :account="account"
+                 @edit-modal="openEditAccountModal(account)"
+                 :key="account.accountId"
+          />
 
-          <entry v-for="account in hiddenAccounts" :account="account" @edit-modal="openEditAccountModal(account)" :key="account.accountId"/>
+          <entry v-for="account in hiddenAccounts"
+                 :account="account"
+                 @edit-modal="openEditAccountModal(account)"
+                 :key="account.accountId"
+          />
         </transition-group>
       </div>
       <div v-else class="card min-w-max templateBorder">
@@ -49,7 +57,8 @@
     </confirmation>
 
     <modal-account-tag-edit @close="tagEditModal = false" :opened="tagEditModal" :tag="tag"/>
-    <modal-account-edit :account="accountToEdit" :opened="accountEditModal" @close="accountEditModal = false"></modal-account-edit>
+    <modal-account-edit :account="accountToEdit" :opened="accountEditModal" @close="accountEditModal = false" @open-accumulation="openAccumulationModal(accountToEdit)" ></modal-account-edit>
+    <modal-accumulation-set @close="accumulationSetModal = false" :opened="accumulationSetModal" :account="accountToAccumulation" ></modal-accumulation-set>
   </div>
 </template>
 
@@ -87,11 +96,11 @@ const hiddenAccounts = computed(() => props.accounts.filter((a) => a.hidden));
 const createAccountModal = ref(false);
 const tagDeleteModal = ref(false);
 const tagEditModal = ref(false);
+const accumulationSetModal = ref(false);
 
 const accountEditModal = ref(false);
-
 const accountToEdit = ref(null);
-
+const accountToAccumulation = ref(null);
 const setHide = () => {
   emit('hide');
 }
@@ -107,6 +116,11 @@ const deleteTag = () => {
 const openEditAccountModal = (account) => {
   accountToEdit.value = account;
   accountEditModal.value = true;
+}
+
+const openAccumulationModal = (account) => {
+  accountToAccumulation.value = account;
+  accumulationSetModal.value = true;
 }
 
 const confirmDelete = () => {

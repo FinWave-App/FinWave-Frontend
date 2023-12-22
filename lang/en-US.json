@@ -59,7 +59,8 @@
         "time": "Filter by time",
         "description": "Filter by description"
       },
-      "recurring": "Recurring"
+      "recurring": "Recurring",
+      "accumulation": "Accumulation Applied"
     },
     "table": {
       "amount": "Amount",
@@ -238,6 +239,7 @@
       "cancel": "Cancel",
       "confirm": "Confirm",
       "apply": "Apply",
+      "set": "Set",
       "close": "Close"
     },
 
@@ -359,6 +361,24 @@
       }
     },
 
+    "setAccumulation": {
+      "title": "Set Accumulation",
+      "placeholders": {
+        "targetAccount": "Target Account",
+        "tag": "Tag",
+        "stepEntry": {
+          "from": "From",
+          "to": "To",
+          "step": "Step"
+        }
+      },
+      "messages": {
+        "success": "Accumulation set",
+        "deleted": "Accumulation deleted",
+        "error": "Oops, failed to set accumulation"
+      }
+    },
+
     "newCurrency": {
       "title": "New currency",
       "placeholders": {
@@ -430,6 +450,8 @@
         "general": "General",
         "amount": "Amount"
       },
+
+      "accumulation": "Accumulation Settings",
 
       "placeholders": {
         "accountName": "Account name",

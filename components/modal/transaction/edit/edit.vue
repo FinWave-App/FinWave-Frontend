@@ -1,6 +1,6 @@
 <template>
   <div>
-    <default :opened="typeOpened === 0" :transaction="transaction"  @reload-transactions="emit('reloadTransactions')" @close="emit('close')"/>
+    <default :opened="typeOpened === 0 || typeOpened === 2 || typeOpened === 3" :transaction="transaction"  @reload-transactions="emit('reloadTransactions')" @close="emit('close')"/>
     <internal :opened="typeOpened === 1" :transaction="transaction" @reload-transactions="emit('reloadTransactions')" @close="emit('close')"/>
   </div>
 </template>

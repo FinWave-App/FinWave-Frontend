@@ -24,7 +24,7 @@
                 v-model="tag"
                 @change="syncTag">
           <option disabled value="-1">{{ $t('modals.editAccount.placeholders.tagSelect') }}</option>
-          <option v-for="tag in allTags" :value="tag.tagId">{{ tag.name + (tag.description !== undefined ? ` (${tag.description})` : "") }}</option>
+          <option v-for="tag in allTags" :value="tag.tagId">{{ tag.name + (tag.description ? ` (${tag.description})` : "") }}</option>
         </select>
       </div>
 
@@ -36,7 +36,9 @@
                 :maxlength="configs.maxDescriptionLength">
       </textarea>
 
-      <div class="modal-action">
+      <div class="modal-action justify-between items-center">
+        <button @click="emit('openAccumulation')" class="btn btn-sm">{{ $t('modals.editAccount.accumulation') }}</button>
+
         <button @click="close" class="btn btn-sm">{{ $t('modals.buttons.close') }}</button>
       </div>
     </div>
@@ -75,6 +77,7 @@
 
 import Default from "~/components/modal/transaction/create/default.vue";
 import Internal from "~/components/modal/transaction/create/internal.vue";
+import WalletButton from "~/components/buttons/walletButton.vue";
 
 const props = defineProps({
   opened: {
@@ -87,7 +90,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'openAccumulation'])
 const tab = ref(0);
 
 const { t } = useI18n();

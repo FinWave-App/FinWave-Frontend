@@ -20,6 +20,10 @@ const props = defineProps({
 
   excludeAccount: {
     type: Number
+  },
+
+  currencyFilter: {
+    type: Number
   }
 })
 
@@ -27,13 +31,13 @@ const emit = defineEmits(['update:modelValue', 'selected'])
 const { t } = useI18n();
 const {$accountsApi, $accountsTagsApi} = useNuxtApp();
 
-const tags = await $accountsTagsApi.getTags();
-const accounts = await $accountsApi.getAccounts();
+const tags = $accountsTagsApi.getTags();
+const accounts = $accountsApi.getAccounts();
 
 const value = ref(props.modelValue || null);
 
 const getTagAccounts = (t) => {
-  return useArrayFilter(accounts, a => a.tagId === t.tagId).value
+  return useArrayFilter(accounts, a => a.tagId === t.tagId && (!props.currencyFilter || a.currencyId === props.currencyFilter)).value
 }
 
 const options = computed(() => {
