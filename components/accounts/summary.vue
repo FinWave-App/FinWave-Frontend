@@ -7,7 +7,7 @@
     </div>
   </div>
   <div v-else class="panel flex">
-    <div class="card  templateBorder flex-1">
+    <div class="card  template-border flex-1">
       <div class="card-body p-3 justify-center items-center min-h-max font-bold text-center">
         {{ $t('mainPage.summary.emptyMessage') }}
       </div>

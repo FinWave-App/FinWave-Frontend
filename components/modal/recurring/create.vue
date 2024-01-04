@@ -170,7 +170,11 @@ const description = ref("");
 const parentTag = ref();
 const sign = ref(1);
 const signChoice = ref(true);
-const nextRepeat = ref(new Date());
+
+const nextDay = new Date();
+nextDay.setDate(nextDay.getDate() + 1);
+
+const nextRepeat = ref(nextDay);
 const repeatFunc = ref(0);
 const repeatArg = ref();
 const notificationMode = ref(0);

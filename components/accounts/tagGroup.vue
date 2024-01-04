@@ -35,7 +35,7 @@
           />
         </transition-group>
       </div>
-      <div v-else class="card min-w-max templateBorder">
+      <div v-else class="card min-w-max template-border">
         <div class="card-body p-5 justify-center items-center h-max">
 
           <button class="btn btn-ghost btn-circle text-opacity-60" @click="createAccountModal = true">

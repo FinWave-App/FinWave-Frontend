@@ -40,7 +40,7 @@
             <td class="text-right">
               <edit-button class="btn btn-ghost btn-xs" @event="recurringToEdit = recurring; editOpened = true"></edit-button>
             </td>
-            <td class="text-right w-1 p-1">
+            <td class="text-right w-1">
               <delete-button class="btn btn-ghost btn-xs" @event="recurringToDelete = recurring; deleteModal = true"></delete-button>
             </td>
           </tr>

@@ -37,6 +37,9 @@
       </pie>
     </div>
 
+    <reports-panel class="lg:col-span-4 row-span-4">
+    </reports-panel>
+
   </div>
 </template>
 

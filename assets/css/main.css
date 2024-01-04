@@ -24,7 +24,7 @@ body {
     @apply bg-base-200;
 }
 
-.templateBorder {
+.template-border {
     @apply border-4 border-dashed border-base-content border-opacity-30;
 }
 
@@ -34,6 +34,10 @@ body {
 
 .page-grid {
     @apply grid grid-cols-1 lg:grid-cols-3 gap-6 w-11/12 lg:w-5/6 mb-8;
+}
+
+.content-grid {
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
 }
 
 .page-panel {
@@ -52,4 +56,12 @@ body {
 }
 .apexcharts-toolbar {
     z-index: 1 !important;
+}
+
+.min-w-48 {
+    min-width: 12rem;
+}
+
+.min-w-64 {
+    min-width: 16rem;
 }

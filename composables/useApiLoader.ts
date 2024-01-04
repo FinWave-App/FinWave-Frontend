@@ -15,26 +15,28 @@ import {AdminApi} from "~/libs/api/admin/AdminApi";
 import {ConfigManager} from "~/libs/config/ConfigManager";
 import {ServerConfigs} from "~/libs/config/ServerConfigs";
 import {AccumulationsApi} from "~/libs/api/accumulations/AccumulationsApi";
+import {ReportsApi} from "~/libs/api/reports/ReportsApi";
 
 export const useApiLoader = new class ApiLoader {
-    private serverConfigs: ConfigManager;
-    private userApi: UserApi;
-    private sessionsApi : SessionsApi;
+    private readonly serverConfigs: ConfigManager;
+    private readonly userApi: UserApi;
+    private readonly sessionsApi : SessionsApi;
 
-    private accountsApi : AccountsApi;
-    private accountsTagsApi : AccountsTagsApi;
+    private readonly accountsApi : AccountsApi;
+    private readonly accountsTagsApi : AccountsTagsApi;
 
-    private transactionsTagsApi : TransactionsTagsApi;
-    private transactionsApi : TransactionsApi;
-    private recurringTransactionsApi : RecurringTransactionsApi;
+    private readonly transactionsTagsApi : TransactionsTagsApi;
+    private readonly transactionsApi : TransactionsApi;
+    private readonly recurringTransactionsApi : RecurringTransactionsApi;
 
-    private currenciesApi : CurrenciesApi;
-    private analyticsApi : AnalyticsApi;
-    private notesApi : NotesApi;
-    private notificationsApi : NotificationApi;
+    private readonly currenciesApi : CurrenciesApi;
+    private readonly analyticsApi : AnalyticsApi;
+    private readonly notesApi : NotesApi;
+    private readonly notificationsApi : NotificationApi;
 
-    private adminApi : AdminApi;
-    protected accumulationsApi: AccumulationsApi;
+    private readonly adminApi : AdminApi;
+    private readonly accumulationsApi: AccumulationsApi;
+    private readonly reportsApi: ReportsApi;
 
     constructor() {
         this.serverConfigs = new ConfigManager();
@@ -53,6 +55,7 @@ export const useApiLoader = new class ApiLoader {
         this.notesApi = new NotesApi();
         this.notificationsApi = new NotificationApi();
         this.accumulationsApi = new AccumulationsApi();
+        this.reportsApi = new ReportsApi();
 
         this.adminApi = new AdminApi();
     }
@@ -78,6 +81,7 @@ export const useApiLoader = new class ApiLoader {
             this.notesApi.init(),
             this.notificationsApi.init(),
             this.accumulationsApi.init(),
+            this.reportsApi.init(),
             this.adminApi.init()
         ]).then(results => {
             return results.map(r => typeof r == "boolean" ? r : true).find((v) => !v) === undefined;
@@ -100,6 +104,7 @@ export const useApiLoader = new class ApiLoader {
                 sessionsApi: this.sessionsApi,
                 notificationsApi: this.notificationsApi,
                 accumulationsApi: this.accumulationsApi,
+                reportsApi: this.reportsApi,
                 adminApi: this.adminApi
             }
         }

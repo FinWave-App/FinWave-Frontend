@@ -197,6 +197,47 @@
     }
   },
 
+  "reportsPanel": {
+    "title": "Reports",
+
+    "backendLang": {
+      "dateLocale": "en-US",
+      "account": "Account",
+      "delta": "Delta",
+      "tag": "Tag",
+      "currency": "Currency",
+      "created": "Created",
+      "description": "Description",
+      "total": "Total"
+    },
+
+    "table": {
+      "created": "Created",
+      "type": "Type",
+      "status": "Status",
+      "description": "Description",
+      "expires": "Expires",
+      "action": "Action"
+    },
+
+    "status": {
+      "failed": "Failed",
+      "inProgress": "In Progress",
+      "available": "Available"
+    },
+
+    "types": {
+      "list": "List-like",
+      "byDays": "By Days",
+      "byMonths": "By Months"
+    },
+
+    "messages": {
+      "linkCopied": "Download link copied",
+      "linkFail": "Fail to copy download link"
+    }
+  },
+
   "accountsPanel": {
     "label": "Accounts",
     "newTag": "New tag",
@@ -327,6 +368,21 @@
       "title": "Change language",
       "placeholders": {
         "language": "Language"
+      }
+    },
+
+    "newReport": {
+      "title": "New report",
+
+      "placeholders": {
+        "filter": "Filter",
+        "type": "Type",
+        "description": "Description"
+      },
+
+      "messages": {
+        "reportRequested": "Report requested",
+        "reportRequestFail": "Report request fail"
       }
     },
 

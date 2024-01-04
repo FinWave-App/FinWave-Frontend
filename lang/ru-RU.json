@@ -196,14 +196,47 @@
       "needPassword": "Введите пароль!",
       "userExists": "Имя занято!",
       "serverError": "Ошибка сервера"
+    }
+  },
+
+  "reportsPanel": {
+    "title": "Отчеты",
+
+    "backendLang": {
+      "dateLocale": "ru-RU",
+      "account": "Счет",
+      "delta": "Сумма",
+      "tag": "Тег",
+      "currency": "Валюта",
+      "created": "Создан",
+      "description": "Описание",
+      "total": "Итого"
     },
 
-    "lang": {
-      "label": "Язык"
+    "table": {
+      "created": "Создан",
+      "type": "Тип",
+      "status": "Статус",
+      "description": "Описание",
+      "expires": "Срок до",
+      "action": "Действие"
     },
 
-    "timezone": {
-      "label": "Часовой пояс"
+    "status": {
+      "failed": "Ошибка",
+      "inProgress": "В процессе",
+      "available": "Доступен"
+    },
+
+    "types": {
+      "list": "Список",
+      "byDays": "По Дням",
+      "byMonths": "По Месяцам"
+    },
+
+    "messages": {
+      "linkCopied": "Ссылка для загрузки скопирована",
+      "linkFail": "Ошибка копирования ссылки"
     }
   },
 
@@ -337,6 +370,21 @@
       "title": "Сменить язык",
       "placeholders": {
         "language": "Язык"
+      }
+    },
+
+    "newReport": {
+      "title": "Новый отчет",
+
+      "placeholders": {
+        "filter": "Фильтр",
+        "type": "Тип",
+        "description": "Описание"
+      },
+
+      "messages": {
+        "reportRequested": "Отчет запрошен",
+        "reportRequestFail": "Ошибка запроса отчета"
       }
     },
 

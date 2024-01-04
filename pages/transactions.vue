@@ -28,7 +28,7 @@
               <td class="text-right">
                 <edit-button class="btn btn-ghost btn-xs" @event="transactionToEdit = transaction; editOpened = true"></edit-button>
               </td>
-              <td class="text-right w-1 p-1">
+              <td class="text-right w-1">
                 <delete-button class="btn btn-ghost btn-xs" @event="transactionToDelete = transaction; deleteModal = true"></delete-button>
               </td>
             </table-entry>

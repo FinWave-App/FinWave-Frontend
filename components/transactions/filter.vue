@@ -26,10 +26,9 @@
                      :searchable="true"
                      :placeholder='$t("transactionsPage.placeholders.filters.currencies")'
                      :close-on-select="false">
-
     </select-currency>
 
-    <Datepicker class="flex-1 min-w-48 xl:min-w-80 dp-h-10"
+    <Datepicker class="flex-1 min-w-64 dp-h-10"
                 v-model="filterTime"
                 :max-range="calendarMaxRange"
                 :placeholder='$t("transactionsPage.placeholders.filters.time")'

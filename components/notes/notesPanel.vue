@@ -25,7 +25,7 @@
         />
       </transition-group>
     </div>
-    <div v-else class="mt-2 card min-w-max templateBorder flex-1">
+    <div v-else class="mt-2 card min-w-max template-border flex-1">
       <div class="card-body p-3 justify-center items-center min-h-max">
 
         <button class="btn btn-ghost btn-circle text-opacity-60" @click="emit('newNote')">

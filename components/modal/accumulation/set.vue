@@ -2,7 +2,7 @@
   <modal-base :title="$t('modals.setAccumulation.title')" :opened="opened" :name="'accumulation-set-modal'">
     <div class="w-full flex flex-col gap-2">
       <div class="flex justify-center">
-         <accounts-entry class="templateBorder w-1/2" v-if="account" :account="account" :hide-buttons="true"/>
+         <accounts-entry class="template-border w-1/2" v-if="account" :account="account" :hide-buttons="true"/>
       </div>
 
       <div class="flex gap-2">
