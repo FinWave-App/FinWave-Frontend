@@ -87,7 +87,16 @@ const close = () => {
 }
 
 const create = () => {
-  const lang = extractLocalizationStrings(getLocaleMessage(locale.value).reportsPanel.backendLang);
+  const lang = {
+    dateLocale: t('reportsPanel.backendLang.dateLocale'),
+    account: t('reportsPanel.backendLang.account'),
+    delta: t('reportsPanel.backendLang.delta'),
+    tag: t('reportsPanel.backendLang.tag'),
+    currency: t('reportsPanel.backendLang.currency'),
+    created: t('reportsPanel.backendLang.created'),
+    description: t('reportsPanel.backendLang.description'),
+    total: t('reportsPanel.backendLang.total')
+  }
 
   close();
 
