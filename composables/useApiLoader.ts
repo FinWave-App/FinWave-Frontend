@@ -61,15 +61,10 @@ export const useApiLoader = new class ApiLoader {
     }
 
     public async fetch() : Promise<boolean> {
-        const auth = await Promise.all([this.userApi.init(), this.serverConfigs.init()]);
-
-        if (auth[0] === false) {
-            useNuxtApp().$auth.logout();
-
-            return false;
-        }
+        const auth = Promise.all([this.userApi.init(), this.serverConfigs.init()]);
 
         return Promise.all([
+            auth,
             this.sessionsApi.init(),
             this.accountsApi.init(),
             this.accountsTagsApi.init(),
@@ -84,6 +79,12 @@ export const useApiLoader = new class ApiLoader {
             this.reportsApi.init(),
             this.adminApi.init()
         ]).then(results => {
+            if (results[0][0] === false) {
+                useNuxtApp().$auth.logout();
+
+                return false;
+            }
+
             return results.map(r => typeof r == "boolean" ? r : true).find((v) => !v) === undefined;
         });
     }

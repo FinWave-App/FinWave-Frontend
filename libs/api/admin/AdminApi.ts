@@ -9,24 +9,30 @@ export class AdminApi extends AbstractApi {
     private transactionsCount: Ref<number> = ref(0);
 
     async init(): Promise<void | boolean> {
-        const {error} = await useApi("/admin/check");
+        useApi("/admin/check").then(result => {
+            if (result.error.value) {
+                this.allowed.value = false;
 
-        if (error.value) {
-            this.allowed.value = false;
+                return;
+            }
 
-            return;
-        }
+            this.allowed.value = true;
 
-        this.allowed.value = true;
+            Promise.all([
+                useApi<any>("/admin/getUsersCount"),
+                useApi<any>("/admin/getActiveUsersCount"),
+                useApi<any>("/admin/getTransactionsCount"),
+            ]).then(results => {
+                let data = results[0].data;
+                this.usersCount.value = data.value ? data.value.count : 0;
 
-        let data = (await useApi<any>("/admin/getUsersCount")).data;
-        this.usersCount.value = data.value ? data.value.count : 0;
+                data = results[1].data;
+                this.activeUsersCount.value = data.value ? data.value.count : 0;
 
-        data = (await useApi<any>("/admin/getActiveUsersCount")).data;
-        this.activeUsersCount.value = data.value ? data.value.count : 0;
-
-        data = (await useApi<any>("/admin/getTransactionsCount")).data;
-        this.transactionsCount.value = data.value ? data.value.count : 0;
+                data = results[2].data;
+                this.transactionsCount.value = data.value ? data.value.count : 0;
+            });
+        });
     }
 
     public async registerUser(username: string, password: string) : Promise<boolean> {

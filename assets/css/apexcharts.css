@@ -1,0 +1,7 @@
+.apexcharts-tooltip {
+    @apply bg-base-100 border-base-200 shadow !important;
+}
+
+.apexcharts-tooltip-title {
+    @apply bg-base-200 border-base-200 !important;
+}

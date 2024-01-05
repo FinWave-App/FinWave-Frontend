@@ -3,6 +3,8 @@
  */
 @import "multiselect.css";
 @import "datepicker.css";
+@import "apexcharts.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
