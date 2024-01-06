@@ -174,6 +174,10 @@ const buildChart = () => {
       },
     },
 
+    stroke: {
+      show: false
+    },
+
     yaxis: {
       labels: {
         formatter: formatter

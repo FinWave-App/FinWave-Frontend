@@ -113,6 +113,12 @@
   },
 
   "analyticsPage": {
+    "byMonthsSwitcher": {
+      "area": "Area",
+      "bar": "Bar",
+      "radar": "Radar"
+    },
+
     "pie": {
       "noData": "No data",
       "selects": {

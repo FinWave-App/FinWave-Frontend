@@ -115,6 +115,12 @@
   },
 
   "analyticsPage": {
+    "byMonthsSwitcher": {
+      "area": "Линейная",
+      "bar": "Столбчатая",
+      "radar": "Паутинная"
+    },
+
     "pie": {
       "noData": "Нет данных",
       "selects": {

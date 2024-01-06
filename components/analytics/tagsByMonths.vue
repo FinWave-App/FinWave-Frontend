@@ -3,11 +3,18 @@
     <transactions-filter-div v-model="filter" :calendar-max-range="configs.maxTimeRangeDaysForMonths"/>
 
     <ApexChart class="w-full max-h-36 mt-4"
-               type="area"
                height="500px"
                :options="chartOptions"
                :series="chartSeries"
-    ></ApexChart>
+    />
+
+    <div class="flex justify-center w-full">
+      <div role="tablist" class="tabs tabs-boxed w-fit">
+        <a role="tab" class="tab px-6" @click="type = 'area'" :class="{ 'tab-active' : type === 'area' }"> {{ $t("analyticsPage.byMonthsSwitcher.area")}} </a>
+        <a role="tab" class="tab px-6" @click="type = 'bar'" :class="{ 'tab-active' : type === 'bar' }"> {{ $t("analyticsPage.byMonthsSwitcher.bar")}} </a>
+        <a role="tab" class="tab px-6" @click="type = 'radar'" :class="{ 'tab-active' : type === 'radar' }"> {{ $t("analyticsPage.byMonthsSwitcher.radar")}} </a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,37 +30,30 @@ const tagsMap = $transactionsTagsApi.getTagsMap();
 const filter = ref();
 const chartSeries = ref([]);
 
-const chartOptions = ref({
-  chart: {
-    id: "tags-by-months",
-    foreColor: undefined
-  },
+const type = ref('area');
 
-  xaxis: {
-    categories: [],
-  },
-  yaxis : {
-    decimalsInFloat: 2
-  }
-});
+const chartOptions = ref({});
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const configs = $serverConfigs.configs.analytics;
 
-const buildChart = async () => {
-  const analytics = (await $analyticsApi.getAnalyticsByMonths(filter.value));
-  const sortedAnalytics = new Map(Array.from(analytics).sort(([a], [b]) => a.localeCompare(b)));
+const analytics = ref({});
 
+const fetch = async () => {
+  const analyticsRaw = await $analyticsApi.getAnalyticsByMonths(filter.value);
+  analytics.value = new Map(Array.from(analyticsRaw).sort(([a], [b]) => a.localeCompare(b)));
+}
+
+const buildChart = () => {
   const xaxis = [];
   const series = [];
   const tags = {};
   let decimals = Number.MAX_VALUE;
 
-  chartOptions.value.xaxis.categories = xaxis;
   chartSeries.value = series;
   let i = 0;
 
-  sortedAnalytics.forEach((v, k, m) => {
+  analytics.value.forEach((v, k, m) => {
     const date = new Date(k).toLocaleString(locale.value, {year: 'numeric', month: 'numeric'})
 
     xaxis.push(date);
@@ -88,11 +88,37 @@ const buildChart = async () => {
     decimals = 2;
 
   chartOptions.value = {
-    ... chartOptions.value,
-    ... {
-      yaxis: {
-        decimalsInFloat: decimals
-      }
+    chart: {
+      id: "tags-by-months-" + type.value,
+      type: type.value,
+      stacked: type.value === 'bar',
+      foreColor: undefined
+    },
+
+    plotOptions: {
+      horizontal: false,
+      columnWidth: '55%',
+      endingShape: 'rounded'
+    },
+
+    stroke: {
+      show: type.value !== 'bar',
+      curve: 'smooth',
+      lineCap: 'butt',
+      colors: undefined,
+      width: 2,
+      dashArray: 0,
+    },
+
+    fill: {
+      type: type.value === 'bar' ? "solid" : "gradient",
+    },
+
+    xaxis: {
+      categories: xaxis,
+    },
+    yaxis : {
+      decimalsInFloat: decimals
     }
   }
 
@@ -105,11 +131,17 @@ const buildChart = async () => {
   });
 }
 
-watch(filter, () => {
+watch([analytics, type], () => {
   buildChart();
 })
 
-buildChart();
+watch(filter, () => {
+  fetch();
+})
+
+fetch().then(() => {
+  buildChart();
+})
 
 </script>
 
