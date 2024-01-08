@@ -21,6 +21,7 @@
 <script setup>
 import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
+import {useColor} from "~/composables/useColor";
 
 const { $analyticsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
@@ -48,6 +49,8 @@ const buildChart = () => {
   const xaxis = [];
   const series = [];
   const tags = {};
+  const colors = [];
+
   let decimals = Number.MAX_VALUE;
 
   chartSeries.value = series;
@@ -75,6 +78,7 @@ const buildChart = () => {
 
         tags[v.currencyId + "-" + v.tagId] = tagSeries;
         series.push(tagSeries);
+        colors.push(useColor(v.tagId));
       } else {
         tagSeries = tags[v.currencyId + "-" + v.tagId];
       }
@@ -100,6 +104,8 @@ const buildChart = () => {
       columnWidth: '55%',
       endingShape: 'rounded'
     },
+
+    colors: colors,
 
     stroke: {
       show: type.value !== 'bar',

@@ -33,6 +33,10 @@
         </p>
       </div>
     </div>
+
+    <div class="text-right w-full font-bold text-sm">
+      {{ total }}
+    </div>
   </div>
 </template>
 
@@ -40,6 +44,7 @@
 import ApexChart from "vue3-apexcharts";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 import Datepicker from "@vuepic/vue-datepicker";
+import {useColor} from "~/composables/useColor";
 
 const props = defineProps({
   sign: {
@@ -93,7 +98,7 @@ const resetView = () => {
 const tagSelected = (event, chartContext, config) => {
   const nextTagId = chartMap.value[config.dataPointIndex];
 
-  if (tagsMap.value.get(nextTagId).childs.length === 0)
+  if (nextTagId === -1 || tagsMap.value.get(nextTagId).childs.length === 0)
     return;
 
   pushToView(nextTagId);
@@ -103,6 +108,8 @@ const tagSelected = (event, chartContext, config) => {
 }
 
 const chartSeries = ref([]);
+const total = ref();
+
 const chartOptions = ref({
   labels: [],
   chart: {
@@ -129,21 +136,6 @@ const reloadAnalytics = async () => {
   ));
 }
 
-const childsSum = (allData, tagObject, currencyId, sign) => {
-  let sum = 0;
-
-  tagObject.childs.forEach(t => {
-    const childDelta = allData[t.tag.tagId];
-    sum += childDelta && childDelta * sign > 0 ? childDelta : 0;
-
-    if (t.childs && t.childs.length > 0) {
-      sum += childsSum(allData, t, sign);
-    }
-  })
-
-  return sum;
-}
-
 const formatAmount = (delta) => {
   const currencyObject = currenciesMap.value.get(currency.value);
 
@@ -161,6 +153,21 @@ const formatter = (value) => {
   return (props.sign > 0 ? "" : "-") + formatAmount(value);
 }
 
+const childsSum = (allData, tagObject, currencyId, sign) => {
+  let sum = 0;
+
+  tagObject.childs.forEach(t => {
+    const childDelta = allData[t.tag.tagId];
+    sum += childDelta && childDelta * sign > 0 ? childDelta : 0;
+
+    if (t.childs && t.childs.length > 0) {
+      sum += childsSum(allData, t, sign);
+    }
+  })
+
+  return sum;
+}
+
 const buildChart = () => {
   const sign = props.sign;
   const newSeries = [];
@@ -173,6 +180,8 @@ const buildChart = () => {
         dataPointSelection: tagSelected
       },
     },
+
+    colors: [],
 
     stroke: {
       show: false
@@ -209,31 +218,44 @@ const buildChart = () => {
   });
 
 
-  const needsToDisplay = (view.value.length > 0 ? tagsMap.value.get(view.value[view.value.length - 1]).childs : tagsTree.value).map((t) => t.tag.tagId);
+  let needsToDisplay = (view.value.length > 0 ? tagsMap.value.get(view.value[view.value.length - 1]).childs : tagsTree.value).map((t) => t.tag.tagId);
+
+  if (view.value.length > 0) {
+    const parentTag = view.value[view.value.length - 1];
+
+    needsToDisplay.push(parentTag);
+  }
+
+  let totalAmount = 0;
 
   needsToDisplay.forEach((tagId) => {
     const tag = tagsMap.value.get(tagId);
     const tagName = tag.tag.name;
-    const tagDelta = allData[tagId] ? allData[tagId] : 0 ;
+    let tagDelta = allData[tagId] ? allData[tagId] : 0;
+    const isParent = view.value[view.value.length - 1] === tagId;
 
-    if (tag.childs.length === 0 && tagDelta * sign < 0)
-      return;
+    if (tagDelta * sign < 0)
+      tagDelta = 0;
 
-    const sum = childsSum(allData, tag, currency.value, sign) + tagDelta;
+    const sum = tagDelta + (isParent ? 0 : childsSum(allData, tag, currency.value, sign));
 
     if (sum === 0)
       return;
 
     const tagChartIndex = newSeries.push(Math.abs(sum)) - 1;
 
-    chartMap.value[tagChartIndex] = tagId;
+    totalAmount += Math.abs(sum);
 
+    chartMap.value[tagChartIndex] = isParent ? -1 : tagId;
     newOptions.labels.push(tagName);
+    newOptions.colors.push(useColor(tagId));
   })
 
   noData.value = newSeries.length === 0;
   chartSeries.value = newSeries;
   chartOptions.value = newOptions;
+
+  total.value = formatter(totalAmount);
 }
 
 reloadAnalytics().then(() => {
