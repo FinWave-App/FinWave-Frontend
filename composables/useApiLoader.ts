@@ -86,6 +86,10 @@ export const useApiLoader = new class ApiLoader {
             }
 
             return results.map(r => typeof r == "boolean" ? r : true).find((v) => !v) === undefined;
+        }).catch(t => {
+            console.log(t);
+
+            return false;
         });
     }
 

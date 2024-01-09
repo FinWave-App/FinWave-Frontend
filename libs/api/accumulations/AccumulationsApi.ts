@@ -11,6 +11,9 @@ export class AccumulationsApi extends AbstractApi {
     protected async fetchMap() : Promise<void> {
         const {data} = await useApi<any>("/user/accumulations/getList");
 
+        if (data.value === null)
+            return;
+
         const newMap = new Map<number, any>();
 
         data.value.accumulations.forEach((accumulation) => {

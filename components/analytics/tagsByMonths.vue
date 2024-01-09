@@ -4,6 +4,7 @@
 
     <ApexChart class="w-full max-h-36 mt-4"
                height="500px"
+               type="area"
                :options="chartOptions"
                :series="chartSeries"
     />
@@ -45,7 +46,7 @@ const fetch = async () => {
   analytics.value = new Map(Array.from(analyticsRaw).sort(([a], [b]) => a.localeCompare(b)));
 }
 
-const buildChart = () => {
+const buildChart = async () => {
   const xaxis = [];
   const series = [];
   const tags = {};
@@ -53,7 +54,6 @@ const buildChart = () => {
 
   let decimals = Number.MAX_VALUE;
 
-  chartSeries.value = series;
   let i = 0;
 
   analytics.value.forEach((v, k, m) => {
@@ -91,12 +91,25 @@ const buildChart = () => {
   if (decimals === Number.MAX_VALUE)
     decimals = 2;
 
+  series.forEach((v) => {
+    for (let y = 0; y < i; y++) {
+      if (!v.data[y]) {
+        v.data[y] = 0;
+      }
+    }
+  });
+
+  chartSeries.value = series;
+
   chartOptions.value = {
     chart: {
       id: "tags-by-months-" + type.value,
       type: type.value,
       stacked: type.value === 'bar',
-      foreColor: undefined
+      foreColor: undefined,
+      animations: {
+        enabled: false
+      }
     },
 
     plotOptions: {
@@ -127,14 +140,6 @@ const buildChart = () => {
       decimalsInFloat: decimals
     }
   }
-
-  series.forEach((v) => {
-    for (let y = 0; y < i; y++) {
-      if (!v.data[y]) {
-        v.data[y] = 0;
-      }
-    }
-  });
 }
 
 watch([analytics, type], () => {
@@ -145,9 +150,7 @@ watch(filter, () => {
   fetch();
 })
 
-fetch().then(() => {
-  buildChart();
-})
+fetch();
 
 </script>
 

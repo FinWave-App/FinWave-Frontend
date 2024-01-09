@@ -1,14 +1,35 @@
 <template>
   <div class="join flex">
-    <input class="input input-bordered join-item w-full" :placeholder="t('modals.setAccumulation.placeholders.stepEntry.from')" v-model.lazy="from" @change="update"/>
-    <input class="input input-bordered join-item w-full" :placeholder="t('modals.setAccumulation.placeholders.stepEntry.to')" v-model.lazy="to" @change="update"/>
-    <input class="input input-bordered join-item w-full" :placeholder="t('modals.setAccumulation.placeholders.stepEntry.step')" v-model.lazy="step" @change="update"/>
+    <input
+        class="input input-bordered join-item w-full"
+        type="number"
+        :placeholder="t('modals.setAccumulation.placeholders.stepEntry.from')" v-model.lazy.number="from" @change="update"
+    />
+
+    <input
+        class="input input-bordered join-item w-full"
+        :placeholder="t('modals.setAccumulation.placeholders.stepEntry.to')"
+        v-model.lazy.number="to"
+        @change="update"
+    />
+
+    <input
+        class="input input-bordered join-item w-full"
+        :placeholder="t('modals.setAccumulation.placeholders.stepEntry.step')"
+        v-model.lazy.number="step"
+        @change="update"
+        :class="{'input-error' : highlightErrors && (!step || step <= 0)}"
+    />
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
   modelValue: {
+
+  },
+
+  highlightErrors: {
 
   }
 })
@@ -26,8 +47,8 @@ const update = () => {
     return;
 
   emit("update:modelValue", {
-    from: from.value,
-    to: to.value,
+    from: from.value || null,
+    to: to.value || null,
     step: step.value
   });
 

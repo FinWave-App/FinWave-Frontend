@@ -2,7 +2,12 @@
   <modal-base :title="$t('modals.setAccumulation.title')" :opened="opened" :name="'accumulation-set-modal'">
     <div class="w-full flex flex-col gap-2">
       <div class="flex justify-center">
-         <accounts-entry class="template-border w-1/2" v-if="account" :account="account" :hide-buttons="true"/>
+         <accounts-entry
+             class="template-border w-1/2"
+             v-if="account"
+             :account="account"
+             :hide-buttons="true"
+         />
       </div>
 
       <div class="flex gap-2">
@@ -11,7 +16,12 @@
             <span class="label-text">{{ $t('modals.setAccumulation.placeholders.targetAccount') }}</span>
           </label>
 
-          <select-account v-model="targetAccountId" :exclude-account="sourceAccountId" :currency-filter="currencyFilter"/>
+          <select-account
+              v-model="targetAccountId"
+              :exclude-account="sourceAccountId"
+              :currency-filter="currencyFilter"
+              :class="{'input-error' : highlightErrors && !targetAccountId}"
+          />
         </div>
 
         <div class="form-control w-full">
@@ -19,11 +29,21 @@
             <span class="label-text">{{ $t('modals.setAccumulation.placeholders.tag') }}</span>
           </label>
 
-          <select-transaction-tag v-model="tagId" :can-be-without-parent="false" :tags-tree="tagsTree"/>
+          <select-transaction-tag
+              v-model="tagId"
+              :can-be-without-parent="false"
+              :tags-tree="tagsTree"
+              :class="{'input-error' : highlightErrors && !tagId}"
+          />
         </div>
       </div>
 
-      <step-entry v-for="(step, index) in steps" :model-value="step" @update:model-value="args => steps[index] = args"/>
+      <step-entry
+          v-for="(step, index) in steps"
+          :model-value="step"
+          @update:model-value="args => steps[index] = args"
+          :highlight-errors="highlightErrors"
+      />
 
       <div class="w-full" v-if="configs.maxStepsPerAccount > steps.length">
         <plus-button class="btn w-full" @event="steps.push({from: null, to: null, step: null})" />
@@ -85,6 +105,8 @@ watch(() => props.opened, (value) => {
   if (!value)
     return;
 
+  highlightErrors.value = false;
+
   const v = accumulationMap.value.get(props.account.accountId) || {};
 
   sourceAccountId.value = props.account.accountId;
@@ -111,6 +133,8 @@ const set = () => {
 
   highlightErrors.value = false;
   close();
+
+  console.log(result);
 
   $accumulationsApi.setAccumulation(result).then((s) => {
     if (s)
