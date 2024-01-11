@@ -42,14 +42,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
           </svg>
         </div>
-        <select v-else class="select select-bordered join-item" v-model.number="sign">
+        <select v-else class="select select-bordered join-item" v-model.number="sign" @click="signManuallyChoice = true">
           <option :value="-1"> - </option>
           <option :value="1"> + </option>
         </select>
 
-        <input type="number"
+        <input
                class="input input-bordered join-item w-full"
-               v-model.number="amount"
+               v-model="rawAmount"
                @change="amountChanged"
                :class="{'input-error' : highlightErrors && (amount === undefined || amount === 0)}"
         >
@@ -111,16 +111,21 @@ const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const account = ref();
 const amount = ref();
+const rawAmount = ref("");
 const description = ref("");
 const parentTag = ref();
 const sign = ref(1);
 const signChoice = ref(true);
+const signManuallyChoice = ref(false);
+
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
 const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
 
 watch(parentTag, () => {
+  signManuallyChoice.value = false;
+
   if (parentTag.value === undefined) {
     signChoice.value = true;
     return;
@@ -154,10 +159,25 @@ const currency = computed(() => {
 });
 
 const amountChanged = () => {
-  if (signChoice.value)
-    sign.value = Math.sign(amount.value);
+  const decimals = currency.value ? currency.value.decimals : 2;
 
-  amount.value = Math.abs(amount.value);
+  const newAmount = Number(
+      eval(
+          rawAmount.value
+              .replace(",", '.')
+              .replace(/[^-()\d/*+.]/g, '')
+      )
+  ).toFixed(decimals);
+
+  if (signChoice.value) {
+    const newSign = Math.sign(newAmount) || 1;
+
+    if (newSign < 0 || !signManuallyChoice.value)
+      sign.value = newSign;
+  }
+
+  amount.value = Math.abs(newAmount);
+  rawAmount.value = amount.value;
 }
 
 const close = () => {

@@ -42,12 +42,17 @@
                  class="input input-bordered w-full"
                  :placeholder="$t('modals.newCurrency.placeholders.currencyDecimals')"
                  v-model.number="decimals"
-                 :class="{'input-error' : highlightErrors && decimals === undefined}"
+                 :class="{'input-error' : highlightErrors && (decimals === undefined || decimals < 1)}"
           />
         </div>
       </div>
 
-      <textarea class="textarea input-bordered" :placeholder="$t('modals.newCurrency.placeholders.currencyDescription')" v-model.trim="description" :maxlength="configs.maxDescriptionLength">
+      <textarea class="textarea input-bordered"
+                :placeholder="$t('modals.newCurrency.placeholders.currencyDescription')"
+                v-model.trim="description"
+                :maxlength="configs.maxDescriptionLength"
+                :class="{'input-error' : highlightErrors && description.length < 1}"
+      >
       </textarea>
     </div>
 
@@ -77,7 +82,7 @@ const description = ref("");
 
 const highlightErrors = ref(false);
 
-const allValid = computed(() => code.value.length >= 1 && symbol.value.length >= 1 && decimals.value !== "")
+const allValid = computed(() => code.value.length > 0 && symbol.value.length > 0 && decimals.value && decimals.value > 0 && description.value.length > 0)
 
 const close = () => {
   emit('close')
