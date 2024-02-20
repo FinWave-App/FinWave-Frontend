@@ -50,6 +50,18 @@
     }
   },
 
+  "bulkPage": {
+    "buttons": {
+      "deleteAll": "Delete all",
+      "newDefault": "Default transaction",
+      "newInternal": "Internal transaction"
+    },
+    "messages": {
+      "success": "All transactions are applied",
+      "error": "Oops, failed to apply transactions"
+    }
+  },
+
   "transactionsPage": {
     "placeholders": {
       "filters": {
@@ -294,7 +306,8 @@
       "deleteAccountTag": "Delete tag?",
       "deleteTransaction": "Delete transaction?",
       "deleteRecurring": "Delete recurring transaction?",
-      "deleteNote": "Delete note?"
+      "deleteNote": "Delete note?",
+      "deleteAllBulk": "Delete all bulk transactions? This action cannot be undone"
     },
 
     "notifications": {
@@ -601,6 +614,11 @@
         "transactionAccount": "Account",
         "transactionDescription": "Description"
       },
+
+      "buttons": {
+        "bulkMode": "Bulk mode"
+      },
+
       "messages": {
         "success": "Transaction created",
         "error": "Oops, failed to create transaction"

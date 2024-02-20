@@ -50,6 +50,18 @@
     }
   },
 
+  "bulkPage": {
+    "buttons": {
+      "deleteAll": "Удалить всё",
+      "newDefault": "Стандартная транзакция",
+      "newInternal": "Перевод"
+    },
+    "messages": {
+      "success": "Все транзакции успешно применены",
+      "error": "Ошибка при применении транзакций"
+    }
+  },
+
   "transactionsPage": {
     "placeholders": {
       "filters": {
@@ -296,7 +308,8 @@
       "deleteAccountTag": "Удалить тег?",
       "deleteTransaction": "Удалить транзакцию?",
       "deleteRecurring": "Удалить автоматизацию?",
-      "deleteNote": "Удалить заметку?"
+      "deleteNote": "Удалить заметку?",
+      "deleteAllBulk": "Удалить все транзакции? Это действие невозможно отменить"
     },
 
     "notifications": {
@@ -603,6 +616,11 @@
         "transactionAccount": "Счет",
         "transactionDescription": "Описание"
       },
+
+      "buttons": {
+        "bulkMode": "Массовый режим"
+      },
+
       "messages": {
         "success": "Транзакция создана",
         "error": "Ошибка создания транзакции"

@@ -6,6 +6,24 @@ export class TransactionsApi extends AbstractApi {
 
     }
 
+    public async newBulkTransaction(transactions : any) : Promise<boolean> {
+        const opts = {
+            method: "POST",
+            body: {
+                entries: transactions.map(t => {
+                    if (t.description === null) t.description = undefined;
+                    t._id = undefined;
+
+                    return t;
+                })
+            }
+        };
+
+        const {error} = await useApi("/user/transactions/newBulk", opts);
+
+        return error.value === null;
+    }
+
     public async newTransaction(tagId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
@@ -112,4 +130,6 @@ export class TransactionsApi extends AbstractApi {
 
         return data.value?.transactions;
     }
+
+
 }

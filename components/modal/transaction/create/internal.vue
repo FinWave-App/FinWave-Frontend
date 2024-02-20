@@ -126,9 +126,15 @@
     </div>
   </div>
 
-  <div class="modal-action">
-    <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-    <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
+  <div class="modal-action flex justify-between items-center">
+    <nuxt-link to="/bulk" class="btn btn-sm disabled">
+      {{ $t('modals.newTransaction.buttons.bulkMode') }}
+    </nuxt-link>
+
+    <div class="flex gap-2">
+      <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
+      <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
+    </div>
   </div>
 </template>
 

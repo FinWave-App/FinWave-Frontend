@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col gap-2">
     <div class="w-full flex gap-2">
       <div class="form-control w-full">
-        <label class="label">
+        <label class="label pt-0">
           <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAccount') }}</span>
         </label>
 
@@ -12,7 +12,7 @@
         />
       </div>
       <div class="form-control w-full">
-        <label class="label">
+        <label class="label pt-0">
           <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
         </label>
 
@@ -33,32 +33,7 @@
         <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAmount') }}</span>
       </label>
 
-      <div class="join w-full">
-        <div v-if="!signChoice" class="join-item flex justify-center items-center px-4 bg-base-200">
-          <svg v-if="sign > 0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
-          </svg>
-        </div>
-        <select v-else class="select select-bordered join-item" v-model.number="sign" @click="signManuallyChoice = true">
-          <option :value="-1"> - </option>
-          <option :value="1"> + </option>
-        </select>
-
-        <input
-               class="input input-bordered join-item w-full"
-               v-model="rawAmount"
-               @change="amountChanged"
-               :class="{'input-error' : highlightErrors && (amount === undefined || amount === 0)}"
-        >
-        <div v-if="currency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
-          <p class="font-bold">
-            {{ currency.symbol }}
-          </p>
-        </div>
-      </div>
+      <transaction-amount-field :currency-id="currencyId" :highlight-errors="highlightErrors" :tag-id="parentTag" v-model="amount" />
     </div>
 
     <div class="form-control w-full">
@@ -87,14 +62,21 @@
     </div>
   </div>
 
-  <div class="modal-action">
-    <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
-    <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
+  <div class="modal-action flex justify-between items-center">
+    <nuxt-link to="/bulk" class="btn btn-sm invisible lg:visible">
+      {{ $t('modals.newTransaction.buttons.bulkMode') }}
+    </nuxt-link>
+
+    <div class="flex gap-2">
+      <button @click="close" class="btn btn-sm btn-ghost">{{ $t('modals.buttons.cancel') }}</button>
+      <button @click="create" class="btn btn-sm btn-success" :class="{'btn-warning' : !allValid}">{{ $t('modals.buttons.create') }}</button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import Datepicker from "@vuepic/vue-datepicker";
+import TransactionAmountField from "~/components/modal/transaction/transactionAmountField.vue";
 
 const emit = defineEmits(['close', 'reloadTransactions']);
 
@@ -111,40 +93,15 @@ const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
 const account = ref();
 const amount = ref();
-const rawAmount = ref("");
 const description = ref("");
 const parentTag = ref();
-const sign = ref(1);
-const signChoice = ref(true);
-const signManuallyChoice = ref(false);
 
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
 const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
 
-watch(parentTag, () => {
-  signManuallyChoice.value = false;
-
-  if (parentTag.value === undefined) {
-    signChoice.value = true;
-    return;
-  }
-
-  const parentTagObject = tagsMap.value.get(parentTag.value);
-
-  if (parentTagObject === undefined || parentTagObject.tag === undefined) {
-    signChoice.value = true;
-    return;
-  }
-
-  if (parentTagObject.tag.type !== 0)
-    sign.value = parentTagObject.tag.type
-
-  signChoice.value = parentTagObject.tag.type === 0;
-});
-
-const currency = computed(() => {
+const currencyId = computed(() => {
   if (account.value === undefined)
     return undefined;
 
@@ -153,32 +110,8 @@ const currency = computed(() => {
   if (accountObject === undefined)
     return undefined;
 
-  let currencyId = accountObject.currencyId;
-
-  return currenciesMap.value.get(currencyId);
+  return accountObject.currencyId;
 });
-
-const amountChanged = () => {
-  const decimals = currency.value ? currency.value.decimals : 2;
-
-  const newAmount = Number(
-      eval(
-          rawAmount.value
-              .replace(",", '.')
-              .replace(/[^-()\d/*+.]/g, '')
-      )
-  ).toFixed(decimals);
-
-  if (signChoice.value) {
-    const newSign = Math.sign(newAmount) || 1;
-
-    if (newSign < 0 || !signManuallyChoice.value)
-      sign.value = newSign;
-  }
-
-  amount.value = Math.abs(newAmount);
-  rawAmount.value = amount.value;
-}
 
 const close = () => {
   emit('close')
@@ -195,7 +128,7 @@ const create = () => {
   close();
 
   const callApi = (tagId) => {
-    $transactionsApi.newTransaction(tagId, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+    $transactionsApi.newTransaction(tagId, account.value, date.value, amount.value, description.value.length > 0 ? description.value : null).then((s) => {
       if (s) {
         $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
         emit('reloadTransactions');
