@@ -56,6 +56,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/finwave-app/frontend:${{ steps.get_version.outputs.version }}
+          tags: |
+            ghcr.io/finwave-app/frontend:latest
+            ghcr.io/finwave-app/frontend:${{ steps.get_version.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
