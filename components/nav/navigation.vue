@@ -11,7 +11,11 @@
       </div>
 
       <div class="normal-case text-xl font-bold flex items-start gap-1 ml-2">
-        FinWave
+        <div class="flex justify-center items-center gap-2">
+          <img src="/public/favicon.ico" class="h-12">
+          FinWave
+        </div>
+
         <div class="badge badge-info badge-sm font-normal">Beta</div>
       </div>
     </div>

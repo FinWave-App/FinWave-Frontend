@@ -2,7 +2,7 @@
   "navigation": {
     "main": "Главная",
     "notes": "Заметки",
-    "tags": "Теги",
+    "tags": "Категории",
     "transactions": "Транзакции",
     "recurring": "Автоматизация",
     "currencies": "Валюты",
@@ -31,7 +31,7 @@
   "mainPage": {
     "buttons": {
       "newTransaction": "Новая транзакция",
-      "newTag": "Новый тег",
+      "newTag": "Новая категория",
       "newCurrency": "Новая валюта",
       "newNote": "Новая заметка"
     },
@@ -66,7 +66,7 @@
     "placeholders": {
       "filters": {
         "accounts": "Фильтр по счетам",
-        "tags": "Фильтр по тегам",
+        "tags": "Фильтр по категориям",
         "currencies": "Фильтр по валютам",
         "time": "Фильтр по времени",
         "description": "Фильтр по описанию"
@@ -77,7 +77,7 @@
     },
     "table": {
       "amount": "Сумма",
-      "tag": "Тег",
+      "tag": "Категория",
       "account": "Счет",
       "createdAt": "Создан",
       "description": "Описание",
@@ -88,7 +88,7 @@
   "recurringPage": {
     "table": {
       "amount": "Сумма",
-      "tag": "Тег",
+      "tag": "Категория",
       "account": "Счет",
       "lastRepeat": "Предыдущий повтор",
       "nextRepeat": "Следующий повтор",
@@ -224,7 +224,7 @@
       "dateLocale": "ru-RU",
       "account": "Счет",
       "delta": "Сумма",
-      "tag": "Тег",
+      "tag": "Категория",
       "currency": "Валюта",
       "created": "Создан",
       "description": "Описание",
@@ -260,15 +260,15 @@
 
   "accountsPanel": {
     "label": "Счета",
-    "newTag": "Новый тег",
+    "newTag": "Новая категория",
     "newAccount": "Новый аккаунт"
   },
 
   "accountTagEntry": {
     "messages": {
-      "deleted": "Тег счета удален",
-      "deleteFail": "Ошибка при удалении тега",
-      "edited": "Тег счета успешно изменен"
+      "deleted": "Категория счета удалена",
+      "deleteFail": "Ошибка при удалении категории",
+      "edited": "Категория счета успешно изменена"
     }
   },
 
@@ -305,7 +305,7 @@
     },
 
     "confirmations": {
-      "deleteAccountTag": "Удалить тег?",
+      "deleteAccountTag": "Удалить категорию?",
       "deleteTransaction": "Удалить транзакцию?",
       "deleteRecurring": "Удалить автоматизацию?",
       "deleteNote": "Удалить заметку?",
@@ -442,7 +442,7 @@
       "title": "Настроить Автонакопление",
       "placeholders": {
         "targetAccount": "Куда",
-        "tag": "Тег",
+        "tag": "Категория",
         "stepEntry": {
           "from": "От",
           "to": "До",
@@ -498,26 +498,26 @@
     },
 
     "newAccountTag": {
-      "title": "Новый тег счета",
+      "title": "Новая категория счета",
       "placeholders": {
         "tagName": "Название",
         "tagDescription": "Описание"
       },
       "messages": {
-        "success": "Тег аккаунта создан",
-        "error": "Ошибка создания тега"
+        "success": "Категория аккаунта создана",
+        "error": "Ошибка создания категории"
       }
     },
 
     "editAccountTag": {
-      "title": "Редактирование тега счета",
+      "title": "Редактирование категории счета",
       "placeholders": {
         "tagName": "Название",
         "tagDescription": "Описание"
       },
       "messages": {
-        "success": "Тег аккаунта изменен",
-        "error": "Ошибка изменения тега"
+        "success": "Категория аккаунта изменена",
+        "error": "Ошибка изменения категории"
       }
     },
 
@@ -533,7 +533,7 @@
       "placeholders": {
         "accountName": "Название",
         "accountDescription": "Описание",
-        "tagSelect": "Выбрать тег",
+        "tagSelect": "Выбрать категорию",
         "amount": "Сумма"
       },
       "messages": {
@@ -549,7 +549,7 @@
         "recurringRepeatMode": "Режим повтора",
         "recurringNextRepeat": "Следующее повторение",
         "recurringNotificationMode": "Режим уведомлений",
-        "recurringTag": "Тег",
+        "recurringTag": "Категория",
         "recurringAccount": "Счет",
         "recurringDescription": "Описание"
       },
@@ -576,7 +576,7 @@
         "recurringRepeatMode": "Режим повтора",
         "recurringNextRepeat": "Следующее повторение",
         "recurringNotificationMode": "Режим уведомлений",
-        "recurringTag": "Тег",
+        "recurringTag": "Категория",
         "recurringAccount": "Счет",
         "recurringDescription": "Описание"
       },
@@ -612,7 +612,7 @@
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
-        "transactionTag": "Тег",
+        "transactionTag": "Категория",
         "transactionAccount": "Счет",
         "transactionDescription": "Описание"
       },
@@ -636,7 +636,7 @@
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
-        "transactionTag": "Тег",
+        "transactionTag": "Категория",
         "transactionAccount": "Счет",
         "transactionDescription": "Описание"
       },
@@ -654,7 +654,7 @@
     },
 
     "newTransactionTag": {
-      "title": "Новый тег транзакций",
+      "title": "Новая категория транзакций",
       "placeholders": {
         "tagName": "Название",
         "tagType": {
@@ -667,13 +667,13 @@
         "tagDescription": "Описание"
       },
       "messages": {
-        "success": "Тег транзакций создан",
-        "error": "Ошибка создания тега транзакций"
+        "success": "Категория транзакций создана",
+        "error": "Ошибка создания категории транзакций"
       }
     },
 
     "editTransactionTag": {
-      "title": "Редактирование тега транзакций",
+      "title": "Редактирование категории транзакций",
       "tagWithoutParent": "Без родителя",
       "placeholders": {
         "tagName": "Название",
@@ -687,8 +687,8 @@
         "tagDescription": "Описание"
       },
       "messages": {
-        "success": "Тег транзакций изменен",
-        "error": "Ошибка изменения тега транзакций"
+        "success": "Категория транзакций изменена",
+        "error": "Ошибка изменения категории транзакций"
       }
     }
   }
