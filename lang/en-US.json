@@ -169,6 +169,7 @@
     },
 
     "rememberMe": "Remember me",
+    "demoMessage": "This is the FinWave demo mode. All data will be deleted after 24 hours",
 
     "actions": {
       "singIn": "Sing in",
@@ -179,6 +180,7 @@
       "invalidCredentials": "Invalid credentials!",
       "needUsername": "Enter your username!",
       "needPassword": "Enter your password!",
+      "demoError": "Creating demo user error!",
       "serverError": "Server error"
     }
   },
@@ -288,6 +290,45 @@
       "hideFail": "Failed to hide account",
       "showed": "Account was successfully showed",
       "showFail": "Failed to show account"
+    }
+  },
+
+  "demo": {
+    "mainCurrencyCode": "USD",
+
+    "accountTags": {
+      "1": {
+        "name": "Traditional",
+        "description": "Traditional finance accounts"
+      },
+      "2": {
+        "name": "Cryptocurrency",
+        "description": "Crypto finance accounts"
+      }
+    },
+
+    "accounts": {
+      "1": "Paypal",
+      "2": "Cash",
+      "3": {
+        "name": "Ledger",
+        "description": "Cold wallet"
+      },
+      "4": {
+        "name": "Binance",
+        "description": "Hot wallet"
+      }
+    },
+
+    "tags": {
+      "1": "Salary",
+      "2": "Investment",
+      "3": "Goods",
+      "4": "Housing",
+      "5": "Entertainment",
+      "6": "Apparel",
+      "7": "Healthcare",
+      "8": "Travel"
     }
   },
 

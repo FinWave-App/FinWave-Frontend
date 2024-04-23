@@ -16,7 +16,8 @@
           FinWave
         </div>
 
-        <div class="badge badge-info badge-sm font-normal">Beta</div>
+        <div v-if="!demoMode" class="badge badge-info badge-sm font-normal">Beta</div>
+        <div v-else class="badge badge-error badge-sm font-bold">Demo</div>
       </div>
     </div>
 
@@ -34,15 +35,15 @@
   </div>
 </template>
 
-<script>
-import User from "~/components/nav/user/user.vue";
-import Theme from "~/components/nav/user/theme.vue";
-import Avatar from "~/components/nav/user/avatar.vue";
+<script setup>
 
-export default {
-  name: "navigation",
-  components: {Avatar, Theme, User}
-}
+import Theme from "~/components/nav/user/theme.vue";
+import User from "~/components/nav/user/user.vue";
+
+const { $serverConfigs } = useNuxtApp();
+const configs = $serverConfigs.configs.users;
+const demoMode = configs.demoMode;
+
 </script>
 
 <style scoped>

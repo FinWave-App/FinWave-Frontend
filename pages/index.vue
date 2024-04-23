@@ -28,6 +28,7 @@ import NewTransactionButton from "~/components/buttons/quickActions/newTransacti
 import NewTagButton from "~/components/buttons/quickActions/newTagButton.vue";
 import NewCurrencyButton from "~/components/buttons/quickActions/newCurrencyButton.vue";
 import NewNoteButton from "~/components/buttons/quickActions/newNoteButton.vue";
+import {useApiLoader} from "~/composables/useApiLoader";
 
 definePageMeta({
   middleware: [
@@ -35,7 +36,13 @@ definePageMeta({
   ]
 })
 
-const { $notesApi } = useNuxtApp();
+const {$userApi, $serverConfigs, $accountsApi, $notesApi } = useNuxtApp();
+const configs = $serverConfigs.configs.users;
+
+if ($userApi.getUsername().value && configs.demoMode && $accountsApi.getAccounts().value.length == 0) {
+  await useApiLoader.initDemo();
+  await useApiLoader.fetch();
+}
 
 const newTransaction = ref(false);
 const newTag = ref(false);

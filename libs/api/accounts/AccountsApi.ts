@@ -123,7 +123,7 @@ export class AccountsApi extends AbstractApi {
         return true;
     }
 
-    public async newAccount(name: string, currencyId: number, tagId: number, description: string | null) : Promise<boolean> {
+    public async newAccount(name: string, currencyId: number, tagId: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
@@ -139,7 +139,7 @@ export class AccountsApi extends AbstractApi {
         const {data: newAccount, error} = await useApi<any>("/user/accounts/new", opts);
 
         if (error.value !== null) {
-            return false;
+            return -1;
         }
 
         this.accounts.value?.push({
@@ -154,6 +154,6 @@ export class AccountsApi extends AbstractApi {
 
         this.reloadMap();
 
-        return true;
+        return newAccount.value.accountId;
     }
 }

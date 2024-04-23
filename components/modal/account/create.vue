@@ -76,7 +76,7 @@ const create = () => {
   close();
 
   $accountsApi.newAccount(name.value, currency.value, props.tag.tagId, description.value.length > 0 ? description.value : null).then((s) => {
-    if (s)
+    if (s !== -1)
       $toastsManager.pushToast(t("modals.newAccount.messages.success"), 2500, "success")
     else
       $toastsManager.pushToast(t("modals.newAccount.messages.error"), 3000,"error")

@@ -114,4 +114,109 @@ export const useApiLoader = new class ApiLoader {
             }
         }
     }
+
+    public async initDemo()  {
+        const { t} = useI18n();
+        const mainCurrencyCode = t("demo.mainCurrencyCode");
+
+        const results = await Promise.all([
+            this.accountsTagsApi.newTag(t("demo.accountTags.1.name"), t("demo.accountTags.1.description")),
+            this.accountsTagsApi.newTag(t("demo.accountTags.2.name"), t("demo.accountTags.2.description")),
+
+            this.currenciesApi.newCurrency("BTC", "₿", 8, "Bitcoin"),
+            this.currenciesApi.newCurrency("ETH", "Ξ", 18, "Ethereum"),
+
+            this.transactionsTagsApi.newTag(1, -1, t("demo.tags.1"), null),
+            this.transactionsTagsApi.newTag(0, -1, t("demo.tags.2"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.3"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.4"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.5"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.6"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.7"), null),
+            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.8"), null),
+        ]).catch(t => {
+            console.log(t);
+
+            return []
+        });
+
+        const tradTag = results[0]
+        const cryptoTag = results[1]
+
+        const btcCurrency = results[2]
+        const ethCurrency = results[3]
+
+        const salaryTag = results[4]
+        const investmentTag = results[5]
+        const goodsTag = results[6]
+        const housingTag = results[7]
+        const entertainmentTag = results[8]
+        const apparelTag = results[9]
+        const healthcareTag = results[10]
+        const travelTag = results[11]
+
+        let mainCurrency = this.currenciesApi.getCurrencies().value.find((v) => v.code === mainCurrencyCode)
+
+        if (!mainCurrency) {
+            mainCurrency = 1;
+        }else {
+            mainCurrency = mainCurrency.currencyId;
+        }
+
+        const accounts = await Promise.all([
+            this.accountsApi.newAccount(t("demo.accounts.3.name"), btcCurrency, cryptoTag, t("demo.accounts.3.description")),
+            this.accountsApi.newAccount(t("demo.accounts.4.name"), ethCurrency, cryptoTag, t("demo.accounts.4.description")),
+            this.accountsApi.newAccount(t("demo.accounts.1"), mainCurrency, tradTag, null),
+            this.accountsApi.newAccount(t("demo.accounts.2"), mainCurrency, tradTag, null),
+        ])
+
+        const ledger = accounts[0];
+        const binance = accounts[1];
+        const paypal = accounts[2];
+        const cash = accounts[3];
+
+        const today = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000;
+
+        await Promise.all([
+            this.transactionsApi.newTransaction(salaryTag, paypal, new Date(today - oneDay * 14), 50000, null),
+            this.transactionsApi.newTransaction(housingTag, paypal, new Date(today - oneDay * 14), -5000, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 13), -421, null),
+            this.transactionsApi.newInternalTransfer(investmentTag, paypal, ledger, new Date(today - oneDay * 13), -19000, 0.5, null),
+            this.transactionsApi.newInternalTransfer(investmentTag, paypal, binance, new Date(today - oneDay * 13), -1000, 0.3, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 12), -515, null),
+            this.transactionsApi.newTransaction(healthcareTag, paypal, new Date(today - oneDay * 12), -526, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 11), -345, null),
+            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 11), -621, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 10), -124, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 9), -235, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 8), -652, null),
+            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 8), -721, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 7), -637, null),
+            this.transactionsApi.newTransaction(apparelTag, paypal, new Date(today - oneDay * 7), -715, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 6), -833, null),
+            this.transactionsApi.newInternalTransfer(investmentTag, binance, cash, new Date(today - oneDay * 6), -0.15, 2000, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 5), -942, null),
+            this.transactionsApi.newTransaction(healthcareTag, paypal, new Date(today - oneDay * 5), -415, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 4), -325, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 3), -634, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 2), -753, null),
+            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 2), -235, null),
+
+            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay), -179, null),
+            this.transactionsApi.newTransaction(travelTag, paypal, new Date(today - oneDay), -15000, null),
+        ]);
+    }
 }

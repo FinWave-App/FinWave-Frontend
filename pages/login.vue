@@ -20,7 +20,7 @@
           </div>
         </form>
 
-        <div class="form-control mt-2">
+        <div v-if="!demoMode" class="form-control mt-2">
           <label class="label cursor-pointer">
             <span class="label-text">{{ $t('loginPage.rememberMe') }}</span>
             <input type="checkbox" :disabled="loading" v-model="rememberMe" checked="checked" class="checkbox" />
@@ -71,7 +71,9 @@ const errorMessage = ref("");
 
 const loading = ref(false);
 
-const { $auth, $serverConfigs } = useNuxtApp();
+const { $auth, $serverConfigs, $toastsManager } = useNuxtApp();
+const { t, locale } = useI18n();
+const configs = $serverConfigs.configs.users;
 
 const singIn = async () => {
   if (login.value === "" || login.value == null) {
@@ -111,10 +113,28 @@ const singIn = async () => {
 
   loading.value = false;
 
-  await navigateTo("/");
+  await navigateTo("/").then(() => {
+    $toastsManager.pushToast(t("loginPage.demoMessage"), 5000, "warning")
+  });
 }
 
-const registrationEnabled = $serverConfigs.configs.users.registration.enabled;
+const registrationEnabled = configs.registration.enabled;
+const demoMode = configs.demoMode;
+
+if (demoMode) {
+  const {data, error} = await useApi('auth/demo', {
+    method: "POST"
+  })
+
+  if (error.value !== null) {
+    loading.value = false;
+
+    errorMessage.value = "loginPage.errors.demoError";
+  }
+
+  login.value = data.value.username;
+  password.value = data.value.password;
+}
 
 </script>
 

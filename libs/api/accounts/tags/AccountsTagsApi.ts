@@ -17,7 +17,7 @@ export class AccountsTagsApi extends AbstractApi {
         return this.tags;
     }
 
-    public async newTag(name: string, description: string | null) : Promise<boolean> {
+    public async newTag(name: string, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: { name: name }
@@ -29,7 +29,7 @@ export class AccountsTagsApi extends AbstractApi {
         const {data: newTag, error} = await useApi("/user/accounts/tags/new", opts);
 
         if (error.value !== null) {
-            return false;
+            return -1;
         }
 
         this.tags.value.push({
@@ -38,7 +38,7 @@ export class AccountsTagsApi extends AbstractApi {
             description: description
         });
 
-        return true;
+        return newTag.value.tagId;
     }
 
     public async editTagName(name: string, tagId: number) {

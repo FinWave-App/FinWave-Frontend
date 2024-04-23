@@ -102,7 +102,7 @@ const create = () => {
   close();
 
   $currenciesApi.newCurrency(code.value, symbol.value, decimals.value, description.value.length > 0 ? description.value : null).then((s) => {
-    if (s)
+    if (s !== -1)
       $toastsManager.pushToast(t("modals.newCurrency.messages.success"), 2500, "success")
     else
       $toastsManager.pushToast(t("modals.newCurrency.messages.error"), 3000,"error")

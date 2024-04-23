@@ -64,7 +64,7 @@ const create = () => {
   close();
 
   $accountsTagsApi.newTag(name.value, description.value.length > 0 ? description.value : null).then((s) => {
-    if (s)
+    if (s !== -1)
       $toastsManager.pushToast(t("modals.newAccountTag.messages.success"), 2500, "success")
     else
       $toastsManager.pushToast(t("modals.newAccountTag.messages.error"), 3000,"error")

@@ -34,7 +34,7 @@ export class CurrenciesApi extends AbstractApi {
         return this.currenciesMap;
     }
 
-    public async newCurrency(code: string, symbol: string, decimals: number, description: string) : Promise<boolean> {
+    public async newCurrency(code: string, symbol: string, decimals: number, description: string) : Promise<number> {
         const opts = {
             method: "POST",
             params: { code: code, symbol: symbol, decimals: decimals, description: description }
@@ -43,7 +43,7 @@ export class CurrenciesApi extends AbstractApi {
         const {data: newCurrency, error} = await useApi("/user/currencies/new", opts);
 
         if (error.value !== null) {
-            return false;
+            return -1;
         }
 
         this.currencies.value.push({
@@ -57,7 +57,7 @@ export class CurrenciesApi extends AbstractApi {
 
         this.rebuildMap();
 
-        return true;
+        return newCurrency.value.currencyId;
     }
 
     public async editCurrencyCode(code: string, currencyId: number) {
