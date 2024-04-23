@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100 shadow">
+  <div class="navbar bg-base-100 shadow overflow-hidden">
     <div class="navbar-start gap-2">
       <div class="dropdown dropdown-hover">
         <div tabindex="0" role="button" class="btn btn-ghost xl:hidden">

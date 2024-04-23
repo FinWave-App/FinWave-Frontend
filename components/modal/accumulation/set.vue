@@ -134,8 +134,6 @@ const set = () => {
   highlightErrors.value = false;
   close();
 
-  console.log(result);
-
   $accumulationsApi.setAccumulation(result).then((s) => {
     if (s)
       $toastsManager.pushToast(t("modals.setAccumulation.messages.success"), 2500, "success")

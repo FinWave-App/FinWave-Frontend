@@ -37,5 +37,6 @@ export class AuthManager {
         useCookie<string | undefined>("session_token").value = undefined;
         this._state.update(null)
         navigateTo("/login");
+        refreshNuxtData()
     }
 }

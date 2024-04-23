@@ -131,7 +131,6 @@ const updateSign = () => {
 }
 
 watch(() => props.tagId, (value, oldValue, onCleanup) => {
-  console.log(value, oldValue, onCleanup)
   updateSign();
 });
 

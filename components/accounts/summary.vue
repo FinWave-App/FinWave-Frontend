@@ -38,6 +38,9 @@ const map = computed(() => {
   for (const account of accounts.value) {
     const currency = currencyMap.value.get(account.currencyId);
 
+    if (!currency)
+      continue;
+
     if (!result.has(currency))
       result.set(currency, 0);
 

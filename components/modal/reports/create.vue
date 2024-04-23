@@ -59,7 +59,7 @@ const { t, getLocaleMessage, locale } = useI18n();
 
 const {$serverConfigs, $reportsApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.reports;
-console.log(configs)
+
 const emit = defineEmits(['close', 'fetchReports'])
 
 const filter = ref();

@@ -29,6 +29,7 @@ import NewTagButton from "~/components/buttons/quickActions/newTagButton.vue";
 import NewCurrencyButton from "~/components/buttons/quickActions/newCurrencyButton.vue";
 import NewNoteButton from "~/components/buttons/quickActions/newNoteButton.vue";
 import {useApiLoader} from "~/composables/useApiLoader";
+import {reloadNuxtApp} from "#app";
 
 definePageMeta({
   middleware: [
@@ -41,7 +42,7 @@ const configs = $serverConfigs.configs.users;
 
 if ($userApi.getUsername().value && configs.demoMode && $accountsApi.getAccounts().value.length == 0) {
   await useApiLoader.initDemo();
-  await useApiLoader.fetch();
+  window.location.reload();
 }
 
 const newTransaction = ref(false);
