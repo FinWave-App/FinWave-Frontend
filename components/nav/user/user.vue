@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="dropdown dropdown-end dropdown-hover">
+    <div class="dropdown dropdown-end dropdown-hover max-w-52">
       <div tabindex="0" role="button" class="cursor-pointer m-1">
-        <avatar :avatar-letter="avatarLetter" :username="username"/>
+        <avatar class="overflow-hidden" :avatar-letter="avatarLetter" :username="username"/>
       </div>
       <ul tabindex="0" class="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52">
         <li v-if="adminAllowed" @click="handleClick">
