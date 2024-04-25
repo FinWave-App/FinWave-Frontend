@@ -24,7 +24,7 @@ export class TransactionsApi extends AbstractApi {
         return error.value === null;
     }
 
-    public async newTransaction(tagId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<boolean> {
+    public async newTransaction(tagId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
@@ -38,12 +38,16 @@ export class TransactionsApi extends AbstractApi {
         if (description !== null && description.length > 0)
             opts.params.description = description;
 
-        const {error} = await useApi("/user/transactions/new", opts);
+        const {data, error} = await useApi("/user/transactions/new", opts);
 
-        return error.value === null;
+        if (error.value !== null) {
+            return -1;
+        }
+
+        return data.value.transactionId;
     }
 
-    public async newInternalTransfer(tagId: number, fromAccountId: number, toAccountId: number, createdAt: Date, fromDelta: number, toDelta: number, description: string | null) : Promise<boolean> {
+    public async newInternalTransfer(tagId: number, fromAccountId: number, toAccountId: number, createdAt: Date, fromDelta: number, toDelta: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
@@ -59,9 +63,13 @@ export class TransactionsApi extends AbstractApi {
         if (description !== null && description.length > 0)
             opts.params.description = description;
 
-        const {error} = await useApi("/user/transactions/newInternal", opts);
+        const {data, error} = await useApi("/user/transactions/newInternal", opts);
 
-        return error.value === null;
+        if (error.value !== null) {
+            return -1;
+        }
+
+        return data.value.transactionId;
     }
 
     public async deleteTransaction(transactionId: number) : Promise<boolean> {

@@ -178,7 +178,7 @@ export const useApiLoader = new class ApiLoader {
         const today = Date.now();
         const oneDay = 24 * 60 * 60 * 1000;
 
-        await Promise.all([
+        return Promise.all([
             this.transactionsApi.newTransaction(salaryTag, paypal, new Date(today - oneDay * 14), 50000, null),
             this.transactionsApi.newTransaction(housingTag, paypal, new Date(today - oneDay * 14), -5000, null),
 

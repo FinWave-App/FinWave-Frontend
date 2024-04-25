@@ -235,7 +235,7 @@ const create = () => {
 
   const callApi = (tagId) => {
     $transactionsApi.newInternalTransfer(tagId, fromAccount.value, toAccount.value, date.value, fromDelta.value * -1, toDelta.value, description.value.length > 0 ? description.value : null).then((s) => {
-      if (s) {
+      if (s !== -1) {
         $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
         emit('reloadTransactions');
         $accountsApi.reloadAccounts();

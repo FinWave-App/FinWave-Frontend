@@ -14,7 +14,7 @@
       <new-note-button @event="newNote = true"/>
     </div>
 
-    <total-panel class="col-span-1 lg:col-span-2 row-span-2"/>
+    <total-panel class="col-span-1 lg:col-span-2 row-span-2" :period="summaryPeriod"/>
     <notes-panel class="col-span-1 lg:col-span-1 row-span-2" :notes="notes" @new-note="newNote = true"/>
     <accounts-summary class="col-span-1 lg:col-span-1 row-span-2" />
   </div>
@@ -33,16 +33,25 @@ import {reloadNuxtApp} from "#app";
 
 definePageMeta({
   middleware: [
-      "auth"
+    "auth"
   ]
 })
 
-const {$userApi, $serverConfigs, $accountsApi, $notesApi } = useNuxtApp();
+const { t, locale } = useI18n();
+const { $serverConfigs, $accountsApi, $notesApi, $toastsManager } = useNuxtApp();
 const configs = $serverConfigs.configs.users;
+const haveAccounts = $accountsApi.getAccounts().value.length !== 0
 
-if ($userApi.getUsername().value && configs.demoMode && $accountsApi.getAccounts().value.length == 0) {
-  await useApiLoader.initDemo();
-  window.location.reload();
+const summaryPeriod = ref(0);
+
+if (configs.demoMode && !haveAccounts) {
+  useApiLoader.initDemo().then(() => {
+    $accountsApi.reloadAccounts();
+    summaryPeriod.value = 31
+  })
+  $toastsManager.pushToast(t("loginPage.demoMessage"), 5000, "warning")
+}else if (!configs.demoMode) {
+  summaryPeriod.value = 31
 }
 
 const newTransaction = ref(false);

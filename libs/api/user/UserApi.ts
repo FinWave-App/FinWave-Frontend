@@ -29,7 +29,7 @@ export class UserApi extends AbstractApi {
 
         const {$auth} = useNuxtApp();
 
-        $auth.logout();
+        $auth.logout(true);
 
         return error.value === null;
     }
@@ -44,7 +44,7 @@ export class UserApi extends AbstractApi {
 
         const {$auth} = useNuxtApp();
 
-        $auth.logout();
+        $auth.logout(true);
 
         return error.value === null;
     }

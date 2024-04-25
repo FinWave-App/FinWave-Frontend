@@ -33,10 +33,11 @@ export class AuthManager {
         this._state.update(token);
     }
 
-    public logout() {
+    public logout(redirect : boolean = false) {
         useCookie<string | undefined>("session_token").value = undefined;
         this._state.update(null)
-        navigateTo("/login");
-        refreshNuxtData()
+
+        if (redirect)
+            window.location.href = '/login';
     }
 }

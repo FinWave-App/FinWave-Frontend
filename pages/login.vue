@@ -113,9 +113,7 @@ const singIn = async () => {
 
   loading.value = false;
 
-  await navigateTo("/").then(() => {
-    $toastsManager.pushToast(t("loginPage.demoMessage"), 5000, "warning")
-  });
+  window.location.href = '/';
 }
 
 const registrationEnabled = configs.registration.enabled;

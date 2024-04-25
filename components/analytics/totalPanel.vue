@@ -1,6 +1,6 @@
 <template>
   <div class="panel">
-    <total-by-period :id="'total-by-period'" :period="31" :currency-id="currencyToShow"></total-by-period>
+    <total-by-period :id="'total-by-period'" :period="period" :currency-id="currencyToShow"></total-by-period>
 
     <div class="">
       <select-currency class="multiselect-xs" v-model="currencyToShow"/>
@@ -10,6 +10,13 @@
 
 <script setup>
 import TotalByPeriod from "~/components/analytics/totalByPeriod.vue";
+
+const props = defineProps({
+  period: {
+    type: Number,
+    required: true
+  }
+})
 
 const currencyToShow = ref(useStorage.getOrDefault("preferred_currency", 1));
 

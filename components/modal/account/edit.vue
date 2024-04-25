@@ -209,7 +209,7 @@ const applyNewAmount = () => {
   close();
 
   $transactionsApi.newTransaction(parentTag.value, props.account.accountId, new Date(), newAmount.value - props.account.amount, null).then((r) => {
-    if (r) {
+    if (r !== -1) {
       props.account.amount = newAmount.value;
 
       $toastsManager.pushToast(t("modals.editAccount.messages.success"), 2500, "success");
