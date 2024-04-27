@@ -28,6 +28,10 @@ watch(currencyToShow, () => {
   useStorage.set("preferred_currency", currencyToShow.value)
 })
 
+watch(() => props.period, () => { // refresh also currency from storage, case for demo mode init
+  currencyToShow.value = useStorage.getOrDefault("preferred_currency", 1)
+})
+
 </script>
 
 

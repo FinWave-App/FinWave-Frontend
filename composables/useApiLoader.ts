@@ -163,6 +163,8 @@ export const useApiLoader = new class ApiLoader {
             mainCurrency = mainCurrency.currencyId;
         }
 
+        useStorage.set("preferred_currency", mainCurrency)
+
         const accounts = await Promise.all([
             this.accountsApi.newAccount(t("demo.accounts.3.name"), btcCurrency, cryptoTag, t("demo.accounts.3.description")),
             this.accountsApi.newAccount(t("demo.accounts.4.name"), ethCurrency, cryptoTag, t("demo.accounts.4.description")),

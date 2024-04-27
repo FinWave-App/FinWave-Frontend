@@ -112,8 +112,7 @@ const singIn = async () => {
   $auth.auth(data.value.token, data.value.lifetimeDays);
 
   loading.value = false;
-
-  window.location.href = '/';
+  navigateTo("/");
 }
 
 const registrationEnabled = configs.registration.enabled;
