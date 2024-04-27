@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <button class="btn w-full btn-success mt-8" :disabled="loading" :class=" { 'loading' : loading }" @click="singIn">{{ $t('loginPage.actions.singIn') }}</button>
+        <button class="btn w-full btn-success mt-8" :disabled="loading" @click="singIn">{{ $t('loginPage.actions.singIn') }}</button>
 
         <div class="w-full flex justify-end mt-2" v-if="registrationEnabled">
           <div class="text-base-content text-sm underline" :class="{ 'text-opacity-50' : loading}">
@@ -111,8 +111,9 @@ const singIn = async () => {
 
   $auth.auth(data.value.token, data.value.lifetimeDays);
 
-  loading.value = false;
-  navigateTo("/");
+  navigateTo("/").then(() => {
+    loading.value = false;
+  })
 }
 
 const registrationEnabled = configs.registration.enabled;
