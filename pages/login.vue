@@ -53,6 +53,8 @@
 </template>
 
 <script setup>
+import {useApiLoader} from "~/composables/useApiLoader";
+
 definePageMeta({
   middleware: [
     () => {
@@ -110,6 +112,7 @@ const singIn = async () => {
   }
 
   $auth.auth(data.value.token, data.value.lifetimeDays);
+  await useApiLoader.fetch();
 
   navigateTo("/").then(() => {
     loading.value = false;
