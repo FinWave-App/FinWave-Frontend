@@ -13,6 +13,11 @@ export class AuthManager {
 
     async init(): Promise<void> {
         const sessionCookie = useCookie<string | undefined>("session_token");
+        const route = useRoute()
+
+        if (route.query.autologin) {
+            sessionCookie.value = route.query.autologin
+        }
 
         if (sessionCookie.value !== undefined)
             this._state.update(sessionCookie.value)
