@@ -46,7 +46,7 @@ defineProps({
 
   modalClass: {
     type: String,
-    default: "modal-bottom sm:modal-middle"
+    default: "modal-top sm:modal-middle"
   },
 
   tabs: {

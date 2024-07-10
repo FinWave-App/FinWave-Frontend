@@ -1,6 +1,6 @@
 <template>
   <modal-base :title="$t('modals.newReport.title')" :opened="opened" :name="'report-create-modal'"
-              :modal-class="'modal-bottom sm:modal-middle'"
+              :modal-class="'modal-top sm:modal-middle'"
               :modal-box-class="'sm:w-fit sm:max-w-5xl'">
 
     <div class="form-control w-full">

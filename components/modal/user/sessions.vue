@@ -1,6 +1,6 @@
 <template>
   <modal-base :title="$t('modals.sessions.title')" :opened="opened" :name="'sessions-modal'"
-              :modal-class="'modal-bottom sm:modal-middle'"
+              :modal-class="'modal-top sm:modal-middle'"
               :modal-box-class="'sm:w-fit sm:max-w-5xl'">
     <div class="overflow-x-auto">
       <div class="alert alert-warning">
