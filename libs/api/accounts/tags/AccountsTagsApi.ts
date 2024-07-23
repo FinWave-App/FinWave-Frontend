@@ -5,16 +5,20 @@ export class AccountsTagsApi extends AbstractApi {
     private tags: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void | boolean> {
+        await this.fetch();
+    }
+
+    public getTags(): Ref<Array<any> | null> {
+        return this.tags;
+    }
+
+    public async fetch(): Promise<void> {
         const {data} = await useApi<any>("/user/accounts/tags/getList");
 
         if (data.value === null)
             return;
 
         this.tags.value = data.value.tags || [];
-    }
-
-    public getTags(): Ref<Array<any> | null> {
-        return this.tags;
     }
 
     public async newTag(name: string, description: string | null) : Promise<number> {

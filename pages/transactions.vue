@@ -115,6 +115,8 @@ const fetchData = async () => {
       .catch(console.log);
 }
 
+$transactionsApi.registerUpdateListener(fetchData)
+
 const changePage = async (pageNeed) => {
   if (pageNeed < 1 || pageNeed > maxPages.value || pageNeed === page.value)
     return;

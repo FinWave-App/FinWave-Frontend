@@ -3,6 +3,15 @@ import {Ref} from "vue";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 
 export class ReportsApi extends AbstractApi {
+    private notifyListeners : Array<Function> = new Array<Function>();
+
+    public updateNotify() {
+        this.notifyListeners.forEach(func => func());
+    }
+
+    public registerUpdateListener(func : Function) : void {
+        this.notifyListeners.push(func);
+    }
 
     async init(): Promise<void | boolean> {
     }

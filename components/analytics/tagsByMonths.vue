@@ -24,7 +24,7 @@ import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
 import {useColor} from "~/composables/useColor";
 
-const { $analyticsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
+const { $analyticsApi, $transactionsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const tagsMap = $transactionsTagsApi.getTagsMap();
@@ -45,6 +45,8 @@ const fetch = async () => {
   const analyticsRaw = await $analyticsApi.getAnalyticsByMonths(filter.value);
   analytics.value = new Map(Array.from(analyticsRaw).sort(([a], [b]) => a.localeCompare(b)));
 }
+
+$transactionsApi.registerUpdateListener(fetch)
 
 const buildChart = async () => {
   const xaxis = [];

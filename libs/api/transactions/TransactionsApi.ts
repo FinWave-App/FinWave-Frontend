@@ -2,8 +2,18 @@ import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 import {AbstractApi} from "~/libs/api/AbstractApi";
 
 export class TransactionsApi extends AbstractApi {
+    private notifyListeners : Array<Function> = new Array<Function>();
+
     async init(): Promise<void | boolean> {
 
+    }
+
+    public updateNotify() {
+        this.notifyListeners.forEach(func => func());
+    }
+
+    public registerUpdateListener(func : Function) : void {
+        this.notifyListeners.push(func);
     }
 
     public async newBulkTransaction(transactions : any) : Promise<boolean> {

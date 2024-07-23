@@ -6,6 +6,10 @@ export class CurrenciesApi extends AbstractApi {
     private currenciesMap: Ref<Map<number, any>> = ref(new Map<number, any>);
 
     async init(): Promise<void | boolean> {
+        await this.fetch();
+    }
+
+    public async fetch() : Promise<void> {
         const {data} = await useApi<any>("/user/currencies/getList");
 
         if (data.value === null)

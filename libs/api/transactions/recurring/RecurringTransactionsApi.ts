@@ -14,6 +14,10 @@ export class RecurringTransactionsApi extends AbstractApi {
     }
 
     async init(): Promise<void | boolean> {
+        await this.fetch();
+    }
+
+    public async fetch(): Promise<void> {
         const {data} = await useApi<any>("/user/transactions/recurring/getList");
 
         if (data.value === null)

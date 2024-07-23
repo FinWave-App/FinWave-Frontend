@@ -63,7 +63,7 @@ const props = defineProps({
   }
 })
 
-const { $transactionsTagsApi, $analyticsApi, $currenciesApi } = useNuxtApp();
+const { $transactionsTagsApi, $analyticsApi, $transactionsApi, $currenciesApi } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const mode = computed(() => props.mode === "month")
@@ -135,6 +135,12 @@ const reloadAnalytics = async () => {
       new TransactionsFilter(null, null, null, days.first, days.last, null)
   ));
 }
+
+$transactionsApi.registerUpdateListener(() => {
+  reloadAnalytics().then(() => {
+    buildChart();
+  })
+})
 
 const formatAmount = (delta) => {
   const currencyObject = currenciesMap.value.get(currency.value);

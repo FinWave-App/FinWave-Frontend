@@ -8,18 +8,20 @@ export class TransactionsTagsApi extends AbstractApi {
     private tagsTree: Ref<Array<any>> = ref([]);
 
     async init(): Promise<void | boolean> {
+        watch(this.tags, (old, newV) => {
+            this.buildTree()
+        }, { deep: true })
+
+        await this.fetch();
+    }
+
+    public async fetch() : Promise<void> {
         const {data} = await useApi<any>("/user/transactions/tags/getList");
 
         if (data.value === null)
             return;
 
         this.tags.value = data.value.tags || [];
-
-        watch(this.tags, (old, newV) => {
-            this.buildTree()
-        }, { deep: true })
-
-        this.buildTree();
     }
 
     private rebuildMap() {

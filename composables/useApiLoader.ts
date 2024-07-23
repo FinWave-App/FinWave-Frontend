@@ -16,6 +16,7 @@ import {ConfigManager} from "~/libs/config/ConfigManager";
 import {ServerConfigs} from "~/libs/config/ServerConfigs";
 import {AccumulationsApi} from "~/libs/api/accumulations/AccumulationsApi";
 import {ReportsApi} from "~/libs/api/reports/ReportsApi";
+import {ca} from "date-fns/locale";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -37,6 +38,8 @@ export const useApiLoader = new class ApiLoader {
     private readonly adminApi : AdminApi;
     private readonly accumulationsApi: AccumulationsApi;
     private readonly reportsApi: ReportsApi;
+
+    private websocketClient : WebSocket | null = null;
 
     constructor() {
         this.serverConfigs = new ConfigManager();
@@ -91,6 +94,70 @@ export const useApiLoader = new class ApiLoader {
 
             return false;
         });
+    }
+
+    public connectWebsocket() : void {
+        const config = useRuntimeConfig()
+        const auth = useNuxtApp().$auth.state();
+
+        this.websocketClient = new WebSocket(config.public.apiURL
+            .replace("https://", "wss://")
+            .replace("http://", "ws://") +
+            "websockets/events"
+        );
+
+        this.websocketClient.onmessage = (event) => {
+            this.parseMessage(JSON.parse(event.data))
+
+            console.log(event.data);
+        };
+
+        this.websocketClient.addEventListener("open", e =>{
+            this.websocketClient.send(JSON.stringify({
+                type: "auth",
+                body: {
+                    token: auth.token
+                }
+            }))
+        })
+    }
+
+    protected parseMessage(message : any) {
+        if (message.type !== "update")
+            return;
+
+        const body = message.body;
+
+        switch (body.updated) {
+            case "accounts":
+                this.accountsApi.reloadAccounts();
+                break;
+            case "accountTags":
+                this.accountsTagsApi.fetch();
+                break;
+            case "accumulation":
+                this.accumulationsApi.fetchMap();
+                break;
+            case "currencies":
+                this.currenciesApi.fetch();
+                break;
+            case "notes":
+                this.notesApi.updateNotify();
+                break;
+            case "transactions":
+                this.accountsApi.reloadAccounts();
+                this.transactionsApi.updateNotify();
+                break;
+            case "reports":
+                this.reportsApi.updateNotify();
+                break;
+            case "recurringTransactions":
+                this.recurringTransactionsApi.fetch();
+                break;
+            case "transactionTags":
+                this.accountsTagsApi.fetch();
+                break;
+        }
     }
 
     public getProvider() : any {

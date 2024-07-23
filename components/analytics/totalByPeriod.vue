@@ -12,7 +12,7 @@
 import ApexChart from "vue3-apexcharts";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 
-const { $analyticsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
+const { $analyticsApi, $transactionsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const props = defineProps({
@@ -121,6 +121,8 @@ const buildChart = async () => {
 watch([() => props.currencyId,() =>  props.period], () => {
   buildChart();
 });
+
+$transactionsApi.registerUpdateListener(buildChart)
 
 buildChart();
 

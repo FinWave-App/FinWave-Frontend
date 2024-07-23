@@ -2,8 +2,18 @@ import {Ref} from "vue";
 import {AbstractApi} from "~/libs/api/AbstractApi";
 
 export class NotesApi extends AbstractApi {
+    private notifyListeners : Array<Function> = new Array<Function>();
+
     async init(): Promise<void | boolean> {
 
+    }
+
+    public updateNotify() {
+        this.notifyListeners.forEach(func => func());
+    }
+
+    public registerUpdateListener(func : Function) : void {
+        this.notifyListeners.push(func);
     }
 
     public async newNote(text: string, notificationTime: Date | null): Promise<boolean> {
