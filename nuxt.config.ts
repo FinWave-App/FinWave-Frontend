@@ -24,6 +24,7 @@ const config: NuxtConfig = {
 
     modules: [
         '@nuxtjs/i18n',
+        'nuxt-papa-parse'
     ],
 
     buildModules: [

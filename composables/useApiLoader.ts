@@ -17,6 +17,7 @@ import {ServerConfigs} from "~/libs/config/ServerConfigs";
 import {AccumulationsApi} from "~/libs/api/accumulations/AccumulationsApi";
 import {ReportsApi} from "~/libs/api/reports/ReportsApi";
 import {ca} from "date-fns/locale";
+import {useStorage} from "@vueuse/core";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -107,9 +108,10 @@ export const useApiLoader = new class ApiLoader {
         );
 
         this.websocketClient.onmessage = (event) => {
-            this.parseMessage(JSON.parse(event.data))
+            if (event.data === "pong")
+                return
 
-            console.log(event.data);
+            this.parseMessage(JSON.parse(event.data))
         };
 
         this.websocketClient.addEventListener("open", e =>{
@@ -119,6 +121,10 @@ export const useApiLoader = new class ApiLoader {
                     token: auth.token
                 }
             }))
+
+            setInterval(() => {
+                this.websocketClient.send("ping")
+            },15000);
         })
     }
 
@@ -230,7 +236,7 @@ export const useApiLoader = new class ApiLoader {
             mainCurrency = mainCurrency.currencyId;
         }
 
-        useStorage.set("preferred_currency", mainCurrency)
+        useStorage("preferred_currency", 1).value = mainCurrency;
 
         const accounts = await Promise.all([
             this.accountsApi.newAccount(t("demo.accounts.3.name"), btcCurrency, cryptoTag, t("demo.accounts.3.description")),

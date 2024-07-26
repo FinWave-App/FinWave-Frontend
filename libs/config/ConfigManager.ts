@@ -1,6 +1,6 @@
 import {ServerConfigs} from "~/libs/config/ServerConfigs";
 import {useCookie} from "#app";
-import {useStorage} from "#imports";
+import {useStorage} from "@vueuse/core";
 
 export class ConfigManager {
     private _configs : ServerConfigs | null = null;
@@ -15,8 +15,8 @@ export class ConfigManager {
 
         this._serverAvailable = true;
 
-        const cachedHash = useStorage.get<string>("configs_hash")
-        const cachedConfigs = useStorage.get<ServerConfigs>("configs");
+        const cachedHash = useStorage("configs_hash", "").value
+        const cachedConfigs = useStorage("configs", {}).value;
 
         if (cachedConfigs !== undefined && cachedHash === hash.value) {
             this._configs = cachedConfigs;
@@ -27,8 +27,8 @@ export class ConfigManager {
 
         const {data: configs} = await useApi<ServerConfigs>("configs/get");
 
-        useStorage.set("configs", JSON.stringify(configs.value));
-        useStorage.set("configs_hash", hash.value);
+        useStorage("configs", {}).value = configs.value;
+        useStorage("configs_hash", "").value = hash.value;
 
         this._configs = configs.value;
         this.hash = hash.value;

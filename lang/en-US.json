@@ -54,7 +54,8 @@
     "buttons": {
       "deleteAll": "Delete all",
       "newDefault": "Default transaction",
-      "newInternal": "Internal transaction"
+      "newInternal": "Internal transaction",
+      "importCSV": "Import from CSV file"
     },
     "messages": {
       "success": "All transactions are applied",
@@ -340,7 +341,8 @@
       "confirm": "Confirm",
       "apply": "Apply",
       "set": "Set",
-      "close": "Close"
+      "close": "Close",
+      "back": "Back"
     },
 
     "confirmations": {
@@ -349,6 +351,41 @@
       "deleteRecurring": "Delete recurring transaction?",
       "deleteNote": "Delete note?",
       "deleteAllBulk": "Delete all bulk transactions? This action cannot be undone"
+    },
+
+    "csvImport": {
+      "title": "CSV Import",
+      "importMessage": "Imported {n} transactions",
+      "warning": "Columns that have not been mapped will not be saved. You can also select multiple description columns for merging",
+      "readLines": "{n} lines have been read",
+
+      "steps": {
+        "fileSelect": "Select a file",
+        "columnsDefining": "Defining columns",
+        "unknownValuesDefinition": "Defining unknown values"
+      },
+
+      "placeholders": {
+        "ignoreFirst": "Ignore {n} lines",
+        "description": "Default description",
+
+        "unrecognized": {
+          "account": "Select unrecognized accounts",
+          "amount": "Select unrecognized amounts",
+          "tag": "Select unrecognized tags",
+          "date": "Select unrecognized dates"
+        }
+      },
+
+      "columnsTypes": {
+        "toSelect": "Select type",
+        "ignore": "Ignore",
+        "account": "Account",
+        "amount": "Amount",
+        "tag": "Tag",
+        "date": "Date",
+        "description": "Description"
+      }
     },
 
     "notifications": {

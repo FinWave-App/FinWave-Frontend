@@ -14,7 +14,7 @@
       </div>
 
       <div class="flex gap-4 flex-col-reverse mt-4">
-        <div v-for="transaction in transactions" :key="transaction._id" class="flex justify-between gap-2 items-center border rounded-xl p-2 border-base-200">
+        <div v-for="(transaction, index) in transactions" :key="transaction._id" class="flex justify-between gap-2 items-center border rounded-xl p-2 border-base-200" :class="{'border-error' : highlightWrong === index}">
           <select-transaction-tag
               class="w-full flex-1"
               :allow-new="true"
@@ -95,10 +95,13 @@
 
     <div class="col-span-3">
       <div class="flex gap-2 w-full justify-end">
+        <button class="btn btn-sm btn-neutral" v-if="transactions.length === 0" @click="csvImportOpened = true">{{ $t('bulkPage.buttons.importCSV') }}</button>
         <button @click="confirmDeleteOpened = true" class="btn btn-sm btn-error">{{ $t('bulkPage.buttons.deleteAll') }}</button>
-        <button @click="apply" :disabled="false" class="btn btn-sm btn-success">{{ $t('modals.buttons.apply') }}</button>
+        <button @click="apply" class="btn btn-sm btn-success" :class="{'btn-success' : allValid, 'btn-warning' : !allValid}">{{ $t('modals.buttons.apply') }}</button>
       </div>
     </div>
+
+    <csv-import :opened="csvImportOpened" @close="csvImportOpened = false" @addTransactions="addFromImport" />
 
     <confirmation :opened="confirmDeleteOpened"
                   name="bulk-delete-confirm"
@@ -121,6 +124,8 @@ import PlusButton from "~/components/buttons/plusButton.vue";
 import CopyButton from "~/components/buttons/copyButton.vue";
 import DuplicateButton from "~/components/buttons/duplicateButton.vue";
 import Confirmation from "~/components/modal/confirmation.vue";
+import {useStorage} from "@vueuse/core";
+import CsvImport from "~/components/modal/transaction/csvImport.vue";
 
 definePageMeta({
   middleware: [
@@ -140,13 +145,58 @@ const tagsTree = $transactionsTagsApi.getTagsTree();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const accountsMap = $accountsApi.getAccountsMap();
 
-const transactions = ref(useStorage.getOrDefault("bulk_transactions", []));
+const transactions = useStorage("bulk_transactions", []);
 
 const confirmDeleteOpened = ref(false);
+const csvImportOpened = ref(false);
+
+const allValid = computed(() => {
+  if (transactions.value.length === 0)
+    return false;
+
+  return checkAll() === transactions.value.length;
+})
+
+const highlightWrong = ref(-1);
+
+watch(transactions, (value, oldValue, onCleanup) => {
+  if (highlightWrong.value !== -1)
+    highlightWrong.value = checkAll();
+}, { deep: true })
+
+const checkAll = () => {
+  let lastCheck = 0;
+
+  for (let t of transactions.value) {
+    if (!t.tagId || !tagsMap.value.has(t.tagId))
+      return lastCheck;
+
+    if (!t.accountId || !accountsMap.value.has(t.accountId))
+      return lastCheck;
+
+    if (!t.created || isNaN(Date.parse(t.created)))
+      return lastCheck;
+
+    if (!t.delta || t.delta === 0)
+      return lastCheck;
+
+    if (t.type === 1) {
+      if (!t.toAccountId || !accountsMap.value.has(t.toAccountId))
+        return lastCheck;
+
+      if (!t.toDelta || t.toDelta === 0)
+        return lastCheck;
+    }
+
+    lastCheck++;
+  }
+
+  return lastCheck;
+}
 
 const addNew = (type) => {
   const newTransaction = {
-    _id: new Date().getMilliseconds(),
+    _id: Date.now(),
     type: type,
     tagId: null,
     accountId: null,
@@ -161,20 +211,20 @@ const addNew = (type) => {
   }
 
   transactions.value.push(newTransaction)
+}
 
-  useStorage.set("bulk_transactions", transactions.value);
+const addFromImport = (t) => {
+  csvImportOpened.value = false;
+
+  transactions.value = t.reverse();
 }
 
 const copy = (transaction) => {
   transactions.value.push({... transaction})
-
-  useStorage.set("bulk_transactions", transactions.value);
 }
 
 const deleteTransaction = (transaction) => {
   transactions.value = transactions.value.filter((t) => t !== transaction);
-
-  useStorage.set("bulk_transactions", transactions.value);
 }
 
 const accountIdToCurrencyId = (accountId) => {
@@ -190,12 +240,19 @@ const accountIdToCurrencyId = (accountId) => {
 }
 
 const apply = () => {
+  const lastCheck = checkAll();
+
+  if (lastCheck !== transactions.value.length) {
+    highlightWrong.value = lastCheck;
+
+    return;
+  }
+
   $transactionsApi.newBulkTransaction(transactions.value).then((s) => {
     if (s) {
       $toastsManager.pushToast(t("bulkPage.messages.success"), 2500, "success")
 
       transactions.value = [];
-      useStorage.set("bulk_transactions", transactions.value);
     }
     else
       $toastsManager.pushToast(t("bulkPage.messages.error"), 3000,"error")
@@ -203,8 +260,9 @@ const apply = () => {
 }
 
 const deleteAll = () => {
+  highlightWrong.value = -1;
+
   transactions.value = [];
-  useStorage.set("bulk_transactions", transactions.value);
 
   confirmDeleteOpened.value = false;
 }

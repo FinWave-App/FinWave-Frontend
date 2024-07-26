@@ -49,6 +49,7 @@
 
 import TagGroup from "~/components/accounts/tagGroup.vue";
 import { useArrayFilter } from '@vueuse/core'
+import {useStorage} from "@vueuse/core";
 
 const {$accountsApi, $accountsTagsApi} = useNuxtApp();
 
@@ -60,12 +61,12 @@ const getTagAccounts = (t) => {
 }
 
 tags.value.forEach((t) => {
-  t.hide = useStorage.get("hide_status_" + t.tagId);
+  t.hide = useStorage("hide_status_" + t.tagId, false).value;
 })
 
 const setHideTagStatus = (tag, status) => {
   tag.hide = status;
-  useStorage.set("hide_status_" + tag.tagId, status);
+  useStorage("hide_status_" + tag.tagId, false).value = status;
 }
 
 const createTagModal = ref(false);

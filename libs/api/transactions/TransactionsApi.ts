@@ -21,7 +21,7 @@ export class TransactionsApi extends AbstractApi {
             method: "POST",
             body: {
                 entries: transactions.map(t => {
-                    if (t.description === null) t.description = undefined;
+                    if (!t.description) t.description = undefined;
                     t._id = undefined;
 
                     return t;

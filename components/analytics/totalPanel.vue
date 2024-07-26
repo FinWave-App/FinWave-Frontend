@@ -10,6 +10,7 @@
 
 <script setup>
 import TotalByPeriod from "~/components/analytics/totalByPeriod.vue";
+import {useStorage} from "@vueuse/core";
 
 const props = defineProps({
   period: {
@@ -18,19 +19,11 @@ const props = defineProps({
   }
 })
 
-const currencyToShow = ref(useStorage.getOrDefault("preferred_currency", 1));
+const currencyToShow = useStorage("preferred_currency", 1);
 
 const { $currenciesApi } = useNuxtApp();
 
 const currencies = $currenciesApi.getCurrencies();
-
-watch(currencyToShow, () => {
-  useStorage.set("preferred_currency", currencyToShow.value)
-})
-
-watch(() => props.period, () => { // refresh also currency from storage, case for demo mode init
-  currencyToShow.value = useStorage.getOrDefault("preferred_currency", 1)
-})
 
 </script>
 
