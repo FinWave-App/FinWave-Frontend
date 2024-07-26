@@ -163,11 +163,12 @@ const toDelta = ref();
 const description = ref("");
 
 const highlightErrors = ref(false);
-const allValid = computed(() =>
-    fromAccount.value !== undefined && toAccount.value !== undefined && fromDelta.value !== undefined &&
-    toDelta.value !== undefined && fromDelta.value !== 0 && toDelta.value !== 0 &&
-    tag.value !== undefined && date.value
-)
+const allValid = computed(() => {
+  const basicValid = fromAccount.value !== undefined && tag.value !== undefined && date.value && fromDelta.value !== 0;
+  const separateValid = toAccount.value !== undefined && toDelta.value !== undefined;
+
+  return basicValid && (!separateAmounts.value || separateValid)
+});
 
 const fromCurrency = computed(() => {
   if (fromAccount.value === undefined)
