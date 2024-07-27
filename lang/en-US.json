@@ -17,6 +17,11 @@
       "logout": "Logout"
     },
 
+    "messages": {
+      "usernameCopied": "Login copied",
+      "usernameCopyFail": "Oops, failed to copy login"
+    },
+
     "themes": {
       "system": "System",
       "dark": "Dark",
@@ -131,6 +136,9 @@
       "bar": "Bar",
       "radar": "Radar"
     },
+
+    "income": "Income",
+    "expanse": "Expanse",
 
     "pie": {
       "noData": "No data",
@@ -358,6 +366,8 @@
       "importMessage": "Imported {n} transactions",
       "warning": "Columns that have not been mapped will not be saved. You can also select multiple description columns for merging",
       "readLines": "{n} lines have been read",
+
+      "immediatelyApply": "Apply all transactions immediately",
 
       "steps": {
         "fileSelect": "Select a file",

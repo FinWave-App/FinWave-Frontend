@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <csv-import :opened="csvImportOpened" @close="csvImportOpened = false" @addTransactions="addFromImport" />
+    <csv-import :opened="csvImportOpened" @close="csvImportOpened = false" @addTransactions="addFromImport" @applyTransactions="applyFromImport" />
 
     <confirmation :opened="confirmDeleteOpened"
                   name="bulk-delete-confirm"
@@ -213,6 +213,12 @@ const addNew = (type) => {
   transactions.value.push(newTransaction)
 }
 
+const applyFromImport = (t) => {
+  csvImportOpened.value = false;
+
+  sendToServer(t);
+}
+
 const addFromImport = (t) => {
   csvImportOpened.value = false;
 
@@ -239,6 +245,17 @@ const accountIdToCurrencyId = (accountId) => {
   return accountObject.currencyId;
 }
 
+const sendToServer = (transactions) => {
+  return $transactionsApi.newBulkTransaction(transactions).then((s) => {
+    if (s)
+      $toastsManager.pushToast(t("bulkPage.messages.success"), 2500, "success")
+    else
+      $toastsManager.pushToast(t("bulkPage.messages.error"), 3000,"error")
+
+    return s;
+  });
+}
+
 const apply = () => {
   const lastCheck = checkAll();
 
@@ -248,15 +265,10 @@ const apply = () => {
     return;
   }
 
-  $transactionsApi.newBulkTransaction(transactions.value).then((s) => {
-    if (s) {
-      $toastsManager.pushToast(t("bulkPage.messages.success"), 2500, "success")
-
+  sendToServer(transactions.value).then((s) => {
+    if (s)
       transactions.value = [];
-    }
-    else
-      $toastsManager.pushToast(t("bulkPage.messages.error"), 3000,"error")
-  });
+  })
 }
 
 const deleteAll = () => {

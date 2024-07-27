@@ -187,6 +187,11 @@
 
             </div>
           </div>
+
+          <label class="label cursor-pointer">
+            <span class="label-text">{{ $t('modals.csvImport.immediatelyApply') }}</span>
+            <input type="checkbox" class="toggle toggle-success" v-model="immediatelyApply"/>
+          </label>
         </div>
 
       </template>
@@ -226,12 +231,14 @@ const tags = $transactionsTagsApi.getTags();
 const tagsTree = $transactionsTagsApi.getTagsTree();
 const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 
-const emit = defineEmits(['close', 'addTransactions'])
+const emit = defineEmits(['close', 'addTransactions', 'applyTransactions'])
 const step = ref(0);
 
 const parsedData = ref([])
 const maxColumns = ref(0);
 const ignoreFirst = ref(1);
+
+const immediatelyApply = ref(false);
 
 const columTypes = [
     "ignore",
@@ -339,8 +346,18 @@ const transformToTransactions = () => {
 const unknownValuesFilled = () => {
   let result = true;
 
+  if (needAccount.value && !account.value)
+    return false;
+
+  if (needTag.value && !tag.value)
+    return false;
+
+  if (needDate.value && !date.value)
+    return false;
+
   unknownValues.value.forEach((v, k) => {
     v.forEach((name) => {
+
       if (!unknownMap.value.get(k)[name]) {
         result = false;
 
@@ -490,12 +507,19 @@ const nextStep = () => {
 
       break;
     case 2:
-      if (findUnknownValues()) {
+      if (findUnknownValues() || !unknownValuesFilled()) {
         highlightError.value = true;
 
         break;
       }
+
       const transactions = transformToTransactions();
+
+      if (immediatelyApply.value) {
+        emit('applyTransactions', transactions)
+
+        return;
+      }
 
       $toastsManager.pushToast(t("modals.csvImport.importMessage", transactions.length), 2500, "success")
       emit('addTransactions', transactions)

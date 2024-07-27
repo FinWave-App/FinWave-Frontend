@@ -59,11 +59,11 @@ const formatAmount = (delta) => {
 const buildChart = async () => {
   const newSeries = [
     {
-      name: "Income",
+      name: t("analyticsPage.income"),
       data: []
     },
     {
-      name: "Expanse",
+      name: t("analyticsPage.expanse"),
       data: []
     }
   ];
