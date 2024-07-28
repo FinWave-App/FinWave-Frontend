@@ -18,7 +18,7 @@ export class SessionsApi extends AbstractApi {
             return false;
         }
 
-        return data.value?.sessions;
+        return data.value;
     }
 
     public async newSession(lifetimeDays: number, description: string | null): Promise<any> {

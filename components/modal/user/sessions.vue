@@ -11,25 +11,30 @@
       <table class="table table-xs mt-4">
         <thead>
         <tr>
-          <th>Created</th>
-          <th>Expires</th>
-          <th>Token</th>
-          <th>Description</th>
-          <th class="text-right">Action</th>
-          <th></th>
+          <th>{{ $t('modals.sessions.table.created') }}</th>
+          <th>{{ $t('modals.sessions.table.expires') }}</th>
+          <th>{{ $t('modals.sessions.table.meta') }}</th>
+          <th>{{ $t('modals.sessions.table.description') }}</th>
+          <th class="text-right">{{ $t('modals.sessions.table.action') }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="session in sessions">
+        <tr v-for="session in sessionsData.sessions" :class="{'bg-base-200' : session.sessionId === sessionsData.currentId}">
           <td class="w-36">{{ new Date(session.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
           <td class="w-36">{{ new Date(session.expiresAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
-          <td><p class="w-24 sm:w-56 overflow-hidden overflow-ellipsis"> {{ session.token }} </p></td>
-          <td><p>{{ session.description }}</p></td>
-          <td class="text-right">
-            <buttons-copy-button @click="copyToClipboard(session.token)" class="btn btn-ghost btn-xs"/>
+          <td>
+            <div class="flex gap-2 w-fit">
+              <div class="badge badge-primary badge-outline" v-if="session.sessionId === sessionsData.currentId">
+                {{ $t('modals.sessions.badges.current') }}
+              </div>
+              <div class="badge badge-warning badge-outline" v-if="session.limited">
+                {{ $t('modals.sessions.badges.limited') }}
+              </div>
+            </div>
           </td>
+          <td><p>{{ session.description }}</p></td>
           <td class="text-right w-1 p-1">
-            <buttons-delete-button @click="deleteSession(session)" v-if="session.token !== currentSessionToken" class="btn btn-ghost btn-xs"/>
+            <buttons-delete-button @click="deleteSession(session)" class="btn btn-ghost btn-xs"/>
           </td>
         </tr>
         </tbody>
@@ -68,19 +73,18 @@ const props = defineProps({
 
 const { t, locale } = useI18n();
 
-const {$serverConfigs, $auth, $sessionsApi, $toastsManager } = useNuxtApp();
+const {$serverConfigs, $sessionsApi, $auth, $toastsManager } = useNuxtApp();
 
 const configs = $serverConfigs.configs.users;
 
 const emit = defineEmits(['close'])
 
-const sessions = ref([]);
-const currentSessionToken = $auth.state().token;
+const sessionsData = ref([]);
 
 const newSessionDescription = ref();
 
 const fetchSessions = async () => {
-  sessions.value = await $sessionsApi.getSessions();
+  sessionsData.value = await $sessionsApi.getSessions();
 }
 
 watch(() => props.opened, async () => {
@@ -95,6 +99,7 @@ const close = () => {
 const newSession = () => {
   $sessionsApi.newSession(configs.userSessionsLifetimeDays, newSessionDescription.value.length > 0 ? newSessionDescription.value : null).then((s) => {
     if (s) {
+      copyToClipboard(s);
       $toastsManager.pushToast(t("modals.sessions.messages.successCreate"), 2500, "success");
       fetchSessions();
     }else {
@@ -105,6 +110,12 @@ const newSession = () => {
 
 const deleteSession = (session) => {
   $sessionsApi.deleteSession(session.sessionId).then((s) => {
+    if (s && session.sessionId === sessionsData.value.currentId) {
+      $auth.logout(true);
+
+      return;
+    }
+
     if (s) {
       $toastsManager.pushToast(t("modals.sessions.messages.successDelete"), 2500, "success");
       fetchSessions();

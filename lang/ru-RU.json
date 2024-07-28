@@ -463,6 +463,18 @@
       "placeholders": {
         "description": "Описание"
       },
+      "table": {
+        "created": "Создан",
+        "expires": "Истекает",
+        "meta": "Мета",
+        "description": "Описание",
+        "action": "Действие"
+      },
+      "badges": {
+        "current": "Текущий",
+        "limited": "Ограниченный"
+      },
+
       "messages": {
         "successCreate": "Сеанс создан",
         "errorCreate": "Ошибка создания сеанса",

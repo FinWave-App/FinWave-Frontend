@@ -461,6 +461,17 @@
       "placeholders": {
         "description": "Description"
       },
+      "table": {
+        "created": "Created",
+        "expires": "Expires",
+        "meta": "Meta",
+        "description": "Description",
+        "action": "Action"
+      },
+      "badges": {
+        "current": "Current",
+        "limited": "Limited"
+      },
       "messages": {
         "successCreate": "Session created",
         "errorCreate": "Oops, failed to create session",
