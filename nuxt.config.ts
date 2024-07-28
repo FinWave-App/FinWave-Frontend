@@ -65,6 +65,7 @@ const config: NuxtConfig = {
     runtimeConfig: {
         public: {
             apiURL: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:8080/',
+            allowCustomApiURL: process.env.NUXT_ALLOW_CUSTOM_API_URL || false,
         },
     }
 }

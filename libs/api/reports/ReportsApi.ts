@@ -1,6 +1,7 @@
 import {AbstractApi} from "~/libs/api/AbstractApi";
 import {Ref} from "vue";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
+import {useServer} from "~/composables/useServer";
 
 export class ReportsApi extends AbstractApi {
     private notifyListeners : Array<Function> = new Array<Function>();
@@ -54,6 +55,6 @@ export class ReportsApi extends AbstractApi {
     public getDownloadURL(token: string) : string {
         const config = useRuntimeConfig();
 
-        return config.public.apiURL + "files/reports/get?token=" + token;
+        return useServer.getUrl() + "files/reports/get?token=" + token;
     }
 }

@@ -1,4 +1,5 @@
 import {useLazyFetch} from "#app";
+import {useServer} from "~/composables/useServer";
 
 export const useLazyApi = function <T> (request : any, opts : any = {}) {
     const config = useRuntimeConfig()
@@ -9,5 +10,5 @@ export const useLazyApi = function <T> (request : any, opts : any = {}) {
         opts.headers.authorization = 'Bearer ' + auth.token;
     }
 
-    return useLazyFetch<T>(request, { baseURL: config.public.baseURL, ...opts })
+    return useLazyFetch<T>(request, { baseURL: useServer.getUrl(), ...opts })
 }

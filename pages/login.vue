@@ -1,6 +1,8 @@
 <template>
   <div class="hero min-h-screen">
-    <div class="hero-content w-full">
+    <div class="hero-content w-full flex-col">
+      <server-changer v-if="server.allowCustomUrl()" class="panel lg:w-1/3" @serverChanged="reloadPage"/>
+
       <div class="panel lg:w-1/3">
         <p class="font-bold text-xl text-center">{{ $t('loginPage.title') }}</p>
 
@@ -54,9 +56,11 @@
 
 <script setup>
 import {useApiLoader} from "~/composables/useApiLoader";
+import {useServer} from "~/composables/useServer";
 
 definePageMeta({
   middleware: [
+    "server-available",
     () => {
       if (useNuxtApp().$auth.state().authed.value)
         return navigateTo("/");
@@ -74,8 +78,14 @@ const errorMessage = ref("");
 const loading = ref(false);
 
 const { $auth, $serverConfigs, $toastsManager } = useNuxtApp();
+const server = useServer;
+
 const { t, locale } = useI18n();
 const configs = $serverConfigs.configs.users;
+
+const reloadPage = () => {
+  window.location.reload();
+}
 
 const singIn = async () => {
   if (login.value === "" || login.value == null) {

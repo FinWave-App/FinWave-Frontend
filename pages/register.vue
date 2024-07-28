@@ -65,6 +65,7 @@
 <script setup>
 definePageMeta({
   middleware: [
+    "server-available",
     () => {
     const {$serverConfigs, $auth} = useNuxtApp()
 

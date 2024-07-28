@@ -1,9 +1,14 @@
 import {useApiLoader} from "#imports";
+import {ca} from "date-fns/locale";
 
 export default defineNuxtPlugin(async nuxtApp => {
-    await useApiLoader.fetch();
+    try {
+        await useApiLoader.fetch();
 
-    useApiLoader.connectWebsocket();
+        useApiLoader.connectWebsocket();
+    }catch (e) {
+        console.log(e)
+    }
 
     return useApiLoader.getProvider();
 })

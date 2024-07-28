@@ -18,6 +18,7 @@ import {AccumulationsApi} from "~/libs/api/accumulations/AccumulationsApi";
 import {ReportsApi} from "~/libs/api/reports/ReportsApi";
 import {ca} from "date-fns/locale";
 import {useStorage} from "@vueuse/core";
+import {useServer} from "~/composables/useServer";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -98,13 +99,10 @@ export const useApiLoader = new class ApiLoader {
     }
 
     public connectWebsocket() : void {
-        const config = useRuntimeConfig()
         const auth = useNuxtApp().$auth.state();
 
-        this.websocketClient = new WebSocket(config.public.apiURL
-            .replace("https://", "wss://")
-            .replace("http://", "ws://") +
-            "websockets/events"
+        this.websocketClient = new WebSocket(
+            useServer.getWebSocketUrl() + "websockets/events"
         );
 
         this.websocketClient.onmessage = (event) => {
