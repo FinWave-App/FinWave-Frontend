@@ -118,6 +118,8 @@
 
   "tagsPage": {
     "path": "Путь:",
+    "root": "Корень",
+
     "table": {
       "name": "Имя",
       "tagType": {
@@ -286,12 +288,27 @@
   "selects": {
     "noResults": "Нет результатов",
     "noOptions": "Список пуст",
+
     "transactionTagSelect": {
+      "placeholder": "Категория",
       "withoutParent": "Без родителя",
       "new": "Новый"
     },
+
+    "amountField": {
+      "placeholder": "Сумма"
+    },
+
     "langSelect": {
       "label": "Язык"
+    },
+
+    "currencySelect": {
+      "placeholder": "RUB"
+    },
+
+    "accountSelect": {
+      "placeholder": "Счет"
     }
   },
 

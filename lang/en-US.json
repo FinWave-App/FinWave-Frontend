@@ -116,6 +116,8 @@
 
   "tagsPage": {
     "path": "Path:",
+    "root": "Root",
+
     "table": {
       "name": "Name",
       "tagType": {
@@ -284,10 +286,25 @@
   "selects": {
     "noResults": "No results found",
     "noOptions": "The list is empty",
+
     "transactionTagSelect": {
+      "placeholder": "Tag",
       "withoutParent": "Root",
       "new": "New"
     },
+
+    "amountField": {
+      "placeholder": "Amount"
+    },
+
+    "currencySelect": {
+      "placeholder": "USD"
+    },
+
+    "accountSelect": {
+      "placeholder": "Account"
+    },
+
     "langSelect": {
       "label": "Language"
     }

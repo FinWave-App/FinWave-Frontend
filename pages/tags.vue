@@ -8,7 +8,7 @@
 
         <div class="text-sm breadcrumbs">
           <ul>
-            <li><a @click="resetView()">Root</a></li>
+            <li><a @click="resetView()"> {{$t("tagsPage.root")}} </a></li>
             <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item)"> {{tagsMap.get(item).tag.name}} </a></li>
           </ul>
         </div>

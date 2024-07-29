@@ -31,6 +31,7 @@
     <Datepicker class="flex-1 min-w-64 dp-h-10"
                 v-model="filterTime"
                 :max-range="calendarMaxRange"
+                :enable-time-picker="false"
                 :placeholder='$t("transactionsPage.placeholders.filters.time")'
                 :locale="locale"
                 range />
@@ -75,6 +76,11 @@ const filterDescription = ref();
 function adjustDates(date1, date2, maxDays) {
   let d1 = date1;
   let d2 = date2 ? date2 : null;
+
+  d1.setHours(0, 0, 0, 0);
+
+  if (d2)
+    d2.setHours(23, 59, 59, 999);
 
   if (d2) {
     let timeDiff = Math.abs(d2.getTime() - d1.getTime());

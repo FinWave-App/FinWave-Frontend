@@ -17,6 +17,7 @@
         class="input input-bordered join-item w-full"
         v-model="rawAmount"
         @change="amountChanged"
+        :placeholder="$t('selects.amountField.placeholder')"
         :class="{'input-error' : highlightErrors && (modelValue === undefined || modelValue === 0)}"
     >
     <div v-if="currency !== undefined" class="join-item flex justify-center items-center px-4 bg-base-200">
@@ -53,6 +54,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const { $transactionsTagsApi, $currenciesApi } = useNuxtApp();
+const { t, locale } = useI18n();
 
 const sign = ref(props.signOverride ? props.signOverride : 1);
 const signChoice = ref(!props.signOverride);

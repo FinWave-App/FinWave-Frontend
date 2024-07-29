@@ -3,6 +3,7 @@
       v-model="value"
       :groups="true"
       :options="options"
+      :placeholder="$t('selects.accountSelect.placeholder')"
       :no-options-text="$t('selects.noOptions')"
       :no-results-text="$t('selects.noResults')"
   >

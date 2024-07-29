@@ -82,6 +82,7 @@
 
           <input class="input input-bordered w-16 focus:w-64"
                  v-model.trim="transaction.description"
+                 :placeholder="$t('modals.newTransaction.placeholders.transactionDescription')"
                  :maxlength="configs.maxDescriptionLength"
           >
 

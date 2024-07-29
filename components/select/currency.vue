@@ -2,6 +2,7 @@
   <Multiselect
       v-model="value"
       :options="options"
+      :placeholder="$t('selects.currencySelect.placeholder')"
       :no-options-text="$t('selects.noOptions')"
       :no-results-text="$t('selects.noResults')"
   >

@@ -2,6 +2,7 @@
   <Multiselect
       v-model="value"
       :options="parentSelectRender"
+      :placeholder="$t('selects.transactionTagSelect.placeholder')"
       :no-options-text="$t('selects.noOptions')"
       :no-results-text="$t('selects.noResults')"
       @search-change="search"
