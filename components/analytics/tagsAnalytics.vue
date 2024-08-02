@@ -134,6 +134,8 @@ watch([() => props.date, () => props.onlyRoot], () => {
   fetchData();
 })
 
+fetchData();
+
 </script>
 
 <style scoped>
