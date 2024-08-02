@@ -19,6 +19,7 @@ import {ReportsApi} from "~/libs/api/reports/ReportsApi";
 import {ca} from "date-fns/locale";
 import {useStorage} from "@vueuse/core";
 import {useServer} from "~/composables/useServer";
+import {TransactionsTagsManagementApi} from "~/libs/api/transactions/tag/management/TransactionsTagsManagementApi";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -39,6 +40,9 @@ export const useApiLoader = new class ApiLoader {
 
     private readonly adminApi : AdminApi;
     private readonly accumulationsApi: AccumulationsApi;
+
+    private readonly transactionTagsManagementApi : TransactionsTagsManagementApi;
+
     private readonly reportsApi: ReportsApi;
 
     private websocketClient : WebSocket | null = null;
@@ -60,6 +64,9 @@ export const useApiLoader = new class ApiLoader {
         this.notesApi = new NotesApi();
         this.notificationsApi = new NotificationApi();
         this.accumulationsApi = new AccumulationsApi();
+
+        this.transactionTagsManagementApi = new TransactionsTagsManagementApi();
+
         this.reportsApi = new ReportsApi();
 
         this.adminApi = new AdminApi();
@@ -81,6 +88,7 @@ export const useApiLoader = new class ApiLoader {
             this.notesApi.init(),
             this.notificationsApi.init(),
             this.accumulationsApi.init(),
+            this.transactionTagsManagementApi.init(),
             this.reportsApi.init(),
             this.adminApi.init()
         ]).then(results => {
@@ -180,6 +188,7 @@ export const useApiLoader = new class ApiLoader {
                 sessionsApi: this.sessionsApi,
                 notificationsApi: this.notificationsApi,
                 accumulationsApi: this.accumulationsApi,
+                tagsManagementApi: this.transactionTagsManagementApi,
                 reportsApi: this.reportsApi,
                 adminApi: this.adminApi
             }

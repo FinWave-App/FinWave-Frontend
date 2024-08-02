@@ -32,7 +32,7 @@ const tagsMap = $transactionsTagsApi.getTagsMap();
 const filter = ref();
 const chartSeries = ref([]);
 
-const type = ref('area');
+const type = ref('bar');
 
 const chartOptions = ref({});
 

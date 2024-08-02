@@ -14,9 +14,21 @@
       <new-note-button @event="newNote = true"/>
     </div>
 
-    <total-panel class="col-span-1 lg:col-span-2 row-span-2" :period="summaryPeriod"/>
-    <notes-panel class="col-span-1 lg:col-span-1 row-span-2" :notes="notes" @new-note="newNote = true"/>
-    <accounts-summary class="col-span-1 lg:col-span-1 row-span-2" />
+    <div class="col-span-1 lg:col-span-2 grid grid-cols-1 2xl:grid-cols-7 gap-6">
+      <total-panel class="col-span-1 lg:col-span-6 row-span-2" :period="summaryPeriod"/>
+
+      <tags-analytics class="col-span-1 lg:col-span-5 2xl:col-span-1 row-span-5"
+                      :hide-low-percent="true"
+                      :only-expanses="true"
+                      :only-root="true"
+      />
+
+      <notes-panel class="col-span-1 2xl:col-span-3 row-span-2"
+                   :notes="notes"
+                   @new-note="newNote = true"
+      />
+      <accounts-summary class="col-span-1 2xl:col-span-3 row-span-2" />
+    </div>
   </div>
 </template>
 
@@ -30,6 +42,7 @@ import NewCurrencyButton from "~/components/buttons/quickActions/newCurrencyButt
 import NewNoteButton from "~/components/buttons/quickActions/newNoteButton.vue";
 import {useApiLoader} from "~/composables/useApiLoader";
 import {reloadNuxtApp} from "#app";
+import TagsAnalytics from "~/components/analytics/tagsAnalytics.vue";
 
 definePageMeta({
   middleware: [

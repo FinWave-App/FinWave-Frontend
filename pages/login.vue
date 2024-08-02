@@ -141,10 +141,10 @@ if (demoMode) {
     loading.value = false;
 
     errorMessage.value = "loginPage.errors.demoError";
+  }else {
+    login.value = data.value.username;
+    password.value = data.value.password;
   }
-
-  login.value = data.value.username;
-  password.value = data.value.password;
 }
 
 </script>

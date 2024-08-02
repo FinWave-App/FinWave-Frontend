@@ -5,6 +5,19 @@
       </tags-by-months>
     </div>
 
+    <div class="lg:col-span-4 row-span-2 panel">
+      <p class="font-bold">
+        {{ $t("analyticsPage.tags.title") }}
+      </p>
+
+      <div class="w-full border-y py-2 border-base-200 mt-2">
+        <Datepicker class="input-bordered dp-h-12" v-model="monthPicker" :locale="locale" month-picker/>
+      </div>
+
+      <tags-analytics :date="dateForTags" :need-panel-style="false" :empty-message="t('analyticsPage.tags.noData')"
+      />
+    </div>
+
     <div class="lg:col-span-2 row-span-2 panel">
       <pie class="h-full" :sign="1" :mode="'month'" :id="'pie-month-incomes'">
         <p class="font-bold">
@@ -37,8 +50,7 @@
       </pie>
     </div>
 
-    <reports-panel class="lg:col-span-4 row-span-4">
-    </reports-panel>
+    <reports-panel class="lg:col-span-4 row-span-4"/>
 
   </div>
 </template>
@@ -48,6 +60,8 @@ import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
 import TagsByMonths from "~/components/analytics/tagsByMonths.vue";
 import Pie from "~/components/analytics/pie.vue";
+import TagsAnalytics from "~/components/analytics/tagsAnalytics.vue";
+import Datepicker from "@vuepic/vue-datepicker";
 
 definePageMeta({
   middleware: [
@@ -57,6 +71,18 @@ definePageMeta({
 
 const { $analyticsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
+
+const today = new Date();
+
+const dateForTags = ref();
+const monthPicker = ref();
+
+watch(monthPicker, (value, oldValue, onCleanup) => {
+  if (value)
+    dateForTags.value = new Date(value.year, value.month + 1, 1);
+})
+
+monthPicker.value = { year: today.getFullYear(), month: today.getMonth() };
 
 </script>
 

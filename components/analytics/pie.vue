@@ -12,7 +12,7 @@
 
         <div class="text-sm breadcrumbs pl-3 mt-2 bg-base-200 rounded-xl">
           <ul>
-            <li><a @click="resetView(); buildChart();">Root</a></li>
+            <li><a @click="resetView(); buildChart();">{{$t("tagsPage.root")}}</a></li>
             <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item); buildChart();"> {{tagsMap.get(item).tag.name}} </a></li>
           </ul>
         </div>
@@ -81,7 +81,7 @@ const tagsMap = $transactionsTagsApi.getTagsTreeMap();
 const view = ref([]);
 const tags = $transactionsTagsApi.getTags();
 
-const analytics = ref();
+const analytics = ref([]);
 
 const pushToView = (tagId) => {
   view.value.push(tagId);
@@ -121,7 +121,7 @@ const chartMap = ref({});
 const getDays = () => {
   return {
     first: mode.value ? new Date(date.value.year, date.value.month, 1) : new Date(date.value, 0, 1),
-    last: mode.value ? new Date(date.value.year, date.value.month + 1, 1) : new Date(date.value + 1, 0, 1)
+    last: mode.value ? new Date(date.value.year, date.value.month + 1, 0, 23,59,59, 999) : new Date(date.value + 1, 0, 0, 23,59,59, 999)
   }
 }
 
@@ -159,7 +159,7 @@ const formatter = (value) => {
   return (props.sign > 0 ? "" : "-") + formatAmount(value);
 }
 
-const childsSum = (allData, tagObject, currencyId, sign) => {
+const childsSum = (allData, tagObject, sign) => {
   let sum = 0;
 
   tagObject.childs.forEach(t => {
@@ -169,6 +169,7 @@ const childsSum = (allData, tagObject, currencyId, sign) => {
     if (t.childs && t.childs.length > 0) {
       sum += childsSum(allData, t, sign);
     }
+
   })
 
   return sum;
@@ -243,7 +244,7 @@ const buildChart = () => {
     if (tagDelta * sign < 0)
       tagDelta = 0;
 
-    const sum = tagDelta + (isParent ? 0 : childsSum(allData, tag, currency.value, sign));
+    const sum = tagDelta + (isParent ? 0 : childsSum(allData, tag, sign));
 
     if (sum === 0)
       return;

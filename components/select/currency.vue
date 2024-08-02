@@ -35,6 +35,11 @@ import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
   modelValue: {
+  },
+
+  excludeCurrencies: {
+    type: Array,
+    required: false
   }
 })
 
@@ -49,11 +54,12 @@ const options = computed(() => {
   const resultArray = [];
 
   currencies.value.forEach((c) => {
-    resultArray.push({
-      label: c.code + " - " + c.description + " (" + c.symbol + ")",
-      code: c.code,
-      value: c.currencyId
-    });
+    if (!props.excludeCurrencies || !props.excludeCurrencies.find(exc => exc === c.currencyId))
+      resultArray.push({
+        label: c.code + " - " + c.description + " (" + c.symbol + ")",
+        code: c.code,
+        value: c.currencyId
+      });
   });
 
   return resultArray;

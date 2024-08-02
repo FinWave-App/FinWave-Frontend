@@ -45,7 +45,10 @@
       "allNotesButton": "All notes"
     },
     "summary": {
-      "emptyMessage": "There will be a general summary of the accounts"
+      "emptyMessage": "A general summary of the accounts will be provided here"
+    },
+    "tags": {
+      "emptyMessage": "Here you will see a general summary of expenses by category for the current month"
     }
   },
 
@@ -118,6 +121,14 @@
     "path": "Path:",
     "root": "Root",
 
+    "tagsSummary": {
+      "maxContribution": "Maximum contribution",
+      "noData": {
+        "income": "No income data in the budget",
+        "expanse": "No expanse data in the budget"
+      }
+    },
+
     "table": {
       "name": "Name",
       "tagType": {
@@ -126,6 +137,15 @@
         "income": "Income",
         "mixed": "Mixed"
       },
+
+      "management": {
+        "title": "Budget",
+        "dateTypes": {
+          "perMonth": "per month",
+          "perQuartal": "per quartal"
+        }
+      },
+
       "description": "Description",
       "action": "Action",
       "toChilds": "To Childs"
@@ -157,6 +177,11 @@
         "expensesTitle": "Expenses for year",
         "incomesTitle": "Incomes for year"
       }
+    },
+
+    "tags": {
+      "title": "Budget analysis by category",
+      "noData": "No data"
     }
   },
 
@@ -376,6 +401,33 @@
       "deleteRecurring": "Delete recurring transaction?",
       "deleteNote": "Delete note?",
       "deleteAllBulk": "Delete all bulk transactions? This action cannot be undone"
+    },
+
+    "tagManagement": {
+      "title": "Expected expenses and income",
+
+      "messages": {
+        "new": {
+          "success": "Management created",
+          "error": "Oops, failed to create management"
+        },
+        "edit": {
+          "success": "Management edited",
+          "error": "Oops, failed to edit management"
+        },
+        "remove": {
+          "success": "Management removed",
+          "error": "Oops, failed to remove management"
+        }
+      },
+
+      "placeholders": {
+        "dateType": {
+          "label": "Frequency",
+          "perMonth": "Per month",
+          "perQuartal": "Per quartal"
+        }
+      }
     },
 
     "csvImport": {

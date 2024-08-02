@@ -27,7 +27,13 @@ module.exports = {
     'btn-info',
     'btn-success',
     'btn-warning',
-    'btn-error'
+    'btn-error',
+    'border-success',
+    'border-warning',
+    'border-error',
+    'progress-success',
+    'progress-warning',
+    'progress-error',
   ],
 
   theme: {
