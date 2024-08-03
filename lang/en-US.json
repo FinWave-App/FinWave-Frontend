@@ -2,15 +2,15 @@
   "navigation": {
     "main": "Main",
     "notes": "Notes",
-    "tags": "Tags",
+    "tags": "Categories",
     "transactions": "Transactions",
-    "recurring": "Recurring",
+    "recurring": "Automation",
     "currencies": "Currencies",
     "analytics": "Analytics",
 
     "userButtons": {
       "admin": "Admin",
-      "changePassword": "Change password",
+      "changePassword": "Change Password",
       "sessions": "Sessions",
       "language": "Language",
       "notifications": "Notifications",
@@ -18,8 +18,8 @@
     },
 
     "messages": {
-      "usernameCopied": "Login copied",
-      "usernameCopyFail": "Oops, failed to copy login"
+      "usernameCopied": "Username copied",
+      "usernameCopyFail": "Failed to copy username"
     },
 
     "themes": {
@@ -35,39 +35,39 @@
 
   "mainPage": {
     "buttons": {
-      "newTransaction": "New transaction",
-      "newTag": "New tag",
-      "newCurrency": "New currency",
-      "newNote": "New note"
+      "newTransaction": "New Transaction",
+      "newTag": "New Category",
+      "newCurrency": "New Currency",
+      "newNote": "New Note"
     },
     "notes": {
       "title": "Notes",
-      "allNotesButton": "All notes"
+      "allNotesButton": "All Notes"
     },
     "summary": {
-      "emptyMessage": "A general summary of the accounts will be provided here"
+      "emptyMessage": "Account summary will be here"
     },
     "tags": {
-      "emptyMessage": "Here you will see a general summary of expenses by category for the current month"
+      "emptyMessage": "Category spending summary for the current month will be here"
     }
   },
 
   "notesPage": {
     "placeholders": {
-      "find": "Find by description"
+      "find": "Search by description"
     }
   },
 
   "bulkPage": {
     "buttons": {
-      "deleteAll": "Delete all",
-      "newDefault": "Default transaction",
-      "newInternal": "Internal transaction",
-      "importCSV": "Import from CSV file"
+      "deleteAll": "Delete All",
+      "newDefault": "Default Transaction",
+      "newInternal": "Transfer",
+      "importCSV": "Import from CSV"
     },
     "messages": {
-      "success": "All transactions are applied",
-      "error": "Oops, failed to apply transactions"
+      "success": "All transactions successfully applied",
+      "error": "Error applying transactions"
     }
   },
 
@@ -75,7 +75,7 @@
     "placeholders": {
       "filters": {
         "accounts": "Filter by accounts",
-        "tags": "Filter by tags",
+        "tags": "Filter by categories",
         "currencies": "Filter by currencies",
         "time": "Filter by time",
         "description": "Filter by description"
@@ -85,7 +85,7 @@
     },
     "table": {
       "amount": "Amount",
-      "tag": "Tag",
+      "tag": "Category",
       "account": "Account",
       "createdAt": "Created",
       "description": "Description",
@@ -96,11 +96,11 @@
   "recurringPage": {
     "table": {
       "amount": "Amount",
-      "tag": "Tag",
+      "tag": "Category",
       "account": "Account",
-      "lastRepeat": "Last repeat",
-      "nextRepeat": "Next repeat",
-      "repeatMode": "Repeat mode",
+      "lastRepeat": "Last Repeat",
+      "nextRepeat": "Next Repeat",
+      "repeatMode": "Repeat Mode",
       "notificationMode": "Notification mode",
       "description": "Description",
       "action": "Action"
@@ -122,10 +122,10 @@
     "root": "Root",
 
     "tagsSummary": {
-      "maxContribution": "Maximum contribution",
+      "maxContribution": "Max Contribution",
       "noData": {
         "income": "No income data in the budget",
-        "expanse": "No expanse data in the budget"
+        "expanse": "No expenditure data in the budget"
       }
     },
 
@@ -142,7 +142,7 @@
         "title": "Budget",
         "dateTypes": {
           "perMonth": "per month",
-          "perQuartal": "per quartal"
+          "perQuartal": "per quarter"
         }
       },
 
@@ -160,7 +160,7 @@
     },
 
     "income": "Income",
-    "expanse": "Expanse",
+    "expanse": "Expense",
 
     "pie": {
       "noData": "No data",
@@ -169,26 +169,26 @@
       },
 
       "month": {
-        "expensesTitle": "Expenses for month",
-        "incomesTitle": "Incomes for month"
+        "expensesTitle": "Monthly Expenses",
+        "incomesTitle": "Monthly Incomes"
       },
 
       "year": {
-        "expensesTitle": "Expenses for year",
-        "incomesTitle": "Incomes for year"
+        "expensesTitle": "Annual Expenses",
+        "incomesTitle": "Annual Incomes"
       }
     },
 
     "tags": {
-      "title": "Budget analysis by category",
+      "title": "Budget analysis by categories",
       "noData": "No data"
     }
   },
 
   "errorPage": {
     "title": "Server Error",
-    "description": "Error connecting to the server. Check the console for details",
-    "tryAgain": "Try again"
+    "description": "Failed to connect to the server. Check the console for details.",
+    "tryAgain": "Try Again"
   },
 
   "loginPage": {
@@ -205,24 +205,24 @@
     },
 
     "rememberMe": "Remember me",
-    "demoMessage": "This is the FinWave demo mode. All data will be deleted after 24 hours",
+    "demoMessage": "This is the FinWave demo mode. All data will be deleted in 24 hours",
 
     "actions": {
-      "singIn": "Sing in",
-      "singUp": "Or sing up"
+      "singIn": "Sign In",
+      "singUp": "Or Sign Up"
     },
 
     "errors" : {
       "invalidCredentials": "Invalid credentials!",
       "needUsername": "Enter your username!",
       "needPassword": "Enter your password!",
-      "demoError": "Creating demo user error!",
+      "demoError": "Error creating demo user!",
       "serverError": "Server error"
     }
   },
 
   "registerPage": {
-    "title": "Registration",
+    "title": "Register",
 
     "loginField": {
       "label": "Username",
@@ -235,8 +235,8 @@
     },
 
     "actions": {
-      "singUp": "Sing up",
-      "singIn": "Or sing in"
+      "singUp": "Sign Up",
+      "singIn": "Or Sign In"
     },
 
     "errors" : {
@@ -248,7 +248,7 @@
       },
       "needUsername": "Enter your username!",
       "needPassword": "Enter your password!",
-      "userExists": "Username is busy!",
+      "userExists": "Username is already taken!",
       "serverError": "Server error"
     }
   },
@@ -259,8 +259,8 @@
     "backendLang": {
       "dateLocale": "en-US",
       "account": "Account",
-      "delta": "Delta",
-      "tag": "Tag",
+      "delta": "Amount",
+      "tag": "Category",
       "currency": "Currency",
       "created": "Created",
       "description": "Description",
@@ -283,38 +283,38 @@
     },
 
     "types": {
-      "list": "List-like",
+      "list": "List",
       "byDays": "By Days",
       "byMonths": "By Months"
     },
 
     "messages": {
       "linkCopied": "Download link copied",
-      "linkFail": "Fail to copy download link"
+      "linkFail": "Failed to copy link"
     }
   },
 
   "accountsPanel": {
     "label": "Accounts",
-    "newTag": "New tag",
-    "newAccount": "New account"
+    "newTag": "New Category",
+    "newAccount": "New Account"
   },
 
   "accountTagEntry": {
     "messages": {
-      "deleted": "Account tag was successfully deleted",
-      "deleteFail": "Failed to delete tag",
-      "edited": "Account tag was successfully edited"
+      "deleted": "Account category deleted",
+      "deleteFail": "Failed to delete account category",
+      "edited": "Account category successfully edited"
     }
   },
 
   "selects": {
-    "noResults": "No results found",
+    "noResults": "No results",
     "noOptions": "The list is empty",
 
     "transactionTagSelect": {
-      "placeholder": "Tag",
-      "withoutParent": "Root",
+      "placeholder": "Category",
+      "withoutParent": "Without Parent",
       "new": "New"
     },
 
@@ -337,10 +337,10 @@
 
   "accountEntry": {
     "messages": {
-      "hided": "Account was successfully hidden",
+      "hided": "Account hidden",
       "hideFail": "Failed to hide account",
-      "showed": "Account was successfully showed",
-      "showFail": "Failed to show account"
+      "showed": "Account restored",
+      "showFail": "Failed to restore account"
     }
   },
 
@@ -350,11 +350,11 @@
     "accountTags": {
       "1": {
         "name": "Traditional",
-        "description": "Traditional finance accounts"
+        "description": "Traditional financial accounts"
       },
       "2": {
         "name": "Cryptocurrency",
-        "description": "Crypto finance accounts"
+        "description": "Cryptocurrency accounts"
       }
     },
 
@@ -373,12 +373,12 @@
 
     "tags": {
       "1": "Salary",
-      "2": "Investment",
-      "3": "Goods",
+      "2": "Investments",
+      "3": "Groceries",
       "4": "Housing",
       "5": "Entertainment",
-      "6": "Apparel",
-      "7": "Healthcare",
+      "6": "Clothing",
+      "7": "Health",
       "8": "Travel"
     }
   },
@@ -396,10 +396,10 @@
     },
 
     "confirmations": {
-      "deleteAccountTag": "Delete tag?",
-      "deleteTransaction": "Delete transaction?",
-      "deleteRecurring": "Delete recurring transaction?",
-      "deleteNote": "Delete note?",
+      "deleteAccountTag": "Delete the category?",
+      "deleteTransaction": "Delete the transaction?",
+      "deleteRecurring": "Delete automation?",
+      "deleteNote": "Delete the note?",
       "deleteAllBulk": "Delete all bulk transactions? This action cannot be undone"
     },
 
@@ -408,24 +408,24 @@
 
       "messages": {
         "new": {
-          "success": "Management created",
-          "error": "Oops, failed to create management"
+          "success": "Budget created",
+          "error": "Error creating budget"
         },
         "edit": {
-          "success": "Management edited",
-          "error": "Oops, failed to edit management"
+          "success": "Budget updated",
+          "error": "Error updating budget"
         },
         "remove": {
-          "success": "Management removed",
-          "error": "Oops, failed to remove management"
+          "success": "Budget deleted",
+          "error": "Error deleting budget"
         }
       },
 
       "placeholders": {
         "dateType": {
-          "label": "Frequency",
+          "label": "Periodicity",
           "perMonth": "Per month",
-          "perQuartal": "Per quartal"
+          "perQuartal": "Per quarter"
         }
       }
     },
@@ -436,7 +436,7 @@
       "warning": "Columns that have not been mapped will not be saved. You can also select multiple description columns for merging",
       "readLines": "{n} lines have been read",
 
-      "immediatelyApply": "Apply all transactions immediately",
+      "immediatelyApply": "Immediately apply all transactions",
 
       "steps": {
         "fileSelect": "Select a file",
@@ -451,7 +451,7 @@
         "unrecognized": {
           "account": "Select unrecognized accounts",
           "amount": "Select unrecognized amounts",
-          "tag": "Select unrecognized tags",
+          "tag": "Select unrecognized categories",
           "date": "Select unrecognized dates"
         }
       },
@@ -461,7 +461,7 @@
         "ignore": "Ignore",
         "account": "Account",
         "amount": "Amount",
-        "tag": "Tag",
+        "tag": "Category",
         "date": "Date",
         "description": "Description"
       }
@@ -496,14 +496,14 @@
 
       "messages": {
         "pointCreate": "Point created",
-        "errorCreate": "Oops, failed to create point",
+        "errorCreate": "Error creating point",
         "successDelete": "Point deleted",
-        "errorDelete": "Oops, failed to delete point",
-        "pointEdited": "Point edited",
-        "errorEdit": "Oops, failed to edit point",
+        "errorDelete": "Error deleting point",
+        "pointEdited": "Point updated",
+        "errorEdit": "Error updating point",
 
         "errorPermissionGet": "Notification permission is required for a new point",
-        "errorServiceWorker": "Service worker not available",
+        "errorServiceWorker": "Service worker unavailable",
         "errorSomething": "Something went wrong",
 
         "testSent": "Test notification sent"
@@ -515,17 +515,17 @@
       "warning": "As soon as you change your password, all sessions will be terminated and you will have to log in again",
       "placeholders": {
         "newPassword": "New password",
-        "newPasswordConfirm": "Retype new password"
+        "newPasswordConfirm": "Confirm new password"
       },
       "messages": {
         "success": "Password changed",
-        "error": "Oops, failed to change password"
+        "error": "Error changing password"
       }
     },
 
     "sessions": {
       "title": "Sessions",
-      "warning": "Sessions allow you to log in, as well as use third-party clients. Don't share tokens if you don't know what it's for!",
+      "warning": "Sessions allow you to log in and use third-party clients. Don't share tokens unless you know what they're for!",
       "newSession": "New session:",
       "placeholders": {
         "description": "Description"
@@ -543,23 +543,23 @@
       },
       "messages": {
         "successCreate": "Session created",
-        "errorCreate": "Oops, failed to create session",
+        "errorCreate": "Error creating session",
         "successDelete": "Session deleted",
-        "errorDelete": "Oops, failed to delete session",
-        "successCopy": "Session copied",
-        "errorCopy": "Oops, failed to copy session"
+        "errorDelete": "Error deleting session",
+        "successCopy": "Token copied",
+        "errorCopy": "Error copying token"
       }
     },
 
     "editLanguage": {
-      "title": "Change language",
+      "title": "Change Language",
       "placeholders": {
         "language": "Language"
       }
     },
 
     "newReport": {
-      "title": "New report",
+      "title": "New Report",
 
       "placeholders": {
         "filter": "Filter",
@@ -569,38 +569,38 @@
 
       "messages": {
         "reportRequested": "Report requested",
-        "reportRequestFail": "Report request fail"
+        "reportRequestFail": "Error requesting report"
       }
     },
 
     "newNote": {
-      "title": "New note",
+      "title": "New Note",
       "placeholders": {
         "noteText": "Text",
-        "noteNotificationTime": "Notification time (optional)"
+        "noteNotificationTime": "Remind (optional)"
       },
       "messages": {
         "success": "Note created",
-        "error": "Oops, failed to create note"
+        "error": "Error creating note"
       }
     },
 
     "editNote": {
-      "title": "Edit note",
+      "title": "Edit Note",
       "placeholders": {
         "noteText": "Text",
-        "noteNotificationTime": "Notification time (optional)"
+        "noteNotificationTime": "Remind (optional)"
       },
       "messages": {
-        "success": "Note edited",
-        "error": "Oops, failed to edit note"
+        "success": "Note updated",
+        "error": "Error updating note"
       }
     },
 
     "deleteNote": {
       "messages": {
         "success": "Note deleted",
-        "error": "Oops, failed to delete note"
+        "error": "Error deleting note"
       }
     },
 
@@ -608,7 +608,7 @@
       "title": "Set Accumulation",
       "placeholders": {
         "targetAccount": "Target Account",
-        "tag": "Tag",
+        "tag": "Category",
         "stepEntry": {
           "from": "From",
           "to": "To",
@@ -618,12 +618,12 @@
       "messages": {
         "success": "Accumulation set",
         "deleted": "Accumulation deleted",
-        "error": "Oops, failed to set accumulation"
+        "error": "Error setting accumulation"
       }
     },
 
     "newCurrency": {
-      "title": "New currency",
+      "title": "New Currency",
       "placeholders": {
         "currencyCode": "Code",
         "currencySymbol": "Symbol",
@@ -632,12 +632,12 @@
       },
       "messages": {
         "success": "Currency created",
-        "error": "Oops, failed to create currency"
+        "error": "Error creating currency"
       }
     },
 
     "editCurrency": {
-      "title": "Edit currency",
+      "title": "Edit Currency",
       "placeholders": {
         "currencyCode": "Code",
         "currencySymbol": "Symbol",
@@ -645,50 +645,50 @@
         "currencyDescription": "Description"
       },
       "messages": {
-        "success": "Currency edited",
-        "error": "Oops, failed to edit currency"
+        "success": "Currency updated",
+        "error": "Error updating currency"
       }
     },
 
     "newAccount": {
-      "title": "New account",
+      "title": "New Account",
       "placeholders": {
         "accountName": "Name",
-        "currencySelect": "Select currency",
+        "currencySelect": "Select Currency",
         "accountDescription": "Description"
       },
       "messages": {
         "success": "Account created",
-        "error": "Oops, failed to create account"
+        "error": "Error creating account"
       }
     },
 
     "newAccountTag": {
-      "title": "New account tag",
+      "title": "New Account Category",
       "placeholders": {
         "tagName": "Name",
         "tagDescription": "Description"
       },
       "messages": {
-        "success": "Account tag created",
-        "error": "Oops, failed to create account tag"
+        "success": "Account category created",
+        "error": "Error creating account category"
       }
     },
 
     "editAccountTag": {
-      "title": "Edit account tag",
+      "title": "Edit Account Category",
       "placeholders": {
         "tagName": "Name",
         "tagDescription": "Description"
       },
       "messages": {
-        "success": "Account tag edited",
-        "error": "Oops, failed to edit account tag"
+        "success": "Account category updated",
+        "error": "Error updating account category"
       }
     },
 
     "editAccount": {
-      "title": "Edit account",
+      "title": "Edit Account",
       "tabs": {
         "general": "General",
         "amount": "Amount"
@@ -703,19 +703,19 @@
         "amount": "Amount"
       },
       "messages": {
-        "success": "Account edited",
-        "error": "Oops, failed to edit account"
+        "success": "Account updated",
+        "error": "Error updating account"
       }
     },
 
     "newRecurring": {
-      "title": "New recurring transaction",
+      "title": "New Recurring Transaction",
       "placeholders": {
         "recurringAmount": "Amount",
-        "recurringRepeatMode": "Repeat mode",
-        "recurringNextRepeat": "Next repeat",
-        "recurringNotificationMode": "Notification mode",
-        "recurringTag": "Tag",
+        "recurringRepeatMode": "Repeat Mode",
+        "recurringNextRepeat": "Next Repeat",
+        "recurringNotificationMode": "Notification Mode",
+        "recurringTag": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
       },
@@ -731,18 +731,18 @@
       },
       "messages": {
         "success": "Recurring created",
-        "error": "Oops, failed to create recurring"
+        "error": "Error creating recurrence"
       }
     },
 
     "editRecurring": {
-      "title": "Edit recurring transaction",
+      "title": "Edit Recurrence",
       "placeholders": {
         "recurringAmount": "Amount",
-        "recurringRepeatMode": "Repeat mode",
-        "recurringNextRepeat": "Next repeat",
-        "recurringNotificationMode": "Notification mode",
-        "recurringTag": "Tag",
+        "recurringRepeatMode": "Repeat Mode",
+        "recurringNextRepeat": "Next Repeat",
+        "recurringNotificationMode": "Notification Mode",
+        "recurringTag": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
       },
@@ -757,20 +757,20 @@
         "normal": "Normal"
       },
       "messages": {
-        "success": "Recurring edited",
-        "error": "Oops, failed to edit recurring"
+        "success": "Recurrence updated",
+        "error": "Error updating recurrence"
       }
     },
 
     "deleteRecurring": {
       "messages": {
-        "success": "Recurring deleted",
-        "error": "Oops, failed to delete recurring"
+        "success": "Recurrence deleted",
+        "error": "Error deleting recurrence"
       }
     },
 
     "newTransaction": {
-      "title": "New transaction",
+      "title": "New Transaction",
       "tabs": {
         "default": "Default",
         "internalTransfer": "Internal Transfer"
@@ -778,7 +778,7 @@
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",
-        "transactionTag": "Tag",
+        "transactionTag": "Category",
         "transactionAccount": "Account",
         "transactionDescription": "Description"
       },
@@ -789,12 +789,12 @@
 
       "messages": {
         "success": "Transaction created",
-        "error": "Oops, failed to create transaction"
+        "error": "Error creating transaction"
       }
     },
 
     "editTransaction": {
-      "title": "Edit transaction",
+      "title": "Edit Transaction",
       "tabs": {
         "main": "Main",
         "linked": "Linked"
@@ -802,25 +802,25 @@
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",
-        "transactionTag": "Tag",
+        "transactionTag": "Category",
         "transactionAccount": "Account",
         "transactionDescription": "Description"
       },
       "messages": {
         "success": "Transaction edited",
-        "error": "Oops, failed to edit transaction"
+        "error": "Error editing transaction"
       }
     },
 
     "deleteTransaction": {
       "messages": {
         "success": "Transaction deleted",
-        "error": "Oops, failed to delete transaction"
+        "error": "Error deleting transaction"
       }
     },
 
     "newTransactionTag": {
-      "title": "New transaction tag",
+      "title": "New Transaction Category",
       "placeholders": {
         "tagName": "Name",
         "tagType": {
@@ -833,14 +833,14 @@
         "tagDescription": "Description"
       },
       "messages": {
-        "success": "Transaction tag created",
-        "error": "Oops, failed to create transaction tag"
+        "success": "Transaction category created",
+        "error": "Error creating transaction category"
       }
     },
 
     "editTransactionTag": {
-      "title": "Edit transaction tag",
-      "tagWithoutParent": "Root",
+      "title": "Edit Transaction Category",
+      "tagWithoutParent": "Without parent",
       "placeholders": {
         "tagName": "Name",
         "tagExpectedAmount": "Expected amount",
@@ -854,8 +854,8 @@
         "tagDescription": "Description"
       },
       "messages": {
-        "success": "Transaction tag edited",
-        "error": "Oops, failed to edit transaction tag"
+        "success": "Transaction category updated",
+        "error": "Error updating transaction category"
       }
     }
   }
