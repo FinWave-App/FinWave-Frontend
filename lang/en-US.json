@@ -222,7 +222,7 @@
   },
 
   "registerPage": {
-    "title": "Register",
+    "title": "Sign Up",
 
     "loginField": {
       "label": "Username",
@@ -607,7 +607,7 @@
     "setAccumulation": {
       "title": "Set Accumulation",
       "placeholders": {
-        "targetAccount": "Target Account",
+        "targetAccount": "Target account",
         "tag": "Category",
         "stepEntry": {
           "from": "From",
@@ -654,7 +654,7 @@
       "title": "New Account",
       "placeholders": {
         "accountName": "Name",
-        "currencySelect": "Select Currency",
+        "currencySelect": "Select currency",
         "accountDescription": "Description"
       },
       "messages": {
@@ -712,9 +712,9 @@
       "title": "New Recurring Transaction",
       "placeholders": {
         "recurringAmount": "Amount",
-        "recurringRepeatMode": "Repeat Mode",
-        "recurringNextRepeat": "Next Repeat",
-        "recurringNotificationMode": "Notification Mode",
+        "recurringRepeatMode": "Repeat mode",
+        "recurringNextRepeat": "Next repeat",
+        "recurringNotificationMode": "Notification mode",
         "recurringTag": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
@@ -739,9 +739,9 @@
       "title": "Edit Recurrence",
       "placeholders": {
         "recurringAmount": "Amount",
-        "recurringRepeatMode": "Repeat Mode",
-        "recurringNextRepeat": "Next Repeat",
-        "recurringNotificationMode": "Notification Mode",
+        "recurringRepeatMode": "Repeat mode",
+        "recurringNextRepeat": "Next repeat",
+        "recurringNotificationMode": "Notification mode",
         "recurringTag": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
