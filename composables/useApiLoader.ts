@@ -3,10 +3,10 @@ import {AbstractApi} from "~/libs/api/AbstractApi";
 import {UserApi} from "~/libs/api/user/UserApi";
 import {SessionsApi} from "~/libs/api/sessions/SessionsApi";
 import {AccountsApi} from "~/libs/api/accounts/AccountsApi";
-import {AccountsTagsApi} from "~/libs/api/accounts/tags/AccountsTagsApi";
-import {TransactionsTagsApi} from "~/libs/api/transactions/tag/TransactionsTagsApi";
+import {AccountsFoldersApi} from "~/libs/api/accounts/folders/AccountsFoldersApi";
+import {TransactionsCategoriesApi} from "~/libs/api/category/TransactionsCategoriesApi";
 import {TransactionsApi} from "~/libs/api/transactions/TransactionsApi";
-import {RecurringTransactionsApi} from "~/libs/api/transactions/recurring/RecurringTransactionsApi";
+import {RecurringTransactionsApi} from "~/libs/api/recurring/RecurringTransactionsApi";
 import {CurrenciesApi} from "~/libs/api/currencies/CurrenciesApi";
 import {AnalyticsApi} from "~/libs/api/analytics/AnalyticsApi";
 import {NotesApi} from "~/libs/api/notes/NotesApi";
@@ -19,7 +19,9 @@ import {ReportsApi} from "~/libs/api/reports/ReportsApi";
 import {ca} from "date-fns/locale";
 import {useStorage} from "@vueuse/core";
 import {useServer} from "~/composables/useServer";
-import {TransactionsTagsManagementApi} from "~/libs/api/transactions/tag/management/TransactionsTagsManagementApi";
+import {CategoriesBudgetApi} from "~/libs/api/category/budget/CategoriesBudgetApi";
+import {AiApi} from "~/libs/api/ai/AiApi";
+import {FilesApi} from "~/libs/api/files/FilesApi";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -27,9 +29,9 @@ export const useApiLoader = new class ApiLoader {
     private readonly sessionsApi : SessionsApi;
 
     private readonly accountsApi : AccountsApi;
-    private readonly accountsTagsApi : AccountsTagsApi;
+    private readonly accountsFoldersApi : AccountsFoldersApi;
 
-    private readonly transactionsTagsApi : TransactionsTagsApi;
+    private readonly transactionsCategoriesApi : TransactionsCategoriesApi;
     private readonly transactionsApi : TransactionsApi;
     private readonly recurringTransactionsApi : RecurringTransactionsApi;
 
@@ -41,9 +43,12 @@ export const useApiLoader = new class ApiLoader {
     private readonly adminApi : AdminApi;
     private readonly accumulationsApi: AccumulationsApi;
 
-    private readonly transactionTagsManagementApi : TransactionsTagsManagementApi;
+    private readonly categoriesBudgetApi : CategoriesBudgetApi;
 
     private readonly reportsApi: ReportsApi;
+    private readonly filesApi : FilesApi;
+
+    private readonly aiApi: AiApi;
 
     private websocketClient : WebSocket | null = null;
 
@@ -53,9 +58,9 @@ export const useApiLoader = new class ApiLoader {
         this.sessionsApi = new SessionsApi();
 
         this.accountsApi = new AccountsApi();
-        this.accountsTagsApi = new AccountsTagsApi();
+        this.accountsFoldersApi = new AccountsFoldersApi();
 
-        this.transactionsTagsApi = new TransactionsTagsApi();
+        this.transactionsCategoriesApi = new TransactionsCategoriesApi();
         this.transactionsApi = new TransactionsApi();
         this.recurringTransactionsApi = new RecurringTransactionsApi(this.accountsApi);
 
@@ -65,11 +70,14 @@ export const useApiLoader = new class ApiLoader {
         this.notificationsApi = new NotificationApi();
         this.accumulationsApi = new AccumulationsApi();
 
-        this.transactionTagsManagementApi = new TransactionsTagsManagementApi();
+        this.categoriesBudgetApi = new CategoriesBudgetApi();
 
         this.reportsApi = new ReportsApi();
+        this.filesApi = new FilesApi();
 
         this.adminApi = new AdminApi();
+
+        this.aiApi = new AiApi();
     }
 
     public async fetch() : Promise<boolean> {
@@ -79,8 +87,8 @@ export const useApiLoader = new class ApiLoader {
             auth,
             this.sessionsApi.init(),
             this.accountsApi.init(),
-            this.accountsTagsApi.init(),
-            this.transactionsTagsApi.init(),
+            this.accountsFoldersApi.init(),
+            this.transactionsCategoriesApi.init(),
             this.transactionsApi.init(),
             this.recurringTransactionsApi.init(),
             this.currenciesApi.init(),
@@ -88,9 +96,11 @@ export const useApiLoader = new class ApiLoader {
             this.notesApi.init(),
             this.notificationsApi.init(),
             this.accumulationsApi.init(),
-            this.transactionTagsManagementApi.init(),
+            this.categoriesBudgetApi.init(),
             this.reportsApi.init(),
-            this.adminApi.init()
+            this.filesApi.init(),
+            this.adminApi.init(),
+            this.aiApi.init()
         ]).then(results => {
             if (results[0][0] === false) {
                 useNuxtApp().$auth.logout();
@@ -99,6 +109,9 @@ export const useApiLoader = new class ApiLoader {
             }
 
             return results.map(r => typeof r == "boolean" ? r : true).find((v) => !v) === undefined;
+        }).then(r => {
+            if (r)
+                this.connectWebsocket();
         }).catch(t => {
             console.log(t);
 
@@ -131,6 +144,15 @@ export const useApiLoader = new class ApiLoader {
             setInterval(() => {
                 this.websocketClient.send("ping")
             },15000);
+
+            console.info("Websocket connected");
+        })
+
+        this.websocketClient.addEventListener("close", e =>{
+            setTimeout(() => {
+                console.warn("Websocket reconnect");
+                this.connectWebsocket();
+            },5000);
         })
     }
 
@@ -144,8 +166,8 @@ export const useApiLoader = new class ApiLoader {
             case "accounts":
                 this.accountsApi.reloadAccounts();
                 break;
-            case "accountTags":
-                this.accountsTagsApi.fetch();
+            case "accountFolders":
+                this.accountsFoldersApi.fetch();
                 break;
             case "accumulation":
                 this.accumulationsApi.fetchMap();
@@ -166,8 +188,14 @@ export const useApiLoader = new class ApiLoader {
             case "recurringTransactions":
                 this.recurringTransactionsApi.fetch();
                 break;
-            case "transactionTags":
-                this.accountsTagsApi.fetch();
+            case "categories":
+                this.transactionsCategoriesApi.fetch();
+                break;
+            case "categoryBudget":
+                this.categoriesBudgetApi.fetch();
+                break;
+            case "files":
+                this.filesApi.fetch();
                 break;
         }
     }
@@ -177,8 +205,8 @@ export const useApiLoader = new class ApiLoader {
             provide: {
                 serverConfigs: this.serverConfigs,
                 accountsApi: this.accountsApi,
-                accountsTagsApi: this.accountsTagsApi,
-                transactionsTagsApi: this.transactionsTagsApi,
+                accountsFoldersApi: this.accountsFoldersApi,
+                transactionsCategoriesApi: this.transactionsCategoriesApi,
                 transactionsApi: this.transactionsApi,
                 recurringTransactionsApi: this.recurringTransactionsApi,
                 currenciesApi: this.currenciesApi,
@@ -188,9 +216,11 @@ export const useApiLoader = new class ApiLoader {
                 sessionsApi: this.sessionsApi,
                 notificationsApi: this.notificationsApi,
                 accumulationsApi: this.accumulationsApi,
-                tagsManagementApi: this.transactionTagsManagementApi,
+                categoriesBudgetApi: this.categoriesBudgetApi,
                 reportsApi: this.reportsApi,
-                adminApi: this.adminApi
+                filesApi: this.filesApi,
+                adminApi: this.adminApi,
+                aiApi: this.aiApi
             }
         }
     }
@@ -200,40 +230,40 @@ export const useApiLoader = new class ApiLoader {
         const mainCurrencyCode = t("demo.mainCurrencyCode");
 
         const results = await Promise.all([
-            this.accountsTagsApi.newTag(t("demo.accountTags.1.name"), t("demo.accountTags.1.description")),
-            this.accountsTagsApi.newTag(t("demo.accountTags.2.name"), t("demo.accountTags.2.description")),
+            this.accountsFoldersApi.newFolder(t("demo.accountFolders.1.name"), t("demo.accountFolders.1.description")),
+            this.accountsFoldersApi.newFolder(t("demo.accountFolders.2.name"), t("demo.accountFolders.2.description")),
 
             this.currenciesApi.newCurrency("BTC", "₿", 8, "Bitcoin"),
             this.currenciesApi.newCurrency("ETH", "Ξ", 18, "Ethereum"),
 
-            this.transactionsTagsApi.newTag(1, -1, t("demo.tags.1"), null),
-            this.transactionsTagsApi.newTag(0, -1, t("demo.tags.2"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.3"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.4"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.5"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.6"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.7"), null),
-            this.transactionsTagsApi.newTag(-1, -1, t("demo.tags.8"), null),
+            this.transactionsCategoriesApi.newCategory(1, -1, t("demo.categories.1"), null),
+            this.transactionsCategoriesApi.newCategory(0, -1, t("demo.categories.2"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.3"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.4"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.5"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.6"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.7"), null),
+            this.transactionsCategoriesApi.newCategory(-1, -1, t("demo.categories.8"), null),
         ]).catch(t => {
             console.log(t);
 
             return []
         });
 
-        const tradTag = results[0]
-        const cryptoTag = results[1]
+        const tradFolder = results[0]
+        const cryptoFolder = results[1]
 
         const btcCurrency = results[2]
         const ethCurrency = results[3]
 
-        const salaryTag = results[4]
-        const investmentTag = results[5]
-        const goodsTag = results[6]
-        const housingTag = results[7]
-        const entertainmentTag = results[8]
-        const apparelTag = results[9]
-        const healthcareTag = results[10]
-        const travelTag = results[11]
+        const salaryCategory = results[4]
+        const investmentCategory = results[5]
+        const goodsCategory = results[6]
+        const housingCategory = results[7]
+        const entertainmentCategory = results[8]
+        const apparelCategory = results[9]
+        const healthcareCategory = results[10]
+        const travelCategory = results[11]
 
         let mainCurrency = this.currenciesApi.getCurrencies().value.find((v) => v.code === mainCurrencyCode)
 
@@ -246,10 +276,10 @@ export const useApiLoader = new class ApiLoader {
         useStorage("preferred_currency", 1).value = mainCurrency;
 
         const accounts = await Promise.all([
-            this.accountsApi.newAccount(t("demo.accounts.3.name"), btcCurrency, cryptoTag, t("demo.accounts.3.description")),
-            this.accountsApi.newAccount(t("demo.accounts.4.name"), ethCurrency, cryptoTag, t("demo.accounts.4.description")),
-            this.accountsApi.newAccount(t("demo.accounts.1"), mainCurrency, tradTag, null),
-            this.accountsApi.newAccount(t("demo.accounts.2"), mainCurrency, tradTag, null),
+            this.accountsApi.newAccount(t("demo.accounts.3.name"), btcCurrency, cryptoFolder, t("demo.accounts.3.description")),
+            this.accountsApi.newAccount(t("demo.accounts.4.name"), ethCurrency, cryptoFolder, t("demo.accounts.4.description")),
+            this.accountsApi.newAccount(t("demo.accounts.1"), mainCurrency, tradFolder, null),
+            this.accountsApi.newAccount(t("demo.accounts.2"), mainCurrency, tradFolder, null),
         ])
 
         const ledger = accounts[0];
@@ -261,44 +291,44 @@ export const useApiLoader = new class ApiLoader {
         const oneDay = 24 * 60 * 60 * 1000;
 
         return Promise.all([
-            this.transactionsApi.newTransaction(salaryTag, paypal, new Date(today - oneDay * 14), 50000, null),
-            this.transactionsApi.newTransaction(housingTag, paypal, new Date(today - oneDay * 14), -5000, null),
+            this.transactionsApi.newTransaction(salaryCategory, paypal, new Date(today - oneDay * 14), 50000, null),
+            this.transactionsApi.newTransaction(housingCategory, paypal, new Date(today - oneDay * 14), -5000, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 13), -421, null),
-            this.transactionsApi.newInternalTransfer(investmentTag, paypal, ledger, new Date(today - oneDay * 13), -19000, 0.5, null),
-            this.transactionsApi.newInternalTransfer(investmentTag, paypal, binance, new Date(today - oneDay * 13), -1000, 0.3, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 13), -421, null),
+            this.transactionsApi.newInternalTransfer(investmentCategory, paypal, ledger, new Date(today - oneDay * 13), -19000, 0.5, null),
+            this.transactionsApi.newInternalTransfer(investmentCategory, paypal, binance, new Date(today - oneDay * 13), -1000, 0.3, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 12), -515, null),
-            this.transactionsApi.newTransaction(healthcareTag, paypal, new Date(today - oneDay * 12), -526, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 12), -515, null),
+            this.transactionsApi.newTransaction(healthcareCategory, paypal, new Date(today - oneDay * 12), -526, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 11), -345, null),
-            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 11), -621, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 11), -345, null),
+            this.transactionsApi.newTransaction(entertainmentCategory, paypal, new Date(today - oneDay * 11), -621, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 10), -124, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 10), -124, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 9), -235, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 9), -235, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 8), -652, null),
-            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 8), -721, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 8), -652, null),
+            this.transactionsApi.newTransaction(entertainmentCategory, paypal, new Date(today - oneDay * 8), -721, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 7), -637, null),
-            this.transactionsApi.newTransaction(apparelTag, paypal, new Date(today - oneDay * 7), -715, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 7), -637, null),
+            this.transactionsApi.newTransaction(apparelCategory, paypal, new Date(today - oneDay * 7), -715, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 6), -833, null),
-            this.transactionsApi.newInternalTransfer(investmentTag, binance, cash, new Date(today - oneDay * 6), -0.15, 2000, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 6), -833, null),
+            this.transactionsApi.newInternalTransfer(investmentCategory, binance, cash, new Date(today - oneDay * 6), -0.15, 2000, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 5), -942, null),
-            this.transactionsApi.newTransaction(healthcareTag, paypal, new Date(today - oneDay * 5), -415, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 5), -942, null),
+            this.transactionsApi.newTransaction(healthcareCategory, paypal, new Date(today - oneDay * 5), -415, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 4), -325, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 4), -325, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 3), -634, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 3), -634, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay * 2), -753, null),
-            this.transactionsApi.newTransaction(entertainmentTag, paypal, new Date(today - oneDay * 2), -235, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay * 2), -753, null),
+            this.transactionsApi.newTransaction(entertainmentCategory, paypal, new Date(today - oneDay * 2), -235, null),
 
-            this.transactionsApi.newTransaction(goodsTag, paypal, new Date(today - oneDay), -179, null),
-            this.transactionsApi.newTransaction(travelTag, paypal, new Date(today - oneDay), -15000, null),
+            this.transactionsApi.newTransaction(goodsCategory, paypal, new Date(today - oneDay), -179, null),
+            this.transactionsApi.newTransaction(travelCategory, paypal, new Date(today - oneDay), -15000, null),
         ]);
     }
 }

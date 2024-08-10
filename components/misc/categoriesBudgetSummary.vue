@@ -5,11 +5,11 @@
         <div class="stat-title">{{ currenciesMap.get(m.currencyId).code }}</div>
         <div class="stat-value text-success"> +{{ formatDelta(m.amount, m.currencyId) }} </div>
         <div class="stat-desc">
-          {{ capitalizeFirstLetter($t("tagsPage.table.management.dateTypes.perMonth")) }}
+          {{ capitalizeFirstLetter($t("categoriesPage.table.budget.dateTypes.perMonth")) }}
 
           <template v-if="m.showMax">
             <br>
-            {{ $t("tagsPage.tagsSummary.maxContribution") }}: {{ tagsMap.get(m.maxTag).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
+            {{ $t("categoriesPage.categoriesSummary.maxContribution") }}: {{ categoriesMap.get(m.maxCategory).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
           </template>
         </div>
       </div>
@@ -18,17 +18,17 @@
         <div class="stat-title">{{ currenciesMap.get(m.currencyId).code }}</div>
         <div class="stat-value text-success"> +{{ formatDelta(m.amount, m.currencyId) }} </div>
         <div class="stat-desc">
-          {{ capitalizeFirstLetter($t("tagsPage.table.management.dateTypes.perQuartal")) }}
+          {{ capitalizeFirstLetter($t("categoriesPage.table.budget.dateTypes.perQuartal")) }}
 
           <template v-if="m.showMax">
             <br>
-            {{ $t("tagsPage.tagsSummary.maxContribution") }}: {{ tagsMap.get(m.maxTag).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
+            {{ $t("categoriesPage.categoriesSummary.maxContribution") }}: {{ categoriesMap.get(m.maxCategory).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
           </template>
         </div>
       </div>
     </div>
     <div v-else class="w-full template-border flex items-center justify-center text-center rounded-xl min-h-24">
-      <p class="font-bold opacity-50">{{ $t("tagsPage.tagsSummary.noData.income") }}</p>
+      <p class="font-bold opacity-50">{{ $t("categoriesPage.categoriesSummary.noData.income") }}</p>
     </div>
 
     <div class="stats shadow w-full" v-if="expectExpanses.length > 0">
@@ -36,11 +36,11 @@
         <div class="stat-title">{{ currenciesMap.get(m.currencyId).code }}</div>
         <div class="stat-value text-error"> {{ formatDelta(m.amount, m.currencyId) }} </div>
         <div class="stat-desc">
-          {{ capitalizeFirstLetter($t("tagsPage.table.management.dateTypes.perMonth")) }}
+          {{ capitalizeFirstLetter($t("categoriesPage.table.budget.dateTypes.perMonth")) }}
 
           <template v-if="m.showMax">
             <br>
-            {{ $t("tagsPage.tagsSummary.maxContribution") }}: {{ tagsMap.get(m.maxTag).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
+            {{ $t("categoriesPage.categoriesSummary.maxContribution") }}: {{ categoriesMap.get(m.maxCategory).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
           </template>
         </div>
       </div>
@@ -49,17 +49,17 @@
         <div class="stat-title">{{ currenciesMap.get(m.currencyId).code }}</div>
         <div class="stat-value text-error"> {{ formatDelta(m.amount, m.currencyId) }} </div>
         <div class="stat-desc">
-          {{ capitalizeFirstLetter($t("tagsPage.table.management.dateTypes.perQuartal")) }}
+          {{ capitalizeFirstLetter($t("categoriesPage.table.budget.dateTypes.perQuartal")) }}
 
           <template v-if="m.showMax">
             <br>
-            {{ $t("tagsPage.tagsSummary.maxContribution") }}: {{ tagsMap.get(m.maxTag).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
+            {{ $t("categoriesPage.categoriesSummary.maxContribution") }}: {{ categoriesMap.get(m.maxCategory).name.toLocaleLowerCase() }}, {{ formatDelta(m.maxAmount, m.currencyId) }}
           </template>
         </div>
       </div>
     </div>
     <div v-else class="w-full template-border flex items-center justify-center text-center rounded-xl min-h-24">
-      <p class="font-bold opacity-50">{{ $t("tagsPage.tagsSummary.noData.expanse") }}</p>
+      <p class="font-bold opacity-50">{{ $t("categoriesPage.categoriesSummary.noData.expanse") }}</p>
     </div>
   </div>
 </template>
@@ -67,12 +67,12 @@
 <script setup>
 
 const { t, locale } = useI18n();
-const { $transactionsTagsApi, $tagsManagementApi, $currenciesApi } = useNuxtApp();
+const { $transactionsCategoriesApi, $categoriesBudgetApi, $currenciesApi } = useNuxtApp();
 
-const managements = $tagsManagementApi.getManagements();
+const budgets = $categoriesBudgetApi.getBudgets();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 
-const tagsMap = $transactionsTagsApi.getTagsMap();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 
 const expectIncome = ref([]);
 const expectExpanses = ref([]);
@@ -96,7 +96,7 @@ const calculate = () => {
   expectIncome.value = [];
   expectExpanses.value = [];
 
-  managements.value.forEach((value) => {
+  budgets.value.forEach((value) => {
     if (value.amount > 0) {
       const income = expectIncome.value.find((m) => m.currencyId == value.currencyId && m.dateType == value.dateType);
 
@@ -106,11 +106,11 @@ const calculate = () => {
 
         if (value.amount > income.maxAmount) {
           income.maxAmount = value.amount;
-          income.maxTag = value.tagId;
+          income.maxCategory = value.categoryId;
         }
       }else {
         expectIncome.value.push({
-          maxTag: value.tagId,
+          maxCategory: value.categoryId,
           maxAmount: value.amount,
           showMax: false,
 
@@ -128,12 +128,12 @@ const calculate = () => {
 
         if (value.amount < expanse.maxAmount) {
           expanse.maxAmount = value.amount;
-          expanse.maxTag = value.tagId;
+          expanse.maxCategory = value.categoryId;
         }
 
       }else {
         expectExpanses.value.push({
-          maxTag: value.tagId,
+          maxCategory: value.categoryId,
           maxAmount: value.amount,
           showMax: false,
 
@@ -146,7 +146,7 @@ const calculate = () => {
   })
 }
 
-watch(managements, () => {
+watch(budgets, () => {
   calculate();
 }, {deep: true})
 

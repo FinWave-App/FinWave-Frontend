@@ -14,15 +14,15 @@
         </div>
         <div class="form-control w-full">
           <label class="label">
-            <span class="label-text">{{ $t('modals.editRecurring.placeholders.recurringTag') }}</span>
+            <span class="label-text">{{ $t('modals.editRecurring.placeholders.recurringCategory') }}</span>
           </label>
 
-          <select-transaction-tag class="w-full"
-                                  v-model.number="parentTag"
+          <select-transaction-category class="w-full"
+                                  v-model.number="parentCategory"
                                   :searchable="true"
                                   :can-be-without-parent="false"
-                                  :tags-tree="tagsTree"
-                                  :class="{'input-error' : highlightErrors && parentTag === undefined}"
+                                  :categories-tree="categoriesTree"
+                                  :class="{'input-error' : highlightErrors && parentCategory === undefined}"
           />
         </div>
 
@@ -151,7 +151,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 
-const {$serverConfigs, $transactionsTagsApi, $recurringTransactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $recurringTransactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
 const { t, locale } = useI18n();
 
 const configs = $serverConfigs.configs.transactions;
@@ -159,8 +159,8 @@ const configs = $serverConfigs.configs.transactions;
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
 const repeatModeText = (func) => {
   const type = ["days", "weeks", "months"][func];
@@ -171,7 +171,7 @@ const repeatModeText = (func) => {
 const account = ref();
 const amount = ref();
 const description = ref("");
-const parentTag = ref();
+const parentCategory = ref();
 const sign = ref(1);
 const signChoice = ref(true);
 const nextRepeat = ref(new Date());
@@ -183,7 +183,7 @@ const highlightErrors = ref(false);
 const allValid = computed(() => account.value !== undefined &&
     amount.value !== undefined &&
     amount.value !== 0 &&
-    parentTag.value !== undefined &&
+    parentCategory.value !== undefined &&
     nextRepeat.value &&
     repeatFunc.value !== undefined &&
     repeatArg.value !== undefined &&
@@ -197,7 +197,7 @@ watch(() => props.recurring, (newV, oldV) => {
   account.value = newV.accountId;
   amount.value = newV.delta;
   description.value = newV.description || "";
-  parentTag.value = newV.tagId;
+  parentCategory.value = newV.categoryId;
   nextRepeat.value = new Date(newV.nextRepeat)
   repeatFunc.value = newV.repeatType;
   repeatArg.value = newV.repeatArg;
@@ -206,23 +206,23 @@ watch(() => props.recurring, (newV, oldV) => {
   amountChanged();
 });
 
-watch(parentTag, () => {
-  if (parentTag.value === undefined) {
+watch(parentCategory, () => {
+  if (parentCategory.value === undefined) {
     signChoice.value = true;
     return;
   }
 
-  const parentTagObject = tagsMap.value.get(parentTag.value);
+  const parentCategoryObject = categoriesMap.value.get(parentCategory.value);
 
-  if (parentTagObject === undefined || parentTagObject.tag === undefined) {
+  if (parentCategoryObject === undefined || parentCategoryObject.category === undefined) {
     signChoice.value = true;
     return;
   }
 
-  if (parentTagObject.tag.type !== 0)
-    sign.value = parentTagObject.tag.type
+  if (parentCategoryObject.category.type !== 0)
+    sign.value = parentCategoryObject.category.type
 
-  signChoice.value = parentTagObject.tag.type === 0;
+  signChoice.value = parentCategoryObject.category.type === 0;
 });
 
 const currency = computed(() => {
@@ -260,7 +260,7 @@ const apply = () => {
   highlightErrors.value = false;
   close();
 
-  $recurringTransactionsApi.editRecurring(props.recurring.recurringTransactionId, parentTag.value, account.value, nextRepeat.value, repeatFunc.value, repeatArg.value, notificationMode.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $recurringTransactionsApi.editRecurring(props.recurring.recurringTransactionId, parentCategory.value, account.value, nextRepeat.value, repeatFunc.value, repeatArg.value, notificationMode.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s) {
       $toastsManager.pushToast(t("modals.editRecurring.messages.success"), 2500, "success");
     }else {

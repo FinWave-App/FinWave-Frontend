@@ -2,7 +2,7 @@
   "navigation": {
     "main": "Main",
     "notes": "Notes",
-    "tags": "Categories",
+    "categories": "Categories",
     "transactions": "Transactions",
     "recurring": "Automation",
     "currencies": "Currencies",
@@ -14,6 +14,8 @@
       "sessions": "Sessions",
       "language": "Language",
       "notifications": "Notifications",
+      "ai": "AI Assistant",
+      "storage": "Storage",
       "logout": "Logout"
     },
 
@@ -36,7 +38,7 @@
   "mainPage": {
     "buttons": {
       "newTransaction": "New Transaction",
-      "newTag": "New Category",
+      "newCategory": "New Category",
       "newCurrency": "New Currency",
       "newNote": "New Note"
     },
@@ -47,7 +49,7 @@
     "summary": {
       "emptyMessage": "Account summary will be here"
     },
-    "tags": {
+    "categories": {
       "emptyMessage": "Category spending summary for the current month will be here"
     }
   },
@@ -55,7 +57,9 @@
   "notesPage": {
     "placeholders": {
       "find": "Search by description"
-    }
+    },
+
+    "emptyMessage": "It's empty here for now. Click '+' to add a note."
   },
 
   "bulkPage": {
@@ -75,7 +79,7 @@
     "placeholders": {
       "filters": {
         "accounts": "Filter by accounts",
-        "tags": "Filter by categories",
+        "categories": "Filter by categories",
         "currencies": "Filter by currencies",
         "time": "Filter by time",
         "description": "Filter by description"
@@ -85,18 +89,20 @@
     },
     "table": {
       "amount": "Amount",
-      "tag": "Category",
+      "category": "Category",
       "account": "Account",
       "createdAt": "Created",
       "description": "Description",
       "action": "Action"
-    }
+    },
+
+    "emptyMessage": "It's empty here for now. Click '+' to add a transaction."
   },
 
   "recurringPage": {
     "table": {
       "amount": "Amount",
-      "tag": "Category",
+      "category": "Category",
       "account": "Account",
       "lastRepeat": "Last Repeat",
       "nextRepeat": "Next Repeat",
@@ -104,7 +110,9 @@
       "notificationMode": "Notification mode",
       "description": "Description",
       "action": "Action"
-    }
+    },
+
+    "emptyMessage": "It's empty here for now. Click '+' to add a recurring transaction."
   },
 
   "currenciesPage": {
@@ -117,11 +125,11 @@
     }
   },
 
-  "tagsPage": {
+  "categoriesPage": {
     "path": "Path:",
     "root": "Root",
 
-    "tagsSummary": {
+    "categoriesSummary": {
       "maxContribution": "Max Contribution",
       "noData": {
         "income": "No income data in the budget",
@@ -131,14 +139,14 @@
 
     "table": {
       "name": "Name",
-      "tagType": {
+      "categoryType": {
         "type": "Type",
         "expense": "Expense",
         "income": "Income",
         "mixed": "Mixed"
       },
 
-      "management": {
+      "budget": {
         "title": "Budget",
         "dateTypes": {
           "perMonth": "per month",
@@ -148,8 +156,10 @@
 
       "description": "Description",
       "action": "Action",
-      "toChilds": "To Childs"
-    }
+      "toChilds": "To children"
+    },
+
+    "emptyMessage": "It's empty here for now. Click '+' to add a category."
   },
 
   "analyticsPage": {
@@ -179,7 +189,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "title": "Budget analysis by categories",
       "noData": "No data"
     }
@@ -260,7 +270,7 @@
       "dateLocale": "en-US",
       "account": "Account",
       "delta": "Amount",
-      "tag": "Category",
+      "category": "Category",
       "currency": "Currency",
       "created": "Created",
       "description": "Description",
@@ -271,6 +281,7 @@
       "created": "Created",
       "type": "Type",
       "status": "Status",
+      "size": "Size",
       "description": "Description",
       "expires": "Expires",
       "action": "Action"
@@ -296,15 +307,15 @@
 
   "accountsPanel": {
     "label": "Accounts",
-    "newTag": "New Category",
+    "newCategory": "New Category",
     "newAccount": "New Account"
   },
 
-  "accountTagEntry": {
+  "accountFolderEntry": {
     "messages": {
-      "deleted": "Account category deleted",
-      "deleteFail": "Failed to delete account category",
-      "edited": "Account category successfully edited"
+      "deleted": "Account folder deleted",
+      "deleteFail": "Failed to delete account folder",
+      "edited": "Account folder successfully edited"
     }
   },
 
@@ -312,7 +323,7 @@
     "noResults": "No results",
     "noOptions": "The list is empty",
 
-    "transactionTagSelect": {
+    "transactionCategorySelect": {
       "placeholder": "Category",
       "withoutParent": "Without Parent",
       "new": "New"
@@ -323,7 +334,7 @@
     },
 
     "currencySelect": {
-      "placeholder": "USD"
+      "placeholder": "Currency"
     },
 
     "accountSelect": {
@@ -347,7 +358,7 @@
   "demo": {
     "mainCurrencyCode": "USD",
 
-    "accountTags": {
+    "accountFolders": {
       "1": {
         "name": "Traditional",
         "description": "Traditional financial accounts"
@@ -371,7 +382,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "1": "Salary",
       "2": "Investments",
       "3": "Groceries",
@@ -396,14 +407,55 @@
     },
 
     "confirmations": {
-      "deleteAccountTag": "Delete the category?",
+      "deleteAccountFolder": "Delete the category?",
       "deleteTransaction": "Delete the transaction?",
       "deleteRecurring": "Delete automation?",
       "deleteNote": "Delete the note?",
       "deleteAllBulk": "Delete all bulk transactions? This action cannot be undone"
     },
 
-    "tagManagement": {
+    "files": {
+      "title": "Files",
+
+      "messages": {
+        "delete": {
+          "success": "File deleted",
+          "error": "Error deleting file"
+        },
+        "deleteAll": {
+          "success": "Files deleted",
+          "error": "Error deleting files"
+        },
+        "linkCopy": {
+          "success": "Download link copied",
+          "fail": "Failed to copy link"
+        }
+      },
+
+      "createdAt": "Created at: ",
+      "expiresAt": "Expires at: ",
+
+      "empty": "No Files in Storage",
+
+      "deleteAll": "Delete all"
+    },
+
+    "ai": {
+      "title": "AI Assistant",
+      "buttons": {
+        "start": "New session",
+        "send": "Send"
+      },
+
+      "messages": {
+        "uploadError": "Error to upload file"
+      },
+
+      "startText": "Artificial intelligence embedded in FinWave can do almost anything: add/edit/delete transactions, invoices, notes, budget, and other and other. In addition, of course, analyze your spending to give you the most useful advice.",
+      "emptyTip": "Ask something! For example: “Look at the analytics for a last of months. Are there any recommendations for the next?”"
+    },
+
+    "categoryBudget": {
       "title": "Expected expenses and income",
 
       "messages": {
@@ -451,7 +503,7 @@
         "unrecognized": {
           "account": "Select unrecognized accounts",
           "amount": "Select unrecognized amounts",
-          "tag": "Select unrecognized categories",
+          "category": "Select unrecognized categories",
           "date": "Select unrecognized dates"
         }
       },
@@ -461,7 +513,7 @@
         "ignore": "Ignore",
         "account": "Account",
         "amount": "Amount",
-        "tag": "Category",
+        "category": "Category",
         "date": "Date",
         "description": "Description"
       }
@@ -608,7 +660,7 @@
       "title": "Set Accumulation",
       "placeholders": {
         "targetAccount": "Target account",
-        "tag": "Category",
+        "category": "Category",
         "stepEntry": {
           "from": "From",
           "to": "To",
@@ -663,27 +715,27 @@
       }
     },
 
-    "newAccountTag": {
-      "title": "New Account Category",
+    "newAccountFolder": {
+      "title": "New Account Folder",
       "placeholders": {
-        "tagName": "Name",
-        "tagDescription": "Description"
+        "folderName": "Name",
+        "folderDescription": "Description"
       },
       "messages": {
-        "success": "Account category created",
-        "error": "Error creating account category"
+        "success": "Account folder created",
+        "error": "Error creating account folder"
       }
     },
 
-    "editAccountTag": {
-      "title": "Edit Account Category",
+    "editAccountFolder": {
+      "title": "Edit Account Folder",
       "placeholders": {
-        "tagName": "Name",
-        "tagDescription": "Description"
+        "folderName": "Name",
+        "folderDescription": "Description"
       },
       "messages": {
-        "success": "Account category updated",
-        "error": "Error updating account category"
+        "success": "Account folder updated",
+        "error": "Error updating account folder"
       }
     },
 
@@ -699,7 +751,7 @@
       "placeholders": {
         "accountName": "Account name",
         "accountDescription": "Account description",
-        "tagSelect": "Select tag",
+        "folderSelect": "Select folder",
         "amount": "Amount"
       },
       "messages": {
@@ -715,7 +767,7 @@
         "recurringRepeatMode": "Repeat mode",
         "recurringNextRepeat": "Next repeat",
         "recurringNotificationMode": "Notification mode",
-        "recurringTag": "Category",
+        "recurringCategory": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
       },
@@ -742,7 +794,7 @@
         "recurringRepeatMode": "Repeat mode",
         "recurringNextRepeat": "Next repeat",
         "recurringNotificationMode": "Notification mode",
-        "recurringTag": "Category",
+        "recurringCategory": "Category",
         "recurringAccount": "Account",
         "recurringDescription": "Description"
       },
@@ -778,7 +830,7 @@
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",
-        "transactionTag": "Category",
+        "transactionCategory": "Category",
         "transactionAccount": "Account",
         "transactionDescription": "Description"
       },
@@ -802,7 +854,7 @@
       "placeholders": {
         "transactionAmount": "Amount",
         "transactionDate": "Date",
-        "transactionTag": "Category",
+        "transactionCategory": "Category",
         "transactionAccount": "Account",
         "transactionDescription": "Description"
       },
@@ -819,18 +871,18 @@
       }
     },
 
-    "newTransactionTag": {
+    "newTransactionCategory": {
       "title": "New Transaction Category",
       "placeholders": {
-        "tagName": "Name",
-        "tagType": {
+        "categoryName": "Name",
+        "categoryType": {
           "type": "Type",
           "expense": "Expense",
           "income": "Income",
           "mixed": "Mixed"
         },
-        "tagParent": "Parent",
-        "tagDescription": "Description"
+        "categoryParent": "Parent",
+        "categoryDescription": "Description"
       },
       "messages": {
         "success": "Transaction category created",
@@ -838,20 +890,20 @@
       }
     },
 
-    "editTransactionTag": {
+    "editTransactionCategory": {
       "title": "Edit Transaction Category",
-      "tagWithoutParent": "Without parent",
+      "categoryWithoutParent": "Without parent",
       "placeholders": {
-        "tagName": "Name",
-        "tagExpectedAmount": "Expected amount",
-        "tagType": {
+        "categoryName": "Name",
+        "categoryExpectedAmount": "Expected amount",
+        "categoryType": {
           "type": "Type",
           "expense": "Expense",
           "income": "Income",
           "mixed": "Mixed"
         },
-        "tagParent": "Parent",
-        "tagDescription": "Description"
+        "categoryParent": "Parent",
+        "categoryDescription": "Description"
       },
       "messages": {
         "success": "Transaction category updated",

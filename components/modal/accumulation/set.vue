@@ -26,14 +26,14 @@
 
         <div class="form-control w-full">
           <label class="label">
-            <span class="label-text">{{ $t('modals.setAccumulation.placeholders.tag') }}</span>
+            <span class="label-text">{{ $t('modals.setAccumulation.placeholders.category') }}</span>
           </label>
 
-          <select-transaction-tag
-              v-model="tagId"
+          <select-transaction-category
+              v-model="categoryId"
               :can-be-without-parent="false"
-              :tags-tree="tagsTree"
-              :class="{'input-error' : highlightErrors && !tagId}"
+              :categories-tree="categoriesTree"
+              :class="{'input-error' : highlightErrors && !categoryId}"
           />
         </div>
       </div>
@@ -85,20 +85,20 @@ const close = () => {
   emit('close')
 }
 
-const {$serverConfigs, $accumulationsApi, $transactionsTagsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $accumulationsApi, $transactionsCategoriesApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.accumulation;
 
 const accumulationMap = $accumulationsApi.getAccumulationMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const highlightErrors = ref(false);
-const allValid = computed(() => sourceAccountId.value && targetAccountId.value && tagId.value && steps.value.length > 0 && !steps.value.find(v => !v.step))
+const allValid = computed(() => sourceAccountId.value && targetAccountId.value && categoryId.value && steps.value.length > 0 && !steps.value.find(v => !v.step))
 
 const account = ref();
 const steps = ref([]);
 const sourceAccountId = ref();
 const targetAccountId = ref();
-const tagId = ref();
+const categoryId = ref();
 const currencyFilter = ref();
 
 watch(() => props.opened, (value) => {
@@ -111,7 +111,7 @@ watch(() => props.opened, (value) => {
 
   sourceAccountId.value = props.account.accountId;
   targetAccountId.value = v.targetAccountId;
-  tagId.value = v.tagId;
+  categoryId.value = v.categoryId;
   steps.value = v.steps || [{from: null, to: null, steps: null}];
   account.value = props.account;
   currencyFilter.value = props.account.currencyId;
@@ -127,7 +127,7 @@ const set = () => {
   const result = {
     sourceAccountId: sourceAccountId.value,
     targetAccountId: targetAccountId.value,
-    tagId: tagId.value,
+    categoryId: categoryId.value,
     steps: steps.value
   }
 

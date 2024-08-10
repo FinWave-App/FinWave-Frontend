@@ -1,6 +1,6 @@
 import {useServer} from "~/composables/useServer";
 
-export const useApi = function <T> (request : any, opts : any = {}) {
+export const useApi = async function <T>(request: any, opts: any = {}) {
     const config = useRuntimeConfig()
     const auth = useNuxtApp().$auth.state();
 
@@ -9,5 +9,12 @@ export const useApi = function <T> (request : any, opts : any = {}) {
         opts.headers.Authorization = 'Bearer ' + auth.token;
     }
 
-    return useFetch<T>(request, { baseURL: useServer.getUrl(), ...opts })
+    let error = null;
+    let data = null;
+
+    await $fetch<T>(request, {baseURL: useServer.getUrl(), ...opts})
+        .catch(e => error = e)
+        .then(r => data = r);
+
+    return {data: ref(data), error: ref(error)};
 }

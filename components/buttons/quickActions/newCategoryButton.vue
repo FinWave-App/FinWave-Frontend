@@ -5,7 +5,7 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
     </svg>
 
-    {{ $t("mainPage.buttons.newTag") }}
+    {{ $t("mainPage.buttons.newCategory") }}
   </div>
 </template>
 

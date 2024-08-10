@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-wrap gap-1 w-full">
-    <select-transaction-tag class="flex-1 h-10 min-w-48"
+    <select-transaction-category class="flex-1 h-10 min-w-48"
                             mode="tags"
-                            v-model="filterTags"
+                            v-model="filterCategories"
                             :searchable="true"
-                            :placeholder='$t("transactionsPage.placeholders.filters.tags")'
+                            :placeholder='$t("transactionsPage.placeholders.filters.categories")'
                             :close-on-select="false"
-                            :tags-tree="tagsTree"
+                            :categories-tree="categoriesTree"
                             :can-be-without-parent="false"
     >
 
-    </select-transaction-tag>
+    </select-transaction-category>
 
     <select-account class="flex-1 h-10 min-w-48"
                     mode="tags"
@@ -50,9 +50,9 @@ import Datepicker from "@vuepic/vue-datepicker";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 
 const { t, locale } = useI18n();
-const { $transactionsTagsApi } = useNuxtApp();
+const { $transactionsCategoriesApi } = useNuxtApp();
 
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const props = defineProps({
   modelValue: {
@@ -67,7 +67,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const filterTags = ref();
+const filterCategories = ref();
 const filterAccounts = ref();
 const filterCurrencies = ref();
 const filterTime = ref();
@@ -102,10 +102,10 @@ function adjustDates(date1, date2, maxDays) {
 }
 
 
-watch([filterTags, filterAccounts, filterCurrencies, filterTime, filterDescription], () => {
+watch([filterCategories, filterAccounts, filterCurrencies, filterTime, filterDescription], () => {
   const dates = filterTime.value ? adjustDates(filterTime.value[0], filterTime.value[1], props.calendarMaxRange) : null;
   emit("update:modelValue", new TransactionsFilter(
-      filterTags.value,
+      filterCategories.value,
       filterAccounts.value,
       filterCurrencies.value,
       dates ? dates[0] : null,

@@ -86,16 +86,16 @@
 
       <div class="form-control w-full">
         <label class="label">
-          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
+          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionCategory') }}</span>
         </label>
 
-        <select-transaction-tag class="w-full"
-                                v-model.number="tag"
+        <select-transaction-category class="w-full"
+                                v-model.number="categories"
                                 :searchable="true"
                                 :can-be-without-parent="false"
                                 :allow-new="true"
-                                :tags-tree="tagsTree"
-                                :class="{'input-error' : highlightErrors && tag === undefined}"
+                                :categories-tree="categoriesTree"
+                                :class="{'input-error' : highlightErrors && categories === undefined}"
         />
       </div>
     </div>
@@ -143,7 +143,7 @@ import Datepicker from "@vuepic/vue-datepicker";
 
 const emit = defineEmits(['close', 'reloadTransactions']);
 
-const {$serverConfigs, $transactionsTagsApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
 const { t, locale } = useI18n();
 
 const configs = $serverConfigs.configs.transactions;
@@ -151,10 +151,10 @@ const configs = $serverConfigs.configs.transactions;
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
-const tag = ref();
+const categories = ref();
 const fromAccount = ref();
 const toAccount = ref();
 const date = ref(new Date());
@@ -164,7 +164,7 @@ const description = ref("");
 
 const highlightErrors = ref(false);
 const allValid = computed(() => {
-  const basicValid = fromAccount.value !== undefined && tag.value !== undefined && date.value && fromDelta.value !== 0;
+  const basicValid = fromAccount.value !== undefined && categories.value !== undefined && date.value && fromDelta.value !== 0;
   const separateValid = toAccount.value !== undefined && toDelta.value !== undefined;
 
   return basicValid && (!separateAmounts.value || separateValid)
@@ -234,8 +234,8 @@ const create = () => {
   highlightErrors.value = false;
   close();
 
-  const callApi = (tagId) => {
-    $transactionsApi.newInternalTransfer(tagId, fromAccount.value, toAccount.value, date.value, fromDelta.value * -1, toDelta.value, description.value.length > 0 ? description.value : null).then((s) => {
+  const callApi = (categoriesId) => {
+    $transactionsApi.newInternalTransfer(categoriesId, fromAccount.value, toAccount.value, date.value, fromDelta.value * -1, toDelta.value, description.value.length > 0 ? description.value : null).then((s) => {
       if (s !== -1) {
         $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
         emit('reloadTransactions');
@@ -246,8 +246,8 @@ const create = () => {
     });
   }
 
-  if (typeof tag.value === "string") {
-    $transactionsTagsApi.newTag(0, -1, tag.value, null).then((s) => {
+  if (typeof categories.value === "string") {
+    $transactionsCategoriesApi.newCategory(0, -1, categories.value, null).then((s) => {
       if (s !== -1) {
         callApi(s);
       }else {
@@ -258,7 +258,7 @@ const create = () => {
     return;
   }
 
-  callApi(tag.value);
+  callApi(categories.value);
 }
 
 </script>

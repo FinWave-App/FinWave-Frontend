@@ -1,15 +1,15 @@
 <template>
-  <modal-base :title="$t('modals.newAccountTag.title')" :opened="opened" :name="'account-transactionTag-create-modal'">
+  <modal-base :title="$t('modals.newAccountFolder.title')" :opened="opened" :name="'account-transactionFolder-create-modal'">
     <div class="w-full flex flex-col gap-2">
       <input type="text"
              class="input input-bordered"
-             :placeholder="$t('modals.newAccountTag.placeholders.tagName')"
+             :placeholder="$t('modals.newAccountFolder.placeholders.folderName')"
              v-model.trim="name"
-             :maxlength="tagsConfigs.maxNameLength"
+             :maxlength="foldersConfigs.maxNameLength"
              :class="{'input-error' : highlightErrors && name.length < 1}"
       />
 
-      <textarea class="textarea input-bordered" :placeholder="$t('modals.newAccountTag.placeholders.tagDescription')" v-model.trim="description" :maxlength="tagsConfigs.maxDescriptionLength">
+      <textarea class="textarea input-bordered" :placeholder="$t('modals.newAccountFolder.placeholders.folderDescription')" v-model.trim="description" :maxlength="foldersConfigs.maxDescriptionLength">
       </textarea>
     </div>
 
@@ -37,8 +37,8 @@ const close = () => {
   emit('close')
 }
 
-const {$serverConfigs, $accountsTagsApi, $toastsManager} = useNuxtApp();
-const tagsConfigs = $serverConfigs.configs.accounts.tags;
+const {$serverConfigs, $accountsFoldersApi, $toastsManager} = useNuxtApp();
+const foldersConfigs = $serverConfigs.configs.accounts.folders;
 
 const name = ref("");
 const description = ref("");
@@ -63,11 +63,11 @@ const create = () => {
   highlightErrors.value = false;
   close();
 
-  $accountsTagsApi.newTag(name.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $accountsFoldersApi.newFolder(name.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s !== -1)
-      $toastsManager.pushToast(t("modals.newAccountTag.messages.success"), 2500, "success")
+      $toastsManager.pushToast(t("modals.newAccountFolder.messages.success"), 2500, "success")
     else
-      $toastsManager.pushToast(t("modals.newAccountTag.messages.error"), 3000,"error")
+      $toastsManager.pushToast(t("modals.newAccountFolder.messages.error"), 3000,"error")
   });
 }
 

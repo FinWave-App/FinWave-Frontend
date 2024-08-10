@@ -5,14 +5,14 @@ export class UserApi extends AbstractApi {
     private username: Ref<string | null> = ref(null);
 
     async init(): Promise<void | boolean> {
-        const {data} = await useApi<any>("/user/getUsername");
+        const {data, error} = await useApi<any>("/user/getUsername");
 
-        if (data.value === null)
+        if (data.value === null || error.value)
             return false;
 
         this.username.value = data.value.username;
 
-        return true;
+        return this.username.value !== undefined && this.username.value !== null;
     }
 
     public getUsername(): Ref<string | null> {

@@ -1,22 +1,22 @@
 <template>
   <div class="transition-all" :class="{'opacity-70 hover:opacity-100': hideStatus}">
-    <div class="transition-all tag-info mb-0" :class="{'rounded-2xl': hideStatus}">
+    <div class="transition-all folder-info mb-0" :class="{'rounded-2xl': hideStatus}">
       <div class="flex justify-between">
         <p class="font-bold text-lg">
-          {{tag.name}}
+          {{folder.name}}
         </p>
 
         <div class="flex gap-1 items-center">
           <plus-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus" @event="createAccountModal = true" />
-          <edit-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus" @event="tagEditModal = true"/>
+          <edit-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="!hideStatus" @event="folderEditModal = true"/>
 
-          <delete-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="hideStatus && accounts.length === 0" @click="deleteTag" />
+          <delete-button class="btn btn-xs btn-ghost m-0 p-0.5" v-if="hideStatus && accounts.length === 0" @click="deleteFolder" />
           <hide-button class="btn btn-xs btn-ghost m-0 p-0.5" :hide-status="hideStatus" @hide="setHide" @unHide="unHide"/>
         </div>
       </div>
 
       <p v-if="!hideStatus" class="opacity-80 text-sm">
-        {{tag.description}}
+        {{folder.description}}
       </p>
     </div>
     <div v-if="!hideStatus" class="bg-base-300 rounded-b-2xl p-2">
@@ -46,17 +46,17 @@
       </div>
     </div>
 
-    <modal-account-create :tag="tag" @close="createAccountModal = false" :opened="createAccountModal"/>
+    <modal-account-create :folder="folder" @close="createAccountModal = false" :opened="createAccountModal"/>
 
-    <confirmation :opened="tagDeleteModal" :name="'transactionTag-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="tagDeleteModal = false">
+    <confirmation :opened="folderDeleteModal" :name="'folder-delete-confirmation-modal'" :confirm-style="'error'" @confirm="confirmDelete" @deny="folderDeleteModal = false">
       <div class="flex justify-center">
         <p class="text-lg font-bold">
-          {{ $t("modals.confirmations.deleteAccountTag") }}
+          {{ $t("modals.confirmations.deleteAccountFolder") }}
         </p>
       </div>
     </confirmation>
 
-    <modal-account-tag-edit @close="tagEditModal = false" :opened="tagEditModal" :tag="tag"/>
+    <modal-account-folder-edit @close="folderEditModal = false" :opened="folderEditModal" :folder="folder"/>
     <modal-account-edit :account="accountToEdit" :opened="accountEditModal" @close="accountEditModal = false" @open-accumulation="openAccumulationModal(accountToEdit)" ></modal-account-edit>
     <modal-accumulation-set @close="accumulationSetModal = false" :opened="accumulationSetModal" :account="accountToAccumulation" ></modal-accumulation-set>
   </div>
@@ -72,7 +72,7 @@ import DeleteButton from "~/components/buttons/deleteButton.vue";
 
 const emit = defineEmits(['hide', 'unHide']);
 
-const {$serverConfigs, $accountsApi, $accountsTagsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $accountsApi, $accountsFoldersApi, $toastsManager} = useNuxtApp();
 const { t } = useI18n();
 
 const props = defineProps({
@@ -80,7 +80,7 @@ const props = defineProps({
     required: true
   },
 
-  tag: {
+  folder: {
     required: true
   },
 
@@ -94,8 +94,8 @@ const showedAccounts = computed(() => props.accounts.filter((a) => !a.hidden));
 const hiddenAccounts = computed(() => props.accounts.filter((a) => a.hidden));
 
 const createAccountModal = ref(false);
-const tagDeleteModal = ref(false);
-const tagEditModal = ref(false);
+const folderDeleteModal = ref(false);
+const folderEditModal = ref(false);
 const accumulationSetModal = ref(false);
 
 const accountEditModal = ref(false);
@@ -109,8 +109,8 @@ const unHide = () => {
   emit('unHide');
 }
 
-const deleteTag = () => {
-  tagDeleteModal.value = true;
+const deleteFolder = () => {
+  folderDeleteModal.value = true;
 }
 
 const openEditAccountModal = (account) => {
@@ -124,20 +124,20 @@ const openAccumulationModal = (account) => {
 }
 
 const confirmDelete = () => {
-  tagDeleteModal.value = false;
+  folderDeleteModal.value = false;
 
-  $accountsTagsApi.deleteTag(props.tag.tagId).then((s) => {
+  $accountsFoldersApi.deleteFolder(props.folder.folderId).then((s) => {
     if (s)
-      $toastsManager.pushToast(t("accountTagEntry.messages.deleted"), 2500, "success")
+      $toastsManager.pushToast(t("accountFolderEntry.messages.deleted"), 2500, "success")
     else
-      $toastsManager.pushToast(t("accountTagEntry.messages.deleteFail"), 3000,"error")
+      $toastsManager.pushToast(t("accountFolderEntry.messages.deleteFail"), 3000,"error")
   });
 }
 
 </script>
 
 <style scoped>
-.tag-info {
+.folder-info {
   @apply p-2 px-3 bg-base-100 rounded-t-2xl;
 }
 

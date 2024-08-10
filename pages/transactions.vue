@@ -3,7 +3,7 @@
     <transactions-filter-div v-model="filter" />
 
     <transition-group name="status">
-      <div v-if="loadStatus === 0" :key="'loadScreen'">
+      <div v-if="loadStatus === 0" :key="'loadScreen'" class="skeleton w-full h-32 bg-opacity-70 mt-4">
       </div>
       <div v-else class="overflow-x-auto overflow-y-hidden mt-2" :key="'table'">
         <table class="table table-sm lg:table-md table-zebra table-pin-rows">
@@ -11,7 +11,7 @@
           <tr>
             <th>{{$t("transactionsPage.table.amount")}}</th>
             <th class="w-8"></th>
-            <th>{{$t("transactionsPage.table.tag")}}</th>
+            <th>{{$t("transactionsPage.table.categories")}}</th>
             <th>{{$t("transactionsPage.table.createdAt")}}</th>
             <th>{{$t("transactionsPage.table.account")}}</th>
             <th>{{$t("transactionsPage.table.description")}}</th>
@@ -36,6 +36,10 @@
           </transition-group>
           </tbody>
         </table>
+      </div>
+
+      <div v-if="loadStatus !== 0 && transactions.length === 0" class="w-full template-border flex items-center justify-center text-center rounded-xl h-min p-4 mt-2">
+        <p class="font-bold opacity-50">{{ $t("transactionsPage.emptyMessage") }}</p>
       </div>
 
     </transition-group>
@@ -81,11 +85,11 @@ const transactionToEdit = ref();
 const transactionToDelete = ref();
 
 const { t, locale } = useI18n();
-const { $transactionsApi, $transactionsTagsApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
+const { $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 
 const accountsMap = $accountsApi.getAccountsMap();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 
@@ -99,7 +103,6 @@ const count = ref(0);
 
 const transactions = ref({});
 const loadStatus = ref(0);
-
 
 const fetchCount = async () => {
   count.value = await $transactionsApi.getTransactionsCount(filter.value)
@@ -179,6 +182,7 @@ const confirmDelete = () => {
 }
 
 .status-leave-active {
+  position: absolute;
 }
 
 .transactions-move,

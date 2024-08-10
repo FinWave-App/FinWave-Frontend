@@ -2,7 +2,7 @@
   <Multiselect
       v-model="value"
       :options="parentSelectRender"
-      :placeholder="$t('selects.transactionTagSelect.placeholder')"
+      :placeholder="$t('selects.transactionCategorySelect.placeholder')"
       :no-options-text="$t('selects.noOptions')"
       :no-results-text="$t('selects.noResults')"
       @search-change="search"
@@ -14,7 +14,7 @@
 
     <template v-slot:singlelabel="{ value }">
       <div class="multiselect-single-label flex gap-1">
-        <div v-if="value.newTag" class="badge badge-success badge-sm">{{ $t('selects.transactionTagSelect.new') }}</div> {{ value.label }}
+        <div v-if="value.newCategory" class="badge badge-success badge-sm">{{ $t('selects.transactionCategorySelect.new') }}</div> {{ value.label }}
       </div>
     </template>
 
@@ -25,7 +25,7 @@
 import Multiselect from '@vueform/multiselect'
 
 const props = defineProps({
-  tagsTree: {
+  categoriesTree: {
     required: true
   },
 
@@ -34,7 +34,7 @@ const props = defineProps({
     required: true
   },
 
-  excludeTagId: {
+  excludeCategoryId: {
     required: false
   },
 
@@ -58,7 +58,7 @@ const rootParent = {
   value: -1,
   disabled: false,
   deep: 0,
-  label: t('selects.transactionTagSelect.withoutParent')
+  label: t('selects.transactionCategorySelect.withoutParent')
 };
 
 const parentSelectRender = ref([]);
@@ -83,7 +83,7 @@ const search = (e, ms) => {
       disabled: false,
       deep: 0,
       label: lastSearch.text,
-      newTag: true
+      newCategory: true
     }
 
     ms.select(result);
@@ -99,10 +99,10 @@ const selectRender = (deep, elements, resultArray) => {
   elements.forEach((e) => {
     resultArray.push(
         {
-          value: e.tag.tagId,
-          disabled: e.tag.tagId == props.excludeTagId,
+          value: e.category.categoryId,
+          disabled: e.category.categoryId == props.excludeCategoryId,
           deep: deep,
-          label: e.tag.name
+          label: e.category.name
         }
     )
 
@@ -123,16 +123,16 @@ watch(() => props.modelValue, () => {
   value.value = props.modelValue;
 });
 
-watch(() => [props.tagsTree, props.canBeWithoutParent, props.excludeTagId], (l, n) => {
+watch(() => [props.categoriesTree, props.canBeWithoutParent, props.excludeCategoryId], (l, n) => {
   parentSelectRender.value = [];
 
   if (props.canBeWithoutParent)
     parentSelectRender.value.push(rootParent);
 
-  selectRender(0, props.tagsTree, parentSelectRender.value)
+  selectRender(0, props.categoriesTree, parentSelectRender.value)
 }, {deep: true})
 
-selectRender(0, props.tagsTree, parentSelectRender.value)
+selectRender(0, props.categoriesTree, parentSelectRender.value)
 
 </script>
 

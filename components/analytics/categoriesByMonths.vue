@@ -24,10 +24,10 @@ import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
 import {useColor} from "~/composables/useColor";
 
-const { $analyticsApi, $transactionsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
+const { $analyticsApi, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
-const tagsMap = $transactionsTagsApi.getTagsMap();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 
 const filter = ref();
 const chartSeries = ref([]);
@@ -51,7 +51,7 @@ $transactionsApi.registerUpdateListener(fetch)
 const buildChart = async () => {
   const xaxis = [];
   const series = [];
-  const tags = {};
+  const categories = {};
   const colors = [];
 
   let decimals = Number.MAX_VALUE;
@@ -66,26 +66,26 @@ const buildChart = async () => {
     v.forEach((v) => {
       const currency = currenciesMap.value.get(v.currencyId)
       const currencySymbol = currency.symbol;
-      const tagName = tagsMap.value.get(v.tagId).name;
+      const categoryName = categoriesMap.value.get(v.categoryId).name;
 
       decimals = Math.min(decimals, currency.decimals);
 
-      let tagSeries = null;
+      let categorySeries = null;
 
-      if (tags[v.currencyId + "-" + v.tagId] === undefined) {
-        tagSeries = {
-          name: tagName + " (" + currencySymbol + ")",
+      if (categories[v.currencyId + "-" + v.categoriesId] === undefined) {
+        categorySeries = {
+          name: categoryName + " (" + currencySymbol + ")",
           data: []
         }
 
-        tags[v.currencyId + "-" + v.tagId] = tagSeries;
-        series.push(tagSeries);
-        colors.push(useColor(v.tagId));
+        categories[v.currencyId + "-" + v.categoryId] = categorySeries;
+        series.push(categorySeries);
+        colors.push(useColor(v.categoryId));
       } else {
-        tagSeries = tags[v.currencyId + "-" + v.tagId];
+        categorySeries = categories[v.currencyId + "-" + v.categoryiesId];
       }
 
-      tagSeries.data[i] = v.delta;
+      categorySeries.data[i] = v.delta;
     })
     i++;
   })
@@ -105,7 +105,7 @@ const buildChart = async () => {
 
   chartOptions.value = {
     chart: {
-      id: "tags-by-months-" + type.value,
+      id: "categories-by-months-" + type.value,
       type: type.value,
       stacked: type.value === 'bar',
       foreColor: undefined,

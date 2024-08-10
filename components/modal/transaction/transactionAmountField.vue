@@ -34,7 +34,7 @@ const props = defineProps({
 
   },
 
-  tagId: {
+  categoryId: {
     required: true
   },
 
@@ -53,7 +53,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const { $transactionsTagsApi, $currenciesApi } = useNuxtApp();
+const { $transactionsCategoriesApi, $currenciesApi } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const sign = ref(props.signOverride ? props.signOverride : 1);
@@ -61,7 +61,7 @@ const signChoice = ref(!props.signOverride);
 const signManuallyChoice = ref(false);
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
 const currency = ref();
 const rawAmount = ref("");
@@ -114,25 +114,25 @@ const updateSign = () => {
   if (props.signOverride)
     return;
 
-  if (props.tagId === undefined) {
+  if (props.categoryId === undefined) {
     signChoice.value = true;
     return;
   }
 
-  const parentTagObject = tagsMap.value.get(props.tagId);
+  const parentCategoryObject = categoriesMap.value.get(props.categoryId);
 
-  if (parentTagObject === undefined || parentTagObject.tag === undefined) {
+  if (parentCategoryObject === undefined || parentCategoryObject.category === undefined) {
     signChoice.value = true;
     return;
   }
 
-  if (parentTagObject.tag.type !== 0)
-    sign.value = parentTagObject.tag.type
+  if (parentCategoryObject.category.type !== 0)
+    sign.value = parentCategoryObject.category.type
 
-  signChoice.value = parentTagObject.tag.type === 0;
+  signChoice.value = parentCategoryObject.category.type === 0;
 }
 
-watch(() => props.tagId, (value, oldValue, onCleanup) => {
+watch(() => props.categoryId, (value, oldValue, onCleanup) => {
   updateSign();
 });
 
@@ -152,7 +152,7 @@ if (props.modelValue) {
   amountChanged();
 }
 
-if (props.tagId) {
+if (props.categoryId) {
   updateSign();
 }
 

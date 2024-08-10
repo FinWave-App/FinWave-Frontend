@@ -72,19 +72,19 @@ export class AccountsApi extends AbstractApi {
         return true;
     }
 
-    public async editAccountTag(tagId: number, accountId: number) {
+    public async editAccountFolder(folderId: number, accountId: number) {
         const opts = {
             method: "POST",
-            params: { accountId: accountId, tagId: tagId }
+            params: { accountId: accountId, folderId: folderId }
         };
 
-        const { error } = await useApi("/user/accounts/editTag", opts);
+        const { error } = await useApi("/user/accounts/editFolder", opts);
 
         if (error.value !== null) {
             return false;
         }
 
-        this.accounts.value.find((t) => t.accountId == accountId).tagId = tagId;
+        this.accounts.value.find((t) => t.accountId == accountId).folderId = folderId;
 
         return true;
     }
@@ -123,13 +123,13 @@ export class AccountsApi extends AbstractApi {
         return true;
     }
 
-    public async newAccount(name: string, currencyId: number, tagId: number, description: string | null) : Promise<number> {
+    public async newAccount(name: string, currencyId: number, folderId: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
                 name: name,
                 currencyId: currencyId,
-                tagId: tagId
+                folderId: folderId
             }
         }
 
@@ -144,7 +144,7 @@ export class AccountsApi extends AbstractApi {
 
         this.accounts.value?.push({
             accountId: newAccount.value.accountId,
-            tagId: tagId,
+            folderId: folderId,
             currencyId: currencyId,
             amount: 0,
             hidden: false,

@@ -4,8 +4,6 @@ import {ca} from "date-fns/locale";
 export default defineNuxtPlugin(async nuxtApp => {
     try {
         await useApiLoader.fetch();
-
-        useApiLoader.connectWebsocket();
     }catch (e) {
         console.log(e)
     }

@@ -3,7 +3,7 @@
     <div v-for="d of data" :key="d.id" class="flex flex-col border rounded-xl p-3 pb-2 pt-1 gap-1 lg:w-full flex-1 justify-between" :class="'border-' + d.status">
       <div class="flex gap-1 items-center justify-center 2xl:flex-wrap">
         <p class="font-bold text-sm truncate">
-          {{tagsMap.get(d.tagId).name}}
+          {{categoriesMap.get(d.categoryId).name}}
         </p>
 
         <div class="badge badge-outline badge-sm">
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div v-else class="w-full template-border flex items-center justify-center text-center rounded-xl h-min p-4">
-    <p class="font-bold opacity-50">{{ props.emptyMessage || $t("mainPage.tags.emptyMessage") }}</p>
+    <p class="font-bold opacity-50">{{ props.emptyMessage || $t("mainPage.categories.emptyMessage") }}</p>
   </div>
 </template>
 
@@ -68,14 +68,14 @@ const props = defineProps({
   }
 })
 
-const { $analyticsApi, $transactionsTagsApi, $tagsManagementApi, $currenciesApi, $serverConfigs, $transactionsApi } = useNuxtApp();
+const { $analyticsApi, $transactionsCategoriesApi, $categoriesBudgetApi, $currenciesApi, $serverConfigs, $transactionsApi } = useNuxtApp();
 
 const data = ref([]);
 
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const managementMap = $tagsManagementApi.getManagementsMap();
+const budgetsMap = $categoriesBudgetApi.getBudgetsMap();
 
 const formatAmount = (delta, currencyId) => {
   const currency = currenciesMap.value.get(currencyId);
@@ -87,13 +87,13 @@ const formatAmount = (delta, currencyId) => {
 }
 
 const fetchData = async () => {
-  const fetched = await $analyticsApi.getTagAnalytics(props.date);
+  const fetched = await $analyticsApi.getCategoryAnalytics(props.date);
   const newData = [];
 
   for (const entry of fetched) {
-    const expected = managementMap.value.get(entry.managementId).amount
+    const expected = budgetsMap.value.get(entry.budgetId).amount
 
-    if (expected > 0 && props.onlyExpanses || props.onlyRoot && !tagsTree.value.find(t => t.tag.tagId === entry.tagId))
+    if (expected > 0 && props.onlyExpanses || props.onlyRoot && !categoriesTree.value.find(t => t.category.categoryId === entry.categoryId))
       continue;
 
     let percent = Math.max(Math.min(entry.delta / expected, 1), 0);
@@ -113,8 +113,8 @@ const fetchData = async () => {
       continue;
 
     newData.push({
-      id: entry.managementId,
-      tagId: entry.tagId,
+      id: entry.budgetId,
+      categoryId: entry.categoryId,
       currencyId: entry.currencyId,
       delta: entry.delta,
       expected: expected,
@@ -130,7 +130,7 @@ $transactionsApi.registerUpdateListener(() => {
   fetchData();
 })
 
-watch([() => props.date, () => props.onlyRoot], () => {
+watch([() => props.date, () => props.onlyRoot, $categoriesBudgetApi.getBudgets()], () => {
   fetchData();
 })
 

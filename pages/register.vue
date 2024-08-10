@@ -131,23 +131,9 @@ const register = async () => {
     return;
   }
 
-  const {data, error} = await useApi('auth/login', {
-    method: "POST",
-    query: {login: login.value, password: password.value}
-  })
-
-  if (error.value !== null) {
-    errorMessage.value = "registerPage.errors.serverError";
-    loading.value = false;
-
-    return;
-  }
-
-  $auth.auth(data.value.token, data.value.lifetimeDays);
-
   loading.value = false;
 
-  await navigateTo("/");
+  await navigateTo("/login");
 }
 
 </script>

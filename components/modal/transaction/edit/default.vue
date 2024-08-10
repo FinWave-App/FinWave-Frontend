@@ -15,15 +15,15 @@
         </div>
         <div class="form-control w-full">
           <label class="label">
-            <span class="label-text">{{ $t('modals.editTransaction.placeholders.transactionTag') }}</span>
+            <span class="label-text">{{ $t('modals.editTransaction.placeholders.transactionCategory') }}</span>
           </label>
 
-          <select-transaction-tag class="w-full"
-                                  v-model="parentTag"
+          <select-transaction-category class="w-full"
+                                  v-model="parentCategory"
                                   :searchable="true"
                                   :can-be-without-parent="false"
-                                  :tags-tree="tagsTree"
-                                  :class="{'input-error' : highlightErrors && parentTag === undefined}"
+                                  :categories-tree="categoriesTree"
+                                  :class="{'input-error' : highlightErrors && parentCategory === undefined}"
           />
         </div>
 
@@ -109,7 +109,7 @@ const props = defineProps({
   }
 })
 
-const {$serverConfigs, $transactionsTagsApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.transactions;
 
 const emit = defineEmits(['close', 'reloadTransactions']);
@@ -118,19 +118,19 @@ const { t, locale } = useI18n();
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
 const account = ref();
 const amount = ref();
 const description = ref("");
-const parentTag = ref(-1);
+const parentCategory = ref(-1);
 const sign = ref(1);
 const signChoice = ref(true);
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
-const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
+const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentCategory.value !== undefined && date.value)
 
 watch(() => props.transaction, (newV, oldV) => {
   if (!newV)
@@ -139,28 +139,28 @@ watch(() => props.transaction, (newV, oldV) => {
   account.value = newV.accountId;
   amount.value = newV.delta;
   description.value = newV.description || "";
-  parentTag.value = newV.tagId;
+  parentCategory.value = newV.categoryId;
   date.value = new Date(newV.createdAt);
   amountChanged();
 });
 
-watch(parentTag, () => {
-  if (parentTag.value === undefined) {
+watch(parentCategory, () => {
+  if (parentCategory.value === undefined) {
     signChoice.value = true;
     return;
   }
 
-  const parentTagObject = tagsMap.value.get(parentTag.value);
+  const parentCategoryObject = categoriesMap.value.get(parentCategory.value);
 
-  if (parentTagObject === undefined || parentTagObject.tag === undefined) {
+  if (parentCategoryObject === undefined || parentCategoryObject.category === undefined) {
     signChoice.value = true;
     return;
   }
 
-  if (parentTagObject.tag.type !== 0)
-    sign.value = parentTagObject.tag.type
+  if (parentCategoryObject.category.type !== 0)
+    sign.value = parentCategoryObject.category.type
 
-  signChoice.value = parentTagObject.tag.type === 0;
+  signChoice.value = parentCategoryObject.category.type === 0;
 });
 
 const currency = computed(() => {
@@ -198,7 +198,7 @@ const apply = () => {
   highlightErrors.value = false;
   close();
 
-  $transactionsApi.editTransaction(props.transaction.transactionId, parentTag.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
+  $transactionsApi.editTransaction(props.transaction.transactionId, parentCategory.value, account.value, date.value, amount.value * sign.value, description.value.length > 0 ? description.value : null).then((s) => {
     if (s) {
       $toastsManager.pushToast(t("modals.editTransaction.messages.success"), 2500, "success");
       emit('reloadTransactions');

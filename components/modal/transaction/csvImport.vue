@@ -75,7 +75,7 @@
 
       <template v-if="step === 2">
         <div class="flex flex-col gap-2 w-full">
-          <div class="flex justify-center gap-2 w-full items-center" v-if="needDate || needAccount || needTag">
+          <div class="flex justify-center gap-2 w-full items-center" v-if="needDate || needAccount || needCategory">
             <div class="form-control w-full" v-if="needDate">
               <label class="label">
                 <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionDate') }}</span>
@@ -101,18 +101,18 @@
               />
             </div>
 
-            <div class="form-control w-full" v-if="needTag">
+            <div class="form-control w-full" v-if="needCategory">
               <label class="label">
-                <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
+                <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionCategory') }}</span>
               </label>
 
-              <select-transaction-tag class="w-full"
-                                      v-model="tag"
+              <select-transaction-category class="w-full"
+                                      v-model="category"
                                       :searchable="true"
                                       :can-be-without-parent="false"
                                       :allow-new="true"
-                                      :tags-tree="tagsTree"
-                                      :class="{'input-error' : highlightError && tag === undefined}"
+                                      :categories-tree="categoriesTree"
+                                      :class="{'input-error' : highlightError && category === undefined}"
               />
             </div>
           </div>
@@ -161,14 +161,14 @@
                         :class="{'input-error' : highlightError && !unknownMap.get(entry[0])[name]}"
                     />
 
-                    <select-transaction-tag
+                    <select-transaction-category
                         v-else-if="entry[0] === 3"
                         class="w-full join-item"
                         v-model="unknownMap.get(entry[0])[name]"
                         :searchable="true"
                         :can-be-without-parent="false"
                         :allow-new="false"
-                        :tags-tree="tagsTree"
+                        :categories-tree="categoriesTree"
                         :class="{'input-error' : highlightError && !unknownMap.get(entry[0])[name]}"
                     />
 
@@ -221,15 +221,15 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const papa = usePapaParse();
 
-const {$serverConfigs, $transactionsTagsApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $accountsApi, $toastsManager} = useNuxtApp();
 
 const configs = $serverConfigs.configs.transactions;
 
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
-const tags = $transactionsTagsApi.getTags();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categories = $transactionsCategoriesApi.getCategories();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
 const emit = defineEmits(['close', 'addTransactions', 'applyTransactions'])
 const step = ref(0);
@@ -244,7 +244,7 @@ const columTypes = [
     "ignore",
     "account",
     "amount",
-    "tag",
+    "category",
     "date",
     "description"
 ]
@@ -252,11 +252,11 @@ const columTypes = [
 const definedColumns = ref({})
 
 const needAccount = ref(false);
-const needTag = ref(false);
+const needCategory = ref(false);
 const needDate = ref(false);
 
 const account = ref();
-const tag = ref();
+const category = ref();
 const date = ref(new Date());
 const description = ref();
 
@@ -274,7 +274,7 @@ const transformToTransactions = () => {
     const transaction = {
       _id: Date.now(),
       type: 0,
-      tagId: tag.value,
+      categoryId: category.value,
       accountId: account.value,
       created: date.value,
       delta: 0,
@@ -309,15 +309,15 @@ const transformToTransactions = () => {
           transaction.delta = amount;
 
           break;
-        case 3: // tag
-            let tag = tags.value.find((t) => t.name.toLowerCase() === data.toLowerCase())
+        case 3: // category
+            let category = categories.value.find((t) => t.name.toLowerCase() === data.toLowerCase())
 
-            if (tag)
-              tag = tag.tagId
+            if (category)
+              category = category.categoryId
             else
-              tag = unknownMap.value.get(type)[data]
+              category = unknownMap.value.get(type)[data]
 
-          transaction.tagId = tag;
+          transaction.categoryId = category;
           break;
         case 4: // date
             if (!Number.isNaN(Date.parse(data)))
@@ -349,7 +349,7 @@ const unknownValuesFilled = () => {
   if (needAccount.value && !account.value)
     return false;
 
-  if (needTag.value && !tag.value)
+  if (needCategory.value && !category.value)
     return false;
 
   if (needDate.value && !date.value)
@@ -392,8 +392,8 @@ const findUnknownValues = () => {
         case 2: // amount
           if (!Number.isNaN(Number.parseFloat(data)) || unknownMap.value.get(type)[data]) continue;
           break;
-        case 3: // tag
-          if (tags.value.find((t) => t.name.toLowerCase() === data.toLowerCase()) || unknownMap.value.get(type)[data]) continue;
+        case 3: // category
+          if (categories.value.find((t) => t.name.toLowerCase() === data.toLowerCase()) || unknownMap.value.get(type)[data]) continue;
           break;
         case 4: // date
           if (!Number.isNaN(Date.parse(data)) || unknownMap.value.get(type)[data]) continue;
@@ -472,7 +472,7 @@ const initDefaultValues = () => {
   const columnsMap = Object.entries(definedColumns.value);
 
   needAccount.value = columnsMap.find((v) => v[1] === 1) === undefined
-  needTag.value = columnsMap.find((v) => v[1] === 3) === undefined
+  needCategory.value = columnsMap.find((v) => v[1] === 3) === undefined
   needDate.value = columnsMap.find((v) => v[1] === 4) === undefined
 }
 

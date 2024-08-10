@@ -1,21 +1,21 @@
 <template>
-  <modal-base :title="$t('modals.editAccountTag.title')" :opened="opened" :name="'account-transactionTag-edit-modal'">
+  <modal-base :title="$t('modals.editAccountFolder.title')" :opened="opened" :name="'account-transactionFolder-edit-modal'">
     <div class="w-full flex flex-col gap-2">
       <input type="text"
              class="input input-bordered"
              :class="{'input-success' : nameSyncStatus === 1, 'input-warning' : nameSyncStatus === 0, 'input-error' : nameSyncStatus === -1}"
-             :placeholder="$t('modals.editAccountTag.placeholders.tagName')"
+             :placeholder="$t('modals.editAccountFolder.placeholders.folderName')"
              v-model.trim="name"
              @change="syncName"
-             :maxlength="tagsConfigs.maxNameLength"
+             :maxlength="foldersConfigs.maxNameLength"
       />
 
       <textarea class="textarea input-bordered"
-                :placeholder="$t('modals.editAccountTag.placeholders.tagDescription')"
+                :placeholder="$t('modals.editAccountFolder.placeholders.folderDescription')"
                 :class="{'textarea-success' : descriptionSyncStatus === 1, 'textarea-warning' : descriptionSyncStatus === 0, 'textarea-error' : descriptionSyncStatus === -1}"
                 v-model.trim="description"
                 @change="syncDescription"
-                :maxlength="tagsConfigs.maxDescriptionLength">
+                :maxlength="foldersConfigs.maxDescriptionLength">
       </textarea>
     </div>
 
@@ -33,7 +33,7 @@ const props = defineProps({
     required: true
   },
 
-  tag: {
+  folder: {
     required: true
   }
 })
@@ -46,19 +46,19 @@ const close = () => {
   emit('close')
 }
 
-const {$serverConfigs, $accountsTagsApi, $toastsManager} = useNuxtApp();
-const tagsConfigs = $serverConfigs.configs.accounts.tags;
+const {$serverConfigs, $accountsFoldersApi, $toastsManager} = useNuxtApp();
+const foldersConfigs = $serverConfigs.configs.accounts.folders;
 
-const name = ref(props.tag.name);
-const description = ref(props.tag.description);
+const name = ref(props.folder.name);
+const description = ref(props.folder.description);
 
 const nameSyncStatus = ref(1);
 const descriptionSyncStatus = ref(1);
 
 watch(() => props.opened, (selection, prevSelection) => {
   if (selection) {
-    name.value = props.tag.name;
-    description.value = props.tag.description;
+    name.value = props.folder.name;
+    description.value = props.folder.description;
 
     nameSyncStatus.value = 1;
     descriptionSyncStatus.value = 1;
@@ -82,13 +82,13 @@ const syncName = () => {
 
   nameSyncStatus.value = 0;
 
-  $accountsTagsApi.editTagName(name.value, props.tag.tagId).then((r) => {
+  $accountsFoldersApi.editFolderName(name.value, props.folder.folderId).then((r) => {
     if (r) {
       nameSyncStatus.value = 1;
-      $toastsManager.pushToast(t("modals.editAccountTag.messages.success"), 2500, "success");
+      $toastsManager.pushToast(t("modals.editAccountFolder.messages.success"), 2500, "success");
     } else {
       nameSyncStatus.value = -1;
-      $toastsManager.pushToast(t("modals.editAccountTag.messages.error"), 3000,"error")
+      $toastsManager.pushToast(t("modals.editAccountFolder.messages.error"), 3000,"error")
     }
   })
 }
@@ -96,13 +96,13 @@ const syncName = () => {
 const syncDescription = () => {
   descriptionSyncStatus.value = 0;
 
-  $accountsTagsApi.editTagDescription(description.value === "" ? undefined : description.value, props.tag.tagId).then((r) => {
+  $accountsFoldersApi.editFolderDescription(description.value === "" ? undefined : description.value, props.folder.folderId).then((r) => {
     if (r) {
       descriptionSyncStatus.value = 1;
-      $toastsManager.pushToast(t("modals.editAccountTag.messages.success"), 2500, "success");
+      $toastsManager.pushToast(t("modals.editAccountFolder.messages.success"), 2500, "success");
     } else {
       descriptionSyncStatus.value = -1;
-      $toastsManager.pushToast(t("modals.editAccountTag.messages.error"), 3000,"error")
+      $toastsManager.pushToast(t("modals.editAccountFolder.messages.error"), 3000,"error")
     }
   })
 }

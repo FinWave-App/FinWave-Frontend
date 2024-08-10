@@ -15,12 +15,12 @@
 
       <div class="flex gap-4 flex-col-reverse mt-4">
         <div v-for="(transaction, index) in transactions" :key="transaction._id" class="flex justify-between gap-2 items-center border rounded-xl p-2 border-base-200" :class="{'border-error' : highlightWrong === index}">
-          <select-transaction-tag
+          <select-transaction-category
               class="w-full flex-1"
               :allow-new="true"
               :can-be-without-parent="false"
-              :tags-tree="tagsTree"
-              v-model="transaction.tagId"
+              :categories-tree="categoriesTree"
+              v-model="transaction.categoriesId"
           />
 
           <div class="flex flex-col justify-center items-center gap-2 flex-1">
@@ -47,7 +47,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.accountId)"
-                  :tag-id="transaction.tagId"
+                  :categories-id="transaction.categoriesId"
                   v-model="transaction.delta"
               />
             </template>
@@ -55,7 +55,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.accountId)"
-                  :tag-id="transaction.tagId"
+                  :categories-id="transaction.categoriesId"
                   v-model="transaction.delta"
                   :sign-override="-1"
               />
@@ -67,7 +67,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.toAccountId)"
-                  :tag-id="transaction.tagId"
+                  :categories-id="transaction.categoriesId"
                   v-model="transaction.toDelta"
                   :sign-override="1"
               />
@@ -136,12 +136,12 @@ definePageMeta({
 
 const { locale, t } = useI18n();
 
-const {$serverConfigs, $transactionsApi, $transactionsTagsApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
+const {$serverConfigs, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 
 const configs = $serverConfigs.configs.transactions;
 
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const accountsMap = $accountsApi.getAccountsMap();
@@ -169,7 +169,7 @@ const checkAll = () => {
   let lastCheck = 0;
 
   for (let t of transactions.value) {
-    if (!t.tagId || !tagsMap.value.has(t.tagId))
+    if (!t.categoriesId || !categoriesMap.value.has(t.categoriesId))
       return lastCheck;
 
     if (!t.accountId || !accountsMap.value.has(t.accountId))
@@ -199,7 +199,7 @@ const addNew = (type) => {
   const newTransaction = {
     _id: Date.now(),
     type: type,
-    tagId: null,
+    categoryId: null,
     accountId: null,
     created: new Date(),
     delta: 0,

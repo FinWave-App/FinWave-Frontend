@@ -1,6 +1,6 @@
 {
   "name": "finwave",
-  "version": "0.17.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@neojp/tailwindcss-important-variant": "^1.0.1",
+    "@nuxt/image": "^1.7.0",
     "@types/node": "^18",
     "autoprefixer": "^10.4.14",
     "nuxt": "^3.10.1",
@@ -22,6 +23,7 @@
     "@headlessui/vue": "^1.7.13",
     "@nuxt/types": "^2.16.3",
     "@nuxtjs/i18n": "^8.0.0-rc.4",
+    "@nuxtjs/mdc": "^0.8.3",
     "@vueform/multiselect": "^2.6.2",
     "@vuepic/vue-datepicker": "^5.4.0",
     "@vueuse/core": "^10.11.0",
@@ -29,6 +31,7 @@
     "daisyui": "^4.4.19",
     "mini-svg-data-uri": "^1.4.4",
     "nuxt-papa-parse": "^1.0.8",
+    "pretty-bytes": "^6.1.1",
     "vue-multiselect": "^3.0.0-beta.2",
     "vue3-apexcharts": "^1.4.4",
     "vue3-treeselect": "^0.1.10"

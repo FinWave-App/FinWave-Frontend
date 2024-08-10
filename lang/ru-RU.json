@@ -2,7 +2,7 @@
   "navigation": {
     "main": "Главная",
     "notes": "Заметки",
-    "tags": "Категории",
+    "categories": "Категории",
     "transactions": "Транзакции",
     "recurring": "Автоматизация",
     "currencies": "Валюты",
@@ -14,6 +14,8 @@
       "sessions": "Сеансы",
       "language": "Язык",
       "notifications": "Уведомления",
+      "ai": "ИИ ассистент",
+      "storage": "Хранилище",
       "logout": "Выйти"
     },
 
@@ -36,7 +38,7 @@
   "mainPage": {
     "buttons": {
       "newTransaction": "Новая транзакция",
-      "newTag": "Новая категория",
+      "newCategory": "Новая категория",
       "newCurrency": "Новая валюта",
       "newNote": "Новая заметка"
     },
@@ -47,7 +49,7 @@
     "summary": {
       "emptyMessage": "Здесь будет общая сводка счетов"
     },
-    "tags": {
+    "categories": {
       "emptyMessage": "Здесь будет общая сводка трат по категориям за текущий месяц"
     }
   },
@@ -55,7 +57,9 @@
   "notesPage": {
     "placeholders": {
       "find": "Найти по описанию"
-    }
+    },
+
+    "emptyMessage": "Пока здесь пусто. Нажмите '+' для добавления своей первой заметки."
   },
 
   "bulkPage": {
@@ -75,7 +79,7 @@
     "placeholders": {
       "filters": {
         "accounts": "Фильтр по счетам",
-        "tags": "Фильтр по категориям",
+        "categories": "Фильтр по категориям",
         "currencies": "Фильтр по валютам",
         "time": "Фильтр по времени",
         "description": "Фильтр по описанию"
@@ -86,18 +90,20 @@
     },
     "table": {
       "amount": "Сумма",
-      "tag": "Категория",
+      "categories": "Категория",
       "account": "Счет",
       "createdAt": "Создан",
       "description": "Описание",
       "action": "Действие"
-    }
+    },
+
+    "emptyMessage": "Пока здесь пусто. Нажмите '+' для добавления своей первой транзакции"
   },
 
   "recurringPage": {
     "table": {
       "amount": "Сумма",
-      "tag": "Категория",
+      "category": "Категория",
       "account": "Счет",
       "lastRepeat": "Предыдущий повтор",
       "nextRepeat": "Следующий повтор",
@@ -106,7 +112,9 @@
       "notificationMode": "Оповещение",
       "description": "Описание",
       "action": "Действие"
-    }
+    },
+
+    "emptyMessage": "Пока здесь пусто. Нажмите '+' для добавления своей первой автоматизации."
   },
 
   "currenciesPage": {
@@ -119,11 +127,11 @@
     }
   },
 
-  "tagsPage": {
+  "categoriesPage": {
     "path": "Путь:",
     "root": "Корень",
 
-    "tagsSummary": {
+    "categoriesSummary": {
       "maxContribution": "Максимальный вклад",
       "noData": {
         "income": "В бюджете отсутствуют данные о доходах",
@@ -133,14 +141,14 @@
 
     "table": {
       "name": "Имя",
-      "tagType": {
+      "categoryType": {
         "type": "Тип",
         "expense": "Расходы",
         "income": "Доход",
         "mixed": "Разное"
       },
 
-      "management": {
+      "budget": {
         "title": "Бюджет",
         "dateTypes": {
           "perMonth": "в месяц",
@@ -149,9 +157,10 @@
       },
 
       "description": "Описание",
-      "action": "Действие",
-      "toChilds": "To Childs"
-    }
+      "action": "Действие"
+    },
+
+    "emptyMessage": "Пока здесь пусто. Нажмите '+' для добавления своей первой категории"
   },
 
   "analyticsPage": {
@@ -181,7 +190,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "title": "Аналитика бюджета по категориям",
       "noData": "Нет данных"
     }
@@ -262,7 +271,7 @@
       "dateLocale": "ru-RU",
       "account": "Счет",
       "delta": "Сумма",
-      "tag": "Категория",
+      "category": "Категория",
       "currency": "Валюта",
       "created": "Создан",
       "description": "Описание",
@@ -273,6 +282,7 @@
       "created": "Создан",
       "type": "Тип",
       "status": "Статус",
+      "size": "Размер",
       "description": "Описание",
       "expires": "Срок до",
       "action": "Действие"
@@ -298,15 +308,15 @@
 
   "accountsPanel": {
     "label": "Счета",
-    "newTag": "Новая категория",
-    "newAccount": "Новый аккаунт"
+    "newFolder": "Новая папка",
+    "newAccount": "Новый счет"
   },
 
-  "accountTagEntry": {
+  "accountFolderEntry": {
     "messages": {
-      "deleted": "Категория счета удалена",
-      "deleteFail": "Ошибка при удалении категории",
-      "edited": "Категория счета успешно изменена"
+      "deleted": "Папка счета удалена",
+      "deleteFail": "Ошибка при удалении папки",
+      "edited": "Папка счета успешно изменена"
     }
   },
 
@@ -314,7 +324,7 @@
     "noResults": "Нет результатов",
     "noOptions": "Список пуст",
 
-    "transactionTagSelect": {
+    "transactionCategorySelect": {
       "placeholder": "Категория",
       "withoutParent": "Без родителя",
       "new": "Новый"
@@ -329,7 +339,7 @@
     },
 
     "currencySelect": {
-      "placeholder": "RUB"
+      "placeholder": "Валюта"
     },
 
     "accountSelect": {
@@ -349,7 +359,7 @@
   "demo": {
     "mainCurrencyCode": "RUB",
 
-    "accountTags": {
+    "accountFolders": {
       "1": {
         "name": "Традиционные",
         "description": "Традиционные финансовые счета"
@@ -373,7 +383,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "1": "Зарплата",
       "2": "Инвестиции",
       "3": "Продукты",
@@ -398,14 +408,51 @@
     },
 
     "confirmations": {
-      "deleteAccountTag": "Удалить категорию?",
+      "deleteAccountFolder": "Удалить папку?",
       "deleteTransaction": "Удалить транзакцию?",
       "deleteRecurring": "Удалить автоматизацию?",
       "deleteNote": "Удалить заметку?",
       "deleteAllBulk": "Удалить все транзакции? Это действие невозможно отменить"
     },
 
-    "tagManagement": {
+    "files": {
+      "title": "Файлы",
+
+      "messages": {
+        "delete": {
+          "success": "Файл удален",
+          "error": "Ошибка удаления файла"
+        },
+        "deleteAll": {
+          "success": "Файлы удалены",
+          "error": "Ошибка удаления файла"
+        },
+        "linkCopy": {
+          "success": "Загрузочная ссылка скопирована",
+          "fail": "Ошибка копирования загрузочной ссылки"
+        }
+      },
+
+      "createdAt": "Создан в: ",
+      "expiresAt": "Истекает в: ",
+
+      "empty": "Нет файлов в хранилище",
+
+      "deleteAll": "Удалить все"
+    },
+
+    "ai": {
+      "title": "ИИ ассистент",
+      "buttons": {
+        "start": "Новая сессия",
+        "send": "Отправить"
+      },
+
+      "startText": "Искусственный интеллект, встроенный в FinWave, может делать практически все: добавлять/редактировать/удалять транзакции, счета, заметки, бюджет и прочее и прочее. Кроме того, конечно же, анализировать ваши траты, чтобы дать вам наиболее полезные советы.",
+      "emptyTip": "Спросите что-нибудь! Например: “Посмотри аналитику за последний месяц. Есть ли какие-нибудь рекомендации на следующий?“"
+    },
+
+    "categoryBudget": {
       "title": "Ожидаемые расходы и доходы",
 
       "messages": {
@@ -453,7 +500,7 @@
         "unrecognized": {
           "account": "Укажите нераспознанные счета",
           "amount": "Укажите нераспознанные суммы",
-          "tag": "Укажите нераспознанные категории",
+          "category": "Укажите нераспознанные категории",
           "date": "Укажите нераспознанные даты"
         }
       },
@@ -463,7 +510,7 @@
         "ignore": "Игнорировать",
         "account": "Счет",
         "amount": "Сумма",
-        "tag": "Категория",
+        "category": "Категория",
         "date": "Время",
         "description": "Описание"
       }
@@ -611,7 +658,7 @@
       "title": "Настроить Автонакопление",
       "placeholders": {
         "targetAccount": "Куда",
-        "tag": "Категория",
+        "category": "Категория",
         "stepEntry": {
           "from": "От",
           "to": "До",
@@ -666,26 +713,26 @@
       }
     },
 
-    "newAccountTag": {
-      "title": "Новая категория счета",
+    "newAccountFolder": {
+      "title": "Новая папка счета",
       "placeholders": {
-        "tagName": "Название",
-        "tagDescription": "Описание"
+        "folderName": "Название",
+        "folderDescription": "Описание"
       },
       "messages": {
-        "success": "Категория аккаунта создана",
-        "error": "Ошибка создания категории"
+        "success": "Папка создана",
+        "error": "Ошибка создания папки"
       }
     },
 
-    "editAccountTag": {
-      "title": "Редактирование категории счета",
+    "editAccountFolder": {
+      "title": "Редактирование папки счета",
       "placeholders": {
-        "tagName": "Название",
-        "tagDescription": "Описание"
+        "folderName": "Название",
+        "folderDescription": "Описание"
       },
       "messages": {
-        "success": "Категория аккаунта изменена",
+        "success": "Категория счета изменена",
         "error": "Ошибка изменения категории"
       }
     },
@@ -702,7 +749,7 @@
       "placeholders": {
         "accountName": "Название",
         "accountDescription": "Описание",
-        "tagSelect": "Выбрать категорию",
+        "folderSelect": "Выбрать папку",
         "amount": "Сумма"
       },
       "messages": {
@@ -718,7 +765,7 @@
         "recurringRepeatMode": "Режим повтора",
         "recurringNextRepeat": "Следующее повторение",
         "recurringNotificationMode": "Режим уведомлений",
-        "recurringTag": "Категория",
+        "recurringCategory": "Категория",
         "recurringAccount": "Счет",
         "recurringDescription": "Описание"
       },
@@ -745,7 +792,7 @@
         "recurringRepeatMode": "Режим повтора",
         "recurringNextRepeat": "Следующее повторение",
         "recurringNotificationMode": "Режим уведомлений",
-        "recurringTag": "Категория",
+        "recurringCategory": "Категория",
         "recurringAccount": "Счет",
         "recurringDescription": "Описание"
       },
@@ -781,7 +828,7 @@
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
-        "transactionTag": "Категория",
+        "transactionCategory": "Категория",
         "transactionAccount": "Счет",
         "transactionDescription": "Описание"
       },
@@ -805,7 +852,7 @@
       "placeholders": {
         "transactionAmount": "Сумма",
         "transactionDate": "Дата",
-        "transactionTag": "Категория",
+        "transactionCategory": "Категория",
         "transactionAccount": "Счет",
         "transactionDescription": "Описание"
       },
@@ -822,18 +869,18 @@
       }
     },
 
-    "newTransactionTag": {
+    "newTransactionCategory": {
       "title": "Новая категория транзакций",
       "placeholders": {
-        "tagName": "Название",
-        "tagType": {
+        "categoryName": "Название",
+        "categoryType": {
           "type": "Тип",
           "expense": "Расходы",
           "income": "Доходы",
           "mixed": "Разное"
         },
-        "tagParent": "Родитель",
-        "tagDescription": "Описание"
+        "categoryParent": "Родитель",
+        "categoryDescription": "Описание"
       },
       "messages": {
         "success": "Категория транзакций создана",
@@ -841,19 +888,19 @@
       }
     },
 
-    "editTransactionTag": {
+    "editTransactionCategory": {
       "title": "Редактирование категории транзакций",
-      "tagWithoutParent": "Без родителя",
+      "categoryWithoutParent": "Без родителя",
       "placeholders": {
-        "tagName": "Название",
-        "tagType": {
+        "categoryName": "Название",
+        "categoryType": {
           "type": "Тип",
           "expense": "Расходы",
           "income": "Доходы",
           "mixed": "Разное"
         },
-        "tagParent": "Родитель",
-        "tagDescription": "Описание"
+        "categoryParent": "Родитель",
+        "categoryDescription": "Описание"
       },
       "messages": {
         "success": "Категория транзакций изменена",

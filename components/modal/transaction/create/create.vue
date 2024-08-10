@@ -25,7 +25,7 @@ const props = defineProps({
   }
 })
 
-const {$serverConfigs, $transactionsTagsApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
 
 
 const emit = defineEmits(['close', 'reloadTransactions']);

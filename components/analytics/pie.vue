@@ -12,8 +12,8 @@
 
         <div class="text-sm breadcrumbs pl-3 mt-2 bg-base-200 rounded-xl">
           <ul>
-            <li><a @click="resetView(); buildChart();">{{$t("tagsPage.root")}}</a></li>
-            <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item); buildChart();"> {{tagsMap.get(item).tag.name}} </a></li>
+            <li><a @click="resetView(); buildChart();">{{$t("categoriesPage.root")}}</a></li>
+            <li v-if="view.length > 0" v-for="item in view"><a @click="cutUnder(item); buildChart();"> {{categoriesMap.get(item).category.name}} </a></li>
           </ul>
         </div>
       </div>
@@ -25,7 +25,7 @@
                  type="pie"
                  :options="chartOptions"
                  :series="chartSeries"
-                 @dataPointSelection="tagSelected"
+                 @dataPointSelection="categorySelected"
       ></ApexChart>
       <div v-else>
         <p class="text-center opacity-60 font-bold">
@@ -63,7 +63,7 @@ const props = defineProps({
   }
 })
 
-const { $transactionsTagsApi, $analyticsApi, $transactionsApi, $currenciesApi } = useNuxtApp();
+const { $transactionsCategoriesApi, $analyticsApi, $transactionsApi, $currenciesApi } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const mode = computed(() => props.mode === "month")
@@ -76,32 +76,32 @@ const date = ref(defaultDate());
 const noData = ref(true);
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 const view = ref([]);
-const tags = $transactionsTagsApi.getTags();
+const categories = $transactionsCategoriesApi.getCategories();
 
 const analytics = ref([]);
 
-const pushToView = (tagId) => {
-  view.value.push(tagId);
+const pushToView = (categoryId) => {
+  view.value.push(categoryId);
 }
 
-const cutUnder = (tagId) => {
-  view.value.length = view.value.findIndex(id => id === tagId) + 1;
+const cutUnder = (categoryId) => {
+  view.value.length = view.value.findIndex(id => id === categoryId) + 1;
 }
 
 const resetView = () => {
   view.value = [];
 }
 
-const tagSelected = (event, chartContext, config) => {
-  const nextTagId = chartMap.value[config.dataPointIndex];
+const categorySelected = (event, chartContext, config) => {
+  const nextCategoryId = chartMap.value[config.dataPointIndex];
 
-  if (nextTagId === -1 || tagsMap.value.get(nextTagId).childs.length === 0)
+  if (nextCategoryId === -1 || categoriesMap.value.get(nextCategoryId).childs.length === 0)
     return;
 
-  pushToView(nextTagId);
+  pushToView(nextCategoryId);
   setTimeout(() => {
     buildChart();
   }, 0);
@@ -159,11 +159,11 @@ const formatter = (value) => {
   return (props.sign > 0 ? "" : "-") + formatAmount(value);
 }
 
-const childsSum = (allData, tagObject, sign) => {
+const childsSum = (allData, categoryObject, sign) => {
   let sum = 0;
 
-  tagObject.childs.forEach(t => {
-    const childDelta = allData[t.tag.tagId];
+  categoryObject.childs.forEach(t => {
+    const childDelta = allData[t.category.categoryId];
     sum += childDelta && childDelta * sign > 0 ? childDelta : 0;
 
     if (t.childs && t.childs.length > 0) {
@@ -184,7 +184,7 @@ const buildChart = () => {
       id: props.id,
       foreColor: undefined,
       events: {
-        dataPointSelection: tagSelected
+        dataPointSelection: categorySelected
       },
     },
 
@@ -220,42 +220,42 @@ const buildChart = () => {
       if (mv.currencyId !== currency.value)
         return;
 
-      allData[mv.tagId] = (allData[mv.tagId] ? allData[mv.tagId] : 0) + mv.delta;
+      allData[mv.categoryId] = (allData[mv.categoryId] ? allData[mv.categoryId] : 0) + mv.delta;
     });
   });
 
 
-  let needsToDisplay = (view.value.length > 0 ? tagsMap.value.get(view.value[view.value.length - 1]).childs : tagsTree.value).map((t) => t.tag.tagId);
+  let needsToDisplay = (view.value.length > 0 ? categoriesMap.value.get(view.value[view.value.length - 1]).childs : categoriesTree.value).map((t) => t.category.categoryId);
 
   if (view.value.length > 0) {
-    const parentTag = view.value[view.value.length - 1];
+    const parentCategory = view.value[view.value.length - 1];
 
-    needsToDisplay.push(parentTag);
+    needsToDisplay.push(parentCategory);
   }
 
   let totalAmount = 0;
 
-  needsToDisplay.forEach((tagId) => {
-    const tag = tagsMap.value.get(tagId);
-    const tagName = tag.tag.name;
-    let tagDelta = allData[tagId] ? allData[tagId] : 0;
-    const isParent = view.value[view.value.length - 1] === tagId;
+  needsToDisplay.forEach((categoryId) => {
+    const category = categoriesMap.value.get(categoryId);
+    const categoryName = category.category.name;
+    let categoryDelta = allData[categoryId] ? allData[categoryId] : 0;
+    const isParent = view.value[view.value.length - 1] === categoryId;
 
-    if (tagDelta * sign < 0)
-      tagDelta = 0;
+    if (categoryDelta * sign < 0)
+      categoryDelta = 0;
 
-    const sum = tagDelta + (isParent ? 0 : childsSum(allData, tag, sign));
+    const sum = categoryDelta + (isParent ? 0 : childsSum(allData, category, sign));
 
     if (sum === 0)
       return;
 
-    const tagChartIndex = newSeries.push(Math.abs(sum)) - 1;
+    const categoryChartIndex = newSeries.push(Math.abs(sum)) - 1;
 
     totalAmount += Math.abs(sum);
 
-    chartMap.value[tagChartIndex] = isParent ? -1 : tagId;
-    newOptions.labels.push(tagName);
-    newOptions.colors.push(useColor(tagId));
+    chartMap.value[categoryChartIndex] = isParent ? -1 : categoryId;
+    newOptions.labels.push(categoryName);
+    newOptions.colors.push(useColor(categoryId));
   })
 
   noData.value = newSeries.length === 0;

@@ -8,7 +8,7 @@
 
       <th></th>
 
-      <td class="w-48">{{ tagsMap.get(transaction.tagId).tag.name }}</td>
+      <td class="w-48">{{ categoriesMap.get(transaction.categoryId).category.name }}</td>
       <td class="w-48">{{ new Date(transaction.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
       <td class="w-48">{{ accountsMap.get(transaction.accountId).name }}</td>
       <td>
@@ -42,11 +42,11 @@
 
       <td class="w-48">
         <p>
-          {{ tagsMap.get(transaction.tagId).tag.name }}
+          {{ categoriesMap.get(transaction.categoryId).category.name }}
         </p>
 
-        <p class="text-xs opacity-80 hover:opacity-100" v-if="transaction.tagId !== transaction.metadata.linkedTransaction.tagId">
-          {{ tagsMap.get(transaction.metadata.linkedTransaction.tagId).tag.name }}
+        <p class="text-xs opacity-80 hover:opacity-100" v-if="transaction.categoryId !== transaction.metadata.linkedTransaction.categoryId">
+          {{ categoriesMap.get(transaction.metadata.linkedTransaction.categoryId).category.name }}
         </p>
       </td>
       <td class="w-48">{{ new Date(transaction.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
@@ -81,7 +81,7 @@
         </div>
       </th>
 
-      <td class="w-48">{{ tagsMap.get(transaction.tagId).tag.name }}</td>
+      <td class="w-48">{{ categoriesMap.get(transaction.categoryId).category.name }}</td>
       <td class="w-48">{{ new Date(transaction.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
       <td class="w-48">{{ accountsMap.get(transaction.accountId).name }}</td>
       <td>
@@ -107,7 +107,7 @@
         </div>
       </th>
 
-      <td class="w-48">{{ tagsMap.get(transaction.tagId).tag.name }}</td>
+      <td class="w-48">{{ categoriesMap.get(transaction.categoryId).category.name }}</td>
       <td class="w-48">{{ new Date(transaction.createdAt).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
       <td class="w-48">{{ accountsMap.get(transaction.accountId).name }}</td>
       <td>
@@ -125,11 +125,11 @@ const props = defineProps({
   }
 })
 
-const { $transactionsApi, $transactionsTagsApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
+const { $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 
 const accountsMap = $accountsApi.getAccountsMap();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 

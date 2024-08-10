@@ -4,15 +4,15 @@
     <div class="collapse-title text-xl font-medium">
       <div class="flex flex-row gap-2">
         <p>
-          {{treeEntry.tag.name}}
+          {{treeEntry.category.name}}
         </p>
         <p class="opacity-80">
-          {{treeEntry.tag.tagId}}
+          {{treeEntry.category.categoryId}}
         </p>
       </div>
     </div>
     <div class="collapse-content bg-base-300">
-      {{treeEntry.tag}}
+      {{treeEntry.category}}
     </div>
   </div>
 </template>

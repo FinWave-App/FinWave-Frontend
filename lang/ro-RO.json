@@ -2,7 +2,7 @@
   "navigation": {
     "main": "Acasă",
     "notes": "Notițe",
-    "tags": "Categorii",
+    "categories": "Categorii",
     "transactions": "Tranzacții",
     "recurring": "Automatizări",
     "currencies": "Valute",
@@ -33,7 +33,7 @@
   "mainPage": {
     "buttons": {
       "newTransaction": "Tranzacție Nouă",
-      "newTag": "Categorie Nouă",
+      "newCategory": "Categorie Nouă",
       "newCurrency": "Valută Nouă",
       "newNote": "Notă Nouă"
     },
@@ -44,7 +44,7 @@
     "summary": {
       "emptyMessage": "Sumarul contului va apărea aici"
     },
-    "tags": {
+    "categories": {
       "emptyMessage": "Sumarul cheltuielilor pe categorii pentru luna curentă va apărea aici"
     }
   },
@@ -72,7 +72,7 @@
     "placeholders": {
       "filters": {
         "accounts": "Filtrează după conturi",
-        "tags": "Filtrează după categorii",
+        "categories": "Filtrează după categorii",
         "currencies": "Filtrează după valute",
         "time": "Filtrează după timp",
         "description": "Filtrează după descriere"
@@ -82,7 +82,7 @@
     },
     "table": {
       "amount": "Sumă",
-      "tag": "Categorie",
+      "category": "Categorie",
       "account": "Cont",
       "createdAt": "Creat",
       "description": "Descriere",
@@ -93,7 +93,7 @@
   "recurringPage": {
     "table": {
       "amount": "Sumă",
-      "tag": "Categorie",
+      "category": "Categorie",
       "account": "Cont",
       "lastRepeat": "Ultima Repetare",
       "nextRepeat": "Următoarea Repetare",
@@ -114,10 +114,10 @@
     }
   },
 
-  "tagsPage": {
+  "categoriesPage": {
     "path": "Cărare:",
     "root": "Rădăcină",
-    "tagsSummary": {
+    "categoriesSummary": {
       "maxContribution": "Contribuție Maximă",
       "noData": {
         "income": "Nu există date despre venituri în buget",
@@ -127,14 +127,14 @@
 
     "table": {
       "name": "Nume",
-      "tagType": {
+      "categoryType": {
         "type": "Tip",
         "expense": "Cheltuială",
         "income": "Venit",
         "mixed": "Mixt"
       },
 
-      "management": {
+      "budget": {
         "title": "Buget",
         "dateTypes": {
           "perMonth": "pe lună",
@@ -173,7 +173,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "title": "Analiza bugetului pe categorii",
       "noData": "Nu există date"
     }
@@ -250,7 +250,7 @@
       "dateLocale": "ro-RO",
       "account": "Cont",
       "delta": "Sumă",
-      "tag": "Categorie",
+      "category": "Categorie",
       "currency": "Valută",
       "created": "Creat",
       "description": "Descriere",
@@ -285,11 +285,11 @@
   },
   "accountsPanel": {
     "label": "Conturi",
-    "newTag": "Categorie Nouă",
+    "newFolder": "Categorie Nouă",
     "newAccount": "Cont Nou"
   },
 
-  "accountTagEntry": {
+  "accountFolderEntry": {
     "messages": {
       "deleted": "Categorie de cont ștearsă",
       "deleteFail": "Eroare la ștergerea categoriei de cont",
@@ -300,7 +300,7 @@
   "selects": {
     "noResults": "Niciun rezultat",
     "noOptions": "Lista este goală",
-    "transactionTagSelect": {
+    "transactionCategorySelect": {
       "placeholder": "Categorie",
       "withoutParent": "Fără Părinte",
       "new": "Nou"
@@ -335,7 +335,7 @@
   "demo": {
     "mainCurrencyCode": "USD",
 
-    "accountTags": {
+    "accountFolders": {
       "1": {
         "name": "Tradițional",
         "description": "Conturi financiare tradiționale"
@@ -359,7 +359,7 @@
       }
     },
 
-    "tags": {
+    "categories": {
       "1": "Salariu",
       "2": "Investiții",
       "3": "Prooziitori",
@@ -384,14 +384,14 @@
     },
 
     "confirmations": {
-      "deleteAccountTag": "Ștergi categoria?",
+      "deleteAccountFolder": "Ștergi categoria?",
       "deleteTransaction": "Ștergi tranzacția?",
       "deleteRecurring": "Ștergi automatizarea?",
       "deleteNote": "Ștergi nota?",
       "deleteAllBulk": "Ștergi toate tranzacțiile bulk? Această acțiune nu poate fi anulată"
     },
 
-    "tagManagement": {
+    "categoryBudget": {
       "title": "Cheltuieli și Venituri Estimate",
       "messages": {
         "new": {
@@ -435,7 +435,7 @@
         "unrecognized": {
           "account": "Selectează conturile necunoscute",
           "amount": "Selectează sumele necunoscute",
-          "tag": "Selectează categoriile necunoscute",
+          "category": "Selectează categoriile necunoscute",
           "date": "Selectează datele necunoscute"
         }
       },
@@ -445,7 +445,7 @@
         "ignore": "Ignoră",
         "account": "Cont",
         "amount": "Sumă",
-        "tag": "Categorie",
+        "category": "Categorie",
         "date": "Data",
         "description": "Descriere"
       }
@@ -588,7 +588,7 @@
       "title": "Setează Acumulare",
       "placeholders": {
         "targetAccount": "Cont țintă",
-        "tag": "Categorie",
+        "category": "Categorie",
         "stepEntry": {
           "from": "De la",
           "to": "Până la",
@@ -645,11 +645,11 @@
       }
     },
 
-    "newAccountTag": {
+    "newAccountFolder": {
       "title": "Categorie de Cont Nouă",
       "placeholders": {
-        "tagName": "Nume",
-        "tagDescription": "Descriere"
+        "folderName": "Nume",
+        "folderDescription": "Descriere"
       },
       "messages": {
         "success": "Categorie de cont creată",
@@ -657,11 +657,11 @@
       }
     },
 
-    "editAccountTag": {
+    "editAccountFolder": {
       "title": "Editează Categoria de Cont",
       "placeholders": {
-        "tagName": "Nume",
-        "tagDescription": "Descriere"
+        "folderName": "Nume",
+        "folderDescription": "Descriere"
       },
       "messages": {
         "success": "Categorie de cont actualizată",
@@ -679,7 +679,7 @@
       "placeholders": {
         "accountName": "Numele contului",
         "accountDescription": "Descrierea contului",
-        "tagSelect": "Selectează categorie",
+        "folderSelect": "Selectează categorie",
         "amount": "Sumă"
       },
       "messages": {
@@ -695,7 +695,7 @@
         "recurringRepeatMode": "Mod de repetare",
         "recurringNextRepeat": "Următoarea repetare",
         "recurringNotificationMode": "Mod de notificare",
-        "recurringTag": "Categorie",
+        "recurringCategory": "Categorie",
         "recurringAccount": "Cont",
         "recurringDescription": "Descriere"
       },
@@ -722,7 +722,7 @@
         "recurringRepeatMode": "Mod de repetare",
         "recurringNextRepeat": "Următoarea repetare",
         "recurringNotificationMode": "Mod de notificare",
-        "recurringTag": "Categorie",
+        "recurringCategory": "Categorie",
         "recurringAccount": "Cont",
         "recurringDescription": "Descriere"
       },
@@ -762,7 +762,7 @@
       "placeholders": {
         "transactionAmount": "Sumă",
         "transactionDate": "Data",
-        "transactionTag": "Categorie",
+        "transactionCategory": "Categorie",
         "transactionAccount": "Cont",
         "transactionDescription": "Descriere"
       },
@@ -786,7 +786,7 @@
       "placeholders": {
         "transactionAmount": "Sumă",
         "transactionDate": "Data",
-        "transactionTag": "Categorie",
+        "transactionCategory": "Categorie",
         "transactionAccount": "Cont",
         "transactionDescription": "Descriere"
       },
@@ -803,18 +803,18 @@
       }
     },
 
-    "newTransactionTag": {
+    "newTransactionCategory": {
       "title": "Categorie de Tranzacție Nouă",
       "placeholders": {
-        "tagName": "Nume",
-        "tagType": {
+        "categoryName": "Nume",
+        "categoryType": {
           "type": "Tip",
           "expense": "Cheltuială",
           "income": "Venit",
           "mixed": "Mixt"
         },
-        "tagParent": "Părinte",
-        "tagDescription": "Descriere"
+        "categoryParent": "Părinte",
+        "categoryDescription": "Descriere"
       },
 
       "messages": {
@@ -823,20 +823,20 @@
       }
     },
 
-    "editTransactionTag": {
+    "editTransactionCategory": {
       "title": "Editează Categorie de Tranzacție",
-      "tagWithoutParent": "Fără Părinte",
+      "categoryWithoutParent": "Fără Părinte",
       "placeholders": {
-        "tagName": "Nume",
-        "tagExpectedAmount": "Sumă estimată",
-        "tagType": {
+        "categoryName": "Nume",
+        "categoryExpectedAmount": "Sumă estimată",
+        "categoryType": {
           "type": "Tip",
           "expense": "Cheltuială",
           "income": "Venit",
           "mixed": "Mixt"
         },
-        "tagParent": "Părinte",
-        "tagDescription": "Descriere"
+        "categoryParent": "Părinte",
+        "categoryDescription": "Descriere"
       },
       "messages": {
         "success": "Categorie de tranzacție actualizată",

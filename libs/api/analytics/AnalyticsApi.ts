@@ -37,7 +37,7 @@ export class AnalyticsApi extends AbstractApi {
         return new Map(Object.entries(data.value.total));
     }
 
-    public async getTagAnalytics(time: Date) : Promise<any> {
+    public async getCategoryAnalytics(time: Date) : Promise<any> {
         const opts = {
             method: "GET",
             params: {
@@ -45,7 +45,7 @@ export class AnalyticsApi extends AbstractApi {
             }
         };
 
-        const {data, error} = await useApi<any>("/user/analytics/getTagsAnalytics", opts);
+        const {data, error} = await useApi<any>("/user/analytics/getCategoriesAnalytics", opts);
 
         if (error.value !== null) {
             return null;

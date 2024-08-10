@@ -34,11 +34,11 @@ export class TransactionsApi extends AbstractApi {
         return error.value === null;
     }
 
-    public async newTransaction(tagId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<number> {
+    public async newTransaction(categoryId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
-                tagId: tagId,
+                categoryId: categoryId,
                 accountId: accountId,
                 createdAt: createdAt.toISOString(),
                 delta: delta
@@ -57,11 +57,11 @@ export class TransactionsApi extends AbstractApi {
         return data.value.transactionId;
     }
 
-    public async newInternalTransfer(tagId: number, fromAccountId: number, toAccountId: number, createdAt: Date, fromDelta: number, toDelta: number, description: string | null) : Promise<number> {
+    public async newInternalTransfer(categoryId: number, fromAccountId: number, toAccountId: number, createdAt: Date, fromDelta: number, toDelta: number, description: string | null) : Promise<number> {
         const opts = {
             method: "POST",
             params: {
-                tagId: tagId,
+                categoryId: categoryId,
                 fromAccountId: fromAccountId,
                 toAccountId: toAccountId,
                 createdAt: createdAt.toISOString(),
@@ -95,12 +95,12 @@ export class TransactionsApi extends AbstractApi {
         return error.value === null;
     }
 
-    public async editTransaction(transactionId: number, tagId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<boolean> {
+    public async editTransaction(transactionId: number, categoryId: number, accountId: number, createdAt: Date, delta: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
                 transactionId: transactionId,
-                tagId: tagId,
+                categoryId: categoryId,
                 accountId: accountId,
                 createdAt: createdAt.toISOString(),
                 delta: delta

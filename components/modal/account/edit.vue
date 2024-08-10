@@ -20,11 +20,11 @@
 
       <div class="form-control w-full">
         <select class="select select-bordered"
-                :class="{'select-success' : tagSyncStatus === 1, 'select-warning' : tagSyncStatus === 0, 'select-error' : tagSyncStatus === -1}"
-                v-model="tag"
-                @change="syncTag">
-          <option disabled value="-1">{{ $t('modals.editAccount.placeholders.tagSelect') }}</option>
-          <option v-for="tag in allTags" :value="tag.tagId">{{ tag.name + (tag.description ? ` (${tag.description})` : "") }}</option>
+                :class="{'select-success' : folderSyncStatus === 1, 'select-warning' : folderSyncStatus === 0, 'select-error' : folderSyncStatus === -1}"
+                v-model="folder"
+                @change="syncFolder">
+          <option disabled value="-1">{{ $t('modals.editAccount.placeholders.folderSelect') }}</option>
+          <option v-for="folder in allFolders" :value="folder.folderId">{{ folder.name + (folder.description ? ` (${folder.description})` : "") }}</option>
         </select>
       </div>
 
@@ -44,11 +44,11 @@
     </div>
 
     <div v-else-if="tab === 1" class="w-full flex flex-col gap-2">
-      <select-transaction-tag class="w-full"
-                              v-model.number="parentTag"
+      <select-transaction-category class="w-full"
+                              v-model.number="category"
                               :searchable="true"
                               :can-be-without-parent="false"
-                              :tags-tree="tagsTree"
+                              :categories-tree="categoriesTree"
       />
 
       <div class="join w-full">
@@ -99,38 +99,39 @@ const close = () => {
   emit('close')
 }
 
-const {$serverConfigs, $accountsApi, $transactionsApi, $transactionsTagsApi, $currenciesApi, $accountsTagsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $accountsApi, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $accountsFoldersApi, $toastsManager} = useNuxtApp();
 const configs = $serverConfigs.configs.accounts;
 
-const allTags = $accountsTagsApi.getTags();
+const allFolders = $accountsFoldersApi.getFolders();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const name = ref();
 const description = ref();
-const tag = ref();
+const folder = ref();
 
 const newAmount = ref(0);
-const parentTag = ref();
-const allValid = computed(() => props.account && parentTag.value && newAmount.value !== props.account.amount)
+const allValid = computed(() => props.account && category.value && newAmount.value !== props.account.amount)
 
 const nameSyncStatus = ref(1);
 const descriptionSyncStatus = ref(1);
-const tagSyncStatus = ref(1);
+const folderSyncStatus = ref(1);
+
+const category = ref();
 
 watch(() => props.opened, (selection, prevSelection) => {
   if (selection) {
     name.value = props.account.name;
     description.value = props.account.description;
-    tag.value = props.account.tagId;
+    folder.value = props.account.folderId;
     newAmount.value = props.account.amount;
 
-    parentTag.value = undefined;
+    category.value = undefined;
 
     nextTick(() => {
       nameSyncStatus.value = 1;
       descriptionSyncStatus.value = 1;
-      tagSyncStatus.value = 1;
+      folderSyncStatus.value = 1;
     })
   }
 })
@@ -143,8 +144,8 @@ watch(description, (selection, prevSelection) => {
   descriptionSyncStatus.value = 0;
 })
 
-watch(tag, (selection, prevSelection) => {
-  tagSyncStatus.value = 0;
+watch(folder, (selection, prevSelection) => {
+  folderSyncStatus.value = 0;
 })
 
 const currency = computed(() => {
@@ -188,15 +189,15 @@ const syncDescription = () => {
   })
 }
 
-const syncTag = () => {
-  tagSyncStatus.value = 0;
+const syncFolder = () => {
+  folderSyncStatus.value = 0;
 
-  $accountsApi.editAccountTag(tag.value, props.account.accountId).then((r) => {
+  $accountsApi.editAccountFolder(folder.value, props.account.accountId).then((r) => {
     if (r) {
-      tagSyncStatus.value = 1;
+      folderSyncStatus.value = 1;
       $toastsManager.pushToast(t("modals.editAccount.messages.success"), 2500, "success");
     } else {
-      tagSyncStatus.value = -1;
+      folderSyncStatus.value = -1;
       $toastsManager.pushToast(t("modals.editAccount.messages.error"), 3000,"error")
     }
   })
@@ -208,7 +209,7 @@ const applyNewAmount = () => {
 
   close();
 
-  $transactionsApi.newTransaction(parentTag.value, props.account.accountId, new Date(), newAmount.value - props.account.amount, null).then((r) => {
+  $transactionsApi.newTransaction(category.value, props.account.accountId, new Date(), newAmount.value - props.account.amount, null).then((r) => {
     if (r !== -1) {
       props.account.amount = newAmount.value;
 

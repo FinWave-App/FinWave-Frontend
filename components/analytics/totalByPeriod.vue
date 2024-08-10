@@ -12,7 +12,7 @@
 import ApexChart from "vue3-apexcharts";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 
-const { $analyticsApi, $transactionsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
+const { $analyticsApi, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const props = defineProps({
@@ -32,7 +32,7 @@ const props = defineProps({
   }
 })
 
-const tagsMap = $transactionsTagsApi.getTagsMap();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 
 const currency = computed(() => currenciesMap.value.get(props.currencyId));

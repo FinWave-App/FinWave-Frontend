@@ -5,7 +5,7 @@
         <thead>
         <tr>
           <th>{{$t("recurringPage.table.amount")}}</th>
-          <th>{{$t("recurringPage.table.tag")}}</th>
+          <th>{{$t("recurringPage.table.category")}}</th>
           <th>{{$t("recurringPage.table.account")}}</th>
           <th>{{$t("recurringPage.table.lastRepeat")}}</th>
           <th>{{$t("recurringPage.table.nextRepeat")}}</th>
@@ -27,7 +27,7 @@
               {{ formatDelta(recurring.delta, recurring.currencyId) }}
             </th>
 
-            <td class="w-48">{{ tagsMap.get(recurring.tagId).tag.name }}</td>
+            <td class="w-48">{{ categoriesMap.get(recurring.categoryId).category.name }}</td>
             <td class="w-48">{{ accountsMap.get(recurring.accountId).name }}</td>
             <td class="w-48">{{ new Date(recurring.lastRepeat).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
             <td class="w-48">{{ new Date(recurring.nextRepeat).toLocaleString(locale, {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</td>
@@ -47,6 +47,10 @@
         </transition-group>
         </tbody>
       </table>
+    </div>
+
+    <div v-if="recurringTransactions.length === 0" class="w-full template-border flex items-center justify-center text-center rounded-xl h-min p-4 mt-2">
+      <p class="font-bold opacity-50">{{ $t("recurringPage.emptyMessage") }}</p>
     </div>
 
     <modal-recurring-create :opened="newOpened" @close="newOpened = false" />
@@ -89,11 +93,11 @@ const recurringToEdit = ref();
 const recurringToDelete = ref();
 
 const { t, locale } = useI18n();
-const { $recurringTransactionsApi, $transactionsTagsApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
+const { $recurringTransactionsApi, $transactionsCategoriesApi, $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 
 const accountsMap = $accountsApi.getAccountsMap();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 const recurringTransactions = $recurringTransactionsApi.getRecurring();

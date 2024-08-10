@@ -13,16 +13,16 @@
       </div>
       <div class="form-control w-full">
         <label class="label pt-0">
-          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionTag') }}</span>
+          <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionCategory') }}</span>
         </label>
 
-        <select-transaction-tag class="w-full"
-                                v-model="parentTag"
+        <select-transaction-category class="w-full"
+                                v-model="parentCategory"
                                 :searchable="true"
                                 :can-be-without-parent="false"
                                 :allow-new="true"
-                                :tags-tree="tagsTree"
-                                :class="{'input-error' : highlightErrors && parentTag === undefined}"
+                                :categories-tree="categoriesTree"
+                                :class="{'input-error' : highlightErrors && parentCategory === undefined}"
         />
       </div>
 
@@ -33,7 +33,7 @@
         <span class="label-text">{{ $t('modals.newTransaction.placeholders.transactionAmount') }}</span>
       </label>
 
-      <transaction-amount-field :currency-id="currencyId" :highlight-errors="highlightErrors" :tag-id="parentTag" v-model="amount" />
+      <transaction-amount-field :currency-id="currencyId" :highlight-errors="highlightErrors" :category-id="parentCategory" v-model="amount" />
     </div>
 
     <div class="form-control w-full">
@@ -80,7 +80,7 @@ import TransactionAmountField from "~/components/modal/transaction/transactionAm
 
 const emit = defineEmits(['close', 'reloadTransactions']);
 
-const {$serverConfigs, $transactionsTagsApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
+const {$serverConfigs, $transactionsCategoriesApi, $transactionsApi, $currenciesApi, $accountsApi, $toastsManager} = useNuxtApp();
 const { t, locale } = useI18n();
 
 const configs = $serverConfigs.configs.transactions;
@@ -88,18 +88,18 @@ const configs = $serverConfigs.configs.transactions;
 const accounts = $accountsApi.getAccounts();
 const accountsMap = $accountsApi.getAccountsMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
-const tagsTree = $transactionsTagsApi.getTagsTree();
-const tagsMap = $transactionsTagsApi.getTagsTreeMap();
+const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
+const categoriesMap = $transactionsCategoriesApi.getCategoriesTreeMap();
 
 const account = ref();
 const amount = ref();
 const description = ref("");
-const parentTag = ref();
+const parentCategory = ref();
 
 const date = ref(new Date());
 
 const highlightErrors = ref(false);
-const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentTag.value !== undefined && date.value)
+const allValid = computed(() => account.value !== undefined && amount.value !== undefined && amount.value !== 0 && parentCategory.value !== undefined && date.value)
 
 const currencyId = computed(() => {
   if (account.value === undefined)
@@ -127,8 +127,8 @@ const create = () => {
   highlightErrors.value = false;
   close();
 
-  const callApi = (tagId) => {
-    $transactionsApi.newTransaction(tagId, account.value, date.value, amount.value, description.value.length > 0 ? description.value : null).then((s) => {
+  const callApi = (categoryId) => {
+    $transactionsApi.newTransaction(categoryId, account.value, date.value, amount.value, description.value.length > 0 ? description.value : null).then((s) => {
       if (s !== -1) {
         $toastsManager.pushToast(t("modals.newTransaction.messages.success"), 2500, "success");
         emit('reloadTransactions');
@@ -139,8 +139,8 @@ const create = () => {
     });
   }
 
-  if (typeof parentTag.value === "string") {
-    $transactionsTagsApi.newTag(0, -1, parentTag.value, null).then((s) => {
+  if (typeof parentCategory.value === "string") {
+    $transactionsCategoriesApi.newCategory(0, -1, parentCategory.value, null).then((s) => {
       if (s !== -1) {
         callApi(s);
       }else {
@@ -151,7 +151,7 @@ const create = () => {
     return;
   }
 
-  callApi(parentTag.value);
+  callApi(parentCategory.value);
 }
 
 </script>

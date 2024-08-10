@@ -91,7 +91,7 @@ const create = () => {
     dateLocale: t('reportsPanel.backendLang.dateLocale'),
     account: t('reportsPanel.backendLang.account'),
     delta: t('reportsPanel.backendLang.delta'),
-    tag: t('reportsPanel.backendLang.tag'),
+    category: t('reportsPanel.backendLang.category'),
     currency: t('reportsPanel.backendLang.currency'),
     created: t('reportsPanel.backendLang.created'),
     description: t('reportsPanel.backendLang.description'),

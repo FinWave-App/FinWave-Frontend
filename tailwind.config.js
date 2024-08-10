@@ -34,6 +34,9 @@ module.exports = {
     'progress-success',
     'progress-warning',
     'progress-error',
+    'max-w-72',
+    'from-emerald-300/20',
+    'bg-gradient-to-r'
   ],
 
   theme: {

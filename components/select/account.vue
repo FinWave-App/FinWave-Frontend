@@ -30,22 +30,22 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'selected'])
 const { t } = useI18n();
-const {$accountsApi, $accountsTagsApi} = useNuxtApp();
+const {$accountsApi, $accountsFoldersApi} = useNuxtApp();
 
-const tags = $accountsTagsApi.getTags();
+const folders = $accountsFoldersApi.getFolders();
 const accounts = $accountsApi.getAccounts();
 
 const value = ref(props.modelValue || null);
 
-const getTagAccounts = (t) => {
-  return useArrayFilter(accounts, a => a.tagId === t.tagId && (!props.currencyFilter || a.currencyId === props.currencyFilter)).value
+const getFolderAccounts = (t) => {
+  return useArrayFilter(accounts, a => a.folderId === t.folderId && (!props.currencyFilter || a.currencyId === props.currencyFilter)).value
 }
 
 const options = computed(() => {
   const resultArray = [];
 
-  tags.value.forEach((t) => {
-    const options = getTagAccounts(t).map((a) => {
+  folders.value.forEach((t) => {
+    const options = getFolderAccounts(t).map((a) => {
       if (props.excludeAccount && props.excludeAccount === a.accountId)
         return null;
 

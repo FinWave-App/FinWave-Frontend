@@ -22,6 +22,12 @@
       </div>
     </div>
 
+    <div v-if="loading === 1" class="skeleton w-full h-32 bg-opacity-70 mt-4"/>
+
+    <div v-if="loading === 0 && allNotes.length === 0" class="w-full template-border flex items-center justify-center text-center rounded-xl h-min p-4 mt-4">
+      <p class="font-bold opacity-50">{{ $t("notesPage.emptyMessage") }}</p>
+    </div>
+
     <modal-note-create :opened="newOpened" @close="newOpened = false" @reloadNotes="fetchNotes()"/>
     <modal-note-edit :opened="editOpened" :note="toEdit" @close="editOpened = false" @reloadNotes="fetchNotes"/>
     <modal-confirmation :opened="deleteConfirmOpened" :confirm-style="'error'" :name="'note-delete-confirm'" @confirm="deleteNote" @deny="deleteConfirmOpened = false">
@@ -58,6 +64,7 @@ const toDelete = ref();
 
 const allNotes = ref([]);
 const filter = ref("");
+const loading = ref(1);
 
 const wordsIncludes = (words, text) => {
   for (const w of words) {
@@ -93,7 +100,11 @@ const capitalizeFirstLetter = (string) => {
 }
 
 const fetchNotes = async () => {
+  loading.value = 1;
+
   allNotes.value = await $notesApi.getNotes();
+
+  loading.value = 0;
 }
 
 const confirmDeleteNote = (note) => {
@@ -117,6 +128,10 @@ const editNote = (note) => {
   toEdit.value = note;
   editOpened.value = true;
 }
+
+$notesApi.registerUpdateListener(() => {
+  fetchNotes();
+})
 
 fetchNotes();
 

@@ -32,7 +32,7 @@ export class ReportsApi extends AbstractApi {
         return data.value?.reports;
     }
 
-    public async newReport(filter: TransactionsFilter | null, description: string | null, type: number, lang: any): Promise<string | boolean> {
+    public async newReport(filter: TransactionsFilter | null, description: string | null, type: number, lang: any): Promise<any> {
         const opts = {
             method: "POST",
             body: {
@@ -49,12 +49,12 @@ export class ReportsApi extends AbstractApi {
             return false;
         }
 
-        return data.value?.token;
+        return data.value;
     }
 
-    public getDownloadURL(token: string) : string {
+    public getDownloadURL(fileId: string) : string {
         const config = useRuntimeConfig();
 
-        return useServer.getUrl() + "files/reports/get?token=" + token;
+        return useServer.getUrl() + "files/download?fileId=" + fileId;
     }
 }

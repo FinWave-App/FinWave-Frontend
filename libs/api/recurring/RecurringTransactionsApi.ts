@@ -46,11 +46,11 @@ export class RecurringTransactionsApi extends AbstractApi {
         return this.recurringMap;
     }
 
-    public async newRecurring(tagId: number, accountId: number, nextRepeat: Date, repeatType: number, repeatArg: number, notificationMode: number, delta: number, description: string | null) : Promise<boolean> {
+    public async newRecurring(categoryId: number, accountId: number, nextRepeat: Date, repeatType: number, repeatArg: number, notificationMode: number, delta: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
-                tagId: tagId,
+                categoryId: categoryId,
                 accountId: accountId,
                 nextRepeat: nextRepeat.toISOString(),
                 repeatType: repeatType,
@@ -71,7 +71,7 @@ export class RecurringTransactionsApi extends AbstractApi {
 
         this.recurring.value?.push({
             recurringTransactionId: newRecurring.value.recurringTransactionId,
-            tagId: tagId,
+            categoryId: categoryId,
             accountId: accountId,
             currencyId: this.accountsApi.getAccountsMap().value.get(accountId).currencyId,
             lastRepeat: new Date(),
@@ -88,12 +88,12 @@ export class RecurringTransactionsApi extends AbstractApi {
         return true;
     }
 
-    public async editRecurring(recurringTransactionId: number, tagId: number, accountId: number, nextRepeat: Date, repeatType: number, repeatArg: number, notificationMode: number, delta: number, description: string | null) : Promise<boolean> {
+    public async editRecurring(recurringTransactionId: number, categoryId: number, accountId: number, nextRepeat: Date, repeatType: number, repeatArg: number, notificationMode: number, delta: number, description: string | null) : Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
                 recurringTransactionId: recurringTransactionId,
-                tagId: tagId,
+                categoryId: categoryId,
                 accountId: accountId,
                 nextRepeat: nextRepeat.toISOString(),
                 repeatType: repeatType,
@@ -113,7 +113,7 @@ export class RecurringTransactionsApi extends AbstractApi {
 
         const edited = this.recurring.value.find((r) => r.recurringTransactionId === recurringTransactionId);
 
-        edited.tagId = tagId;
+        edited.categoryId = categoryId;
         edited.accountId = accountId;
         edited.currencyId = this.accountsApi.getAccountsMap().value.get(accountId).currencyId;
         edited.nextRepeat = nextRepeat;

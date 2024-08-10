@@ -1,7 +1,7 @@
 <template>
   <div class="page-grid">
     <modal-transaction-create :opened="newTransaction" @close="newTransaction = false"/>
-    <modal-transaction-tag-create :opened="newTag" @close="newTag = false"/>
+    <modal-transaction-category-create :opened="newCategory" @close="newCategory = false"/>
     <modal-currency-create :opened="newCurrency" @close="newCurrency = false"/>
     <modal-note-create :opened="newNote" @close="newNote = false" @reloadNotes="reloadNotes()"/>
 
@@ -9,7 +9,7 @@
 
     <div class="col-span-1 row-start-1 lg:row-auto lg:col-span-2 row-span-1 flex flex-wrap gap-2 justify-center lg:justify-start">
       <new-transaction-button @event="newTransaction = true"/>
-      <new-tag-button @event="newTag = true"/>
+      <new-category-button @event="newCategory = true"/>
       <new-currency-button @event="newCurrency = true"/>
       <new-note-button @event="newNote = true"/>
     </div>
@@ -17,7 +17,7 @@
     <div class="col-span-1 lg:col-span-2 grid grid-cols-1 2xl:grid-cols-7 gap-6">
       <total-panel class="col-span-1 lg:col-span-6 row-span-2" :period="summaryPeriod"/>
 
-      <tags-analytics class="col-span-1 lg:col-span-5 2xl:col-span-1 row-span-5"
+      <categories-analytics class="col-span-1 lg:col-span-5 2xl:col-span-1 row-span-5"
                       :hide-low-percent="true"
                       :only-expanses="true"
                       :only-root="true"
@@ -37,12 +37,12 @@
 import TotalByPeriod from "~/components/analytics/totalByPeriod.vue";
 import TotalPanel from "~/components/analytics/totalPanel.vue";
 import NewTransactionButton from "~/components/buttons/quickActions/newTransactionButton.vue";
-import NewTagButton from "~/components/buttons/quickActions/newTagButton.vue";
+import NewCategoryButton from "~/components/buttons/quickActions/newCategoryButton.vue";
 import NewCurrencyButton from "~/components/buttons/quickActions/newCurrencyButton.vue";
 import NewNoteButton from "~/components/buttons/quickActions/newNoteButton.vue";
 import {useApiLoader} from "~/composables/useApiLoader";
 import {reloadNuxtApp} from "#app";
-import TagsAnalytics from "~/components/analytics/tagsAnalytics.vue";
+import CategoriesAnalytics from "~/components/analytics/categoriesAnalytics.vue";
 
 definePageMeta({
   middleware: [
@@ -52,23 +52,23 @@ definePageMeta({
 
 const { t, locale } = useI18n();
 const { $serverConfigs, $accountsApi, $notesApi, $toastsManager } = useNuxtApp();
-const configs = $serverConfigs.configs.users;
+const configs = $serverConfigs.configs;
 const haveAccounts = $accountsApi.getAccounts().value.length !== 0
 
 const summaryPeriod = ref(0);
 
-if (configs.demoMode && !haveAccounts) {
+if (configs.users.demoMode && !haveAccounts) {
   useApiLoader.initDemo().then(() => {
     $accountsApi.reloadAccounts();
     summaryPeriod.value = 31
   })
   $toastsManager.pushToast(t("loginPage.demoMessage"), 5000, "warning")
-}else if (!configs.demoMode) {
+}else if (!configs.users.demoMode) {
   summaryPeriod.value = 31
 }
 
 const newTransaction = ref(false);
-const newTag = ref(false);
+const newCategory = ref(false);
 const newCurrency = ref(false);
 const newNote = ref(false);
 
@@ -79,6 +79,10 @@ const reloadNotes = async () => {
 }
 
 reloadNotes();
+
+$notesApi.registerUpdateListener(() => {
+  reloadNotes();
+})
 
 </script>
 

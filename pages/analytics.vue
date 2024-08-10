@@ -1,20 +1,20 @@
 <template>
   <div class="page-grid lg:grid-cols-4">
     <div class="lg:col-span-4 row-span-4 panel">
-      <tags-by-months>
-      </tags-by-months>
+      <categories-by-months>
+      </categories-by-months>
     </div>
 
     <div class="lg:col-span-4 row-span-2 panel">
       <p class="font-bold">
-        {{ $t("analyticsPage.tags.title") }}
+        {{ $t("analyticsPage.categories.title") }}
       </p>
 
       <div class="w-full border-y py-2 border-base-200 mt-2">
         <Datepicker class="input-bordered dp-h-12" v-model="monthPicker" :locale="locale" month-picker/>
       </div>
 
-      <tags-analytics :date="dateForTags" :need-panel-style="false" :empty-message="t('analyticsPage.tags.noData')"
+      <categories-analytics :date="dateForCategories" :need-panel-style="false" :empty-message="t('analyticsPage.categories.noData')"
       />
     </div>
 
@@ -58,9 +58,9 @@
 <script setup>
 import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
-import TagsByMonths from "~/components/analytics/tagsByMonths.vue";
+import CategoriesByMonths from "~/components/analytics/categoriesByMonths.vue";
 import Pie from "~/components/analytics/pie.vue";
-import TagsAnalytics from "~/components/analytics/tagsAnalytics.vue";
+import CategoriesAnalytics from "~/components/analytics/categoriesAnalytics.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 
 definePageMeta({
@@ -69,17 +69,17 @@ definePageMeta({
   ]
 });
 
-const { $analyticsApi, $transactionsTagsApi, $currenciesApi, $serverConfigs } = useNuxtApp();
+const { $analyticsApi, $transactionsCategoriesApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const today = new Date();
 
-const dateForTags = ref();
+const dateForCategories = ref();
 const monthPicker = ref();
 
 watch(monthPicker, (value, oldValue, onCleanup) => {
   if (value)
-    dateForTags.value = new Date(value.year, value.month + 1, 1);
+    dateForCategories.value = new Date(value.year, value.month + 1, 1);
 })
 
 monthPicker.value = { year: today.getFullYear(), month: today.getMonth() };

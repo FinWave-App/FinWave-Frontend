@@ -7,9 +7,9 @@
       :no-results-text="$t('selects.noResults')"
   >
 
-    <template v-slot:tag="{ option, handleTagRemove, disabled }">
+    <template v-slot:category="{ option, handleCategoryRemove, disabled }">
       <div
-          class="multiselect-tag is-user"
+          class="multiselect-category is-user"
           :class="{
             'is-disabled': disabled
           }"
@@ -19,10 +19,10 @@
 
         <span
             v-if="!disabled"
-            class="multiselect-tag-remove"
-            @click="handleTagRemove(option, $event)"
+            class="multiselect-category-remove"
+            @click="handleCategoryRemove(option, $event)"
         >
-            <span class="multiselect-tag-remove-icon"></span>
+            <span class="multiselect-category-remove-icon"></span>
         </span>
       </div>
     </template>

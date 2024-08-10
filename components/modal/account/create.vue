@@ -40,7 +40,7 @@ const props = defineProps({
     required: true
   },
 
-  tag: {
+  folder: {
     required: true
   }
 })
@@ -75,7 +75,7 @@ const create = () => {
   highlightErrors.value = false;
   close();
 
-  $accountsApi.newAccount(name.value, currency.value, props.tag.tagId, description.value.length > 0 ? description.value : null).then((s) => {
+  $accountsApi.newAccount(name.value, currency.value, props.folder.folderId, description.value.length > 0 ? description.value : null).then((s) => {
     if (s !== -1)
       $toastsManager.pushToast(t("modals.newAccount.messages.success"), 2500, "success")
     else
