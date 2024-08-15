@@ -23,13 +23,24 @@
 import ApexChart from "vue3-apexcharts";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue";
 import {useColor} from "~/composables/useColor";
+import {useStorage} from "@vueuse/core";
+import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 
 const { $analyticsApi, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
 
 const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 
-const filter = ref();
+const preferredCurrency = useStorage("preferred_currency", undefined);
+
+const filter = ref(new TransactionsFilter(
+    undefined,
+    undefined,
+    preferredCurrency.value ? [Number.parseInt(preferredCurrency.value)] : undefined,
+    undefined,
+    undefined,
+    undefined
+));
 const chartSeries = ref([]);
 
 const type = ref('bar');

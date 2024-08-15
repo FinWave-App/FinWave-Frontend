@@ -6,7 +6,7 @@
         <div class="px-6 pt-4 pb-2 border-b border-b-base-200 font-bold text-lg">
           {{ title }}
         </div>
-        <div class="p-6 pt-4">
+        <div :class="contentClass">
           <slot>
           </slot>
         </div>
@@ -44,6 +44,11 @@ defineProps({
   modalClass: {
     type: String,
     default: "modal-top sm:modal-middle"
+  },
+
+  contentClass: {
+    type: String,
+    default: "p-6 pt-4"
   }
 })
 

@@ -157,6 +157,12 @@ export const useApiLoader = new class ApiLoader {
     }
 
     protected parseMessage(message : any) {
+        if (message.type === "aiUpdate") {
+            this.aiApi.internalUpdate(message.body);
+
+            return;
+        }
+
         if (message.type !== "update")
             return;
 

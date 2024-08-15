@@ -21,10 +21,6 @@ const props = defineProps({
 
 const currencyToShow = useStorage("preferred_currency", 1);
 
-const { $currenciesApi } = useNuxtApp();
-
-const currencies = $currenciesApi.getCurrencies();
-
 </script>
 
 

@@ -56,7 +56,9 @@ const categoriesTree = $transactionsCategoriesApi.getCategoriesTree();
 
 const props = defineProps({
   modelValue: {
-
+    type: Object,
+    required: false,
+    default: {}
   },
 
   calendarMaxRange: {
@@ -67,11 +69,13 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const filterCategories = ref();
-const filterAccounts = ref();
-const filterCurrencies = ref();
-const filterTime = ref();
-const filterDescription = ref();
+const filterCategories = ref(props.modelValue.categoriesIds);
+const filterAccounts = ref(props.modelValue.accountsIds);
+const filterCurrencies = ref(props.modelValue.currenciesIds);
+const filterTime = ref(
+    props.modelValue.fromTime && props.modelValue.toTime ? [props.modelValue.fromTime, props.modelValue.toTime] : undefined
+);
+const filterDescription = ref(props.modelValue.description);
 
 function adjustDates(date1, date2, maxDays) {
   let d1 = date1;

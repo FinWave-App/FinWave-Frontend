@@ -6,13 +6,15 @@
     "transactions": "Tranzacții",
     "recurring": "Automatizări",
     "currencies": "Valute",
-    "analytics": "Analitică",
+    "analytics": "Analitice",
     "userButtons": {
       "admin": "Admin",
       "changePassword": "Schimbă Parola",
       "sessions": "Sesiuni",
       "language": "Limbă",
       "notifications": "Notificări",
+      "ai": "AI Asistent",
+      "storage": "Depozitare",
       "logout": "Deconectare"
     },
     "messages": {
@@ -52,7 +54,9 @@
   "notesPage": {
     "placeholders": {
       "find": "Caută după descriere"
-    }
+    },
+
+    "emptyMessage": "Deocamdată aici este gol. Apasă '+' pentru a adăuga o tranzacție recurentă."
   },
 
   "bulkPage": {
@@ -82,7 +86,7 @@
     },
     "table": {
       "amount": "Sumă",
-      "category": "Categorie",
+      "categories": "Categorie",
       "account": "Cont",
       "createdAt": "Creat",
       "description": "Descriere",
@@ -341,7 +345,7 @@
         "description": "Conturi financiare tradiționale"
       },
       "2": {
-        "name": "Criptomonedă",
+        "name": "Criptomonede",
         "description": "Conturi de criptomonede"
       }
     },
@@ -360,9 +364,9 @@
     },
 
     "categories": {
-      "1": "Salariu",
+      "1": "Salarii",
       "2": "Investiții",
-      "3": "Prooziitori",
+      "3": "Cumpărături alimentare",
       "4": "Locuință",
       "5": "Divertisment",
       "6": "Îmbrăcăminte",
@@ -389,6 +393,47 @@
       "deleteRecurring": "Ștergi automatizarea?",
       "deleteNote": "Ștergi nota?",
       "deleteAllBulk": "Ștergi toate tranzacțiile bulk? Această acțiune nu poate fi anulată"
+    },
+
+    "files": {
+      "title": "Fișiere",
+
+      "messages": {
+        "delete": {
+          "success": "Fișier șters",
+          "error": "Eroare la ștergerea fișierului"
+        },
+        "deleteAll": {
+          "success": "Fișiere șterse",
+          "error": "Eroare la ștergerea fișierelor"
+        },
+        "linkCopy": {
+          "success": "Link de descărcare copiat",
+          "fail": "Eșec la copierea linkului"
+        }
+      },
+
+      "createdAt": "Creat la: ",
+      "expiresAt": "Expiră la: ",
+
+      "empty": "Niciun fișier în stocare",
+
+      "deleteAll": "Șterge toate"
+    },
+
+    "ai": {
+      "title": "Asistent AI",
+      "buttons": {
+        "start": "Sesiune nouă",
+        "send": "Trimite"
+      },
+
+      "messages": {
+        "uploadError": "Eroare la încărcarea fișierului"
+      },
+
+      "startText": "Inteligența artificială integrată în FinWave poate face aproape orice: adăuga/edita/șterge tranzacții, facturi, note, buget și multe altele. În plus, desigur, analizează cheltuielile tale pentru a-ți oferi cele mai utile sfaturi.",
+      "emptyTip": "Întreabă ceva! De exemplu: „Uită-te la analizele din ultimele luni. Există vreo recomandare pentru următoarea perioadă?”"
     },
 
     "categoryBudget": {

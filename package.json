@@ -1,6 +1,6 @@
 {
   "name": "finwave",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -28,6 +28,7 @@
     "@vuepic/vue-datepicker": "^5.4.0",
     "@vueuse/core": "^10.11.0",
     "apexcharts": "^3.41.0",
+    "async-mutex": "^0.5.0",
     "daisyui": "^4.4.19",
     "mini-svg-data-uri": "^1.4.4",
     "nuxt-papa-parse": "^1.0.8",

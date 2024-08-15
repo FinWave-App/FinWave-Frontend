@@ -36,7 +36,13 @@ module.exports = {
     'progress-error',
     'max-w-72',
     'from-emerald-300/20',
-    'bg-gradient-to-r'
+    'bg-gradient-to-r',
+    'font-bold',
+    'brightness-125',
+    'p-6',
+    'pt-4',
+    'modal-top',
+    'sm:modal-middle'
   ],
 
   theme: {

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="dropdown dropdown-end dropdown-hover">
-      <div tabindex="0" role="button" class="cursor-pointer">
+    <div class="dropdown dropdown-bottom dropdown-hover">
+      <div tabindex="0" role="button" class="cursor-pointer size-10 flex justify-center items-center">
         <theme-icon :theme="currentTheme"/>
       </div>
       <ul tabindex="0" class="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52">

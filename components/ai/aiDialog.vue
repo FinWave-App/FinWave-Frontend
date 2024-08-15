@@ -2,6 +2,11 @@
   <div class="w-full flex flex-col justify-center items-center transition-all dialog-sizes">
     <div v-if="context" class="w-full flex flex-col gap-2 justify-between h-full" @dragover.prevent="dropStateUpdate" @dragenter.prevent @drop.prevent>
       <div class="flex gap-1 items-center absolute z-10 backdrop-blur py-0.5 pl-1 pr-1 rounded-xl">
+        <button v-if="itsDropdown" class="btn btn-ghost btn-sm p-0.5" @click="changeScreen">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+          </svg>
+        </button>
         <button v-if="messages.length > 0" class="btn btn-ghost btn-sm p-0.5" @click="startDialog">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -14,7 +19,7 @@
 
       <div v-if="messages.length > 0" class="overflow-auto h-full" id="messagesContainer">
         <transition-group name="messages">
-          <div class="chat" v-for="m in messages" :class="{'chat-start' : m.fromBot, 'chat-end' : !m.fromBot}" :key="m.id">
+          <div class="chat" v-for="m in messages" :class="{'chat-start' : m.fromBot, 'chat-end' : !m.fromBot, 'mt-8' : m.id === 0}" :key="m.id">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
                 <svg v-if="m.fromBot" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
@@ -25,7 +30,7 @@
                 </svg>
               </div>
             </div>
-            <div v-if="m.status === 1" class="chat-bubble" :class="{'max-w-72' : limitedBubbleWidth, 'from-emerald-300/20 bg-gradient-to-r' : m.attachment && !m.isImage}">
+            <div v-if="m.status === 1" class="chat-bubble bg-opacity-85" :class="{'max-w-72' : itsDropdown, 'from-emerald-300/20 bg-gradient-to-r' : m.attachment && !m.isImage}">
               <MDC v-if="!m.attachment || m.isImage" class="markdown" :value="m.message" />
               <div v-else class="max-w-48 h-8 flex justify-between gap-2 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -101,7 +106,7 @@
 import {find} from "vue3-treeselect";
 
 const props = defineProps({
-  limitedBubbleWidth: {
+  itsDropdown: {
     type: Boolean,
     required: false,
     default: true
@@ -121,6 +126,10 @@ const messages = $aiApi.getMessages();
 const userWantDrop = ref(false);
 let dragTimeout = null;
 let lastDropCall = Date.now();
+
+const changeScreen = () => {
+  emit('changeScreen');
+}
 
 const dropStateUpdate = () => {
   userWantDrop.value = true;
@@ -188,7 +197,7 @@ const filesDropped = async (event) => {
 }
 
 const startDialog = async () => {
-  await $aiApi.newContext();
+  await $aiApi.newContext(locale.value);
 }
 
 const sendMessage = async () => {

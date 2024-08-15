@@ -1,11 +1,14 @@
 import {AbstractApi} from "~/libs/api/AbstractApi";
 import {Ref} from "vue";
 import {useServer} from "~/composables/useServer";
+import {Mutex} from "async-mutex";
 
 export class AiApi extends AbstractApi {
     private _contextId: Ref<number | null> = ref(null);
     private _messages: Ref<Array<any>> = ref(new Array<any>());
     private _lastMessageIndex: Ref<number> = ref(0);
+
+    private _messageMutex = new Mutex();
 
     async init(): Promise<void | boolean> {
         return true;
@@ -17,6 +20,28 @@ export class AiApi extends AbstractApi {
 
     public getMessages(): Ref<Array<any>> {
         return this._messages;
+    }
+
+    public async internalUpdate(body: any) : Promise<void> {
+        if (body.contextId !== this._contextId.value)
+            return
+
+        const release = await this._messageMutex.acquire();
+
+        try {
+            let template = this._messages.value.find((m) => m.status === 0);
+
+            const newMessage = this.pushTemplateMessage();
+
+            if (!template)
+                template = newMessage;
+
+            template.fromBot = body.role === "assistant";
+            template.status = 1;
+            template.message = body.newMessage;
+        }finally {
+            release();
+        }
     }
 
     protected executeWithTimeout<T>(promise: Promise<T>, timeout: number, onTimeout: () => void, context: any): Promise<T> {
@@ -44,15 +69,23 @@ export class AiApi extends AbstractApi {
             }
         };
 
-        this._messages.value.push({
-            id: this._lastMessageIndex.value,
-            fromBot: false,
-            status: 0
-        })
+        let release = await this._messageMutex.acquire();
 
-        const newMessageId = this._lastMessageIndex.value;
+        let newMessageId;
 
-        this._lastMessageIndex.value++;
+        try {
+            this._messages.value.push({
+                id: this._lastMessageIndex.value,
+                fromBot: false,
+                status: 0
+            })
+
+            newMessageId = this._lastMessageIndex.value;
+
+            this._lastMessageIndex.value++;
+        }finally {
+            release();
+        }
 
         const { data, error } = await useApi<any>("/user/ai/attachFile", opts);
 
@@ -61,13 +94,19 @@ export class AiApi extends AbstractApi {
 
         const fileUrl = useServer.getUrl() + "files/download?fileId=" + fileId;
 
-        let m = this._messages.value.find((m) => m.id === newMessageId);
+        release = await this._messageMutex.acquire();
 
-        m.message = renderAsImage ? "![attachment](" + fileUrl + ")" : "";
-        m.isImage = renderAsImage;
-        m.name = name;
-        m.attachment = true;
-        m.status = 1;
+        try {
+            let m = this._messages.value.find((m) => m.id === newMessageId);
+
+            m.message = renderAsImage ? "![attachment](" + fileUrl + ")" : "";
+            m.isImage = renderAsImage;
+            m.name = name;
+            m.attachment = true;
+            m.status = 1;
+        }finally {
+            release();
+        }
 
         return true;
     }
@@ -81,33 +120,51 @@ export class AiApi extends AbstractApi {
             }
         };
 
-        this._messages.value.push({
-            id: this._lastMessageIndex.value,
-            fromBot: false,
-            status: 1,
-            message: message
-        })
-        this._lastMessageIndex.value++;
+        let release = await this._messageMutex.acquire();
+
+        try {
+            this._messages.value.push({
+                id: this._lastMessageIndex.value,
+                fromBot: false,
+                status: 1,
+                message: message
+            })
+            this._lastMessageIndex.value++;
+        }finally {
+            release();
+        }
 
         const apiPromise = useApi<any>("/user/ai/ask", opts);
 
-        const { data, error } = await this.executeWithTimeout(apiPromise, 1000, this.pushTemplateMessage, this)
-            .catch(console.error);
+        const { data, error } = await this.executeWithTimeout(apiPromise, 1500, async () => {
+            release = await this._messageMutex.acquire();
+            try {
+                this.pushTemplateMessage();
+            }finally {
+                release();
+            }
+        }, this).catch(console.error);
 
-        let m = this._messages.value.find((m) => m.id === this._lastMessageIndex.value - 1);
+        release = await this._messageMutex.acquire();
 
-        if (m.status !== 0)
-            m = this.pushTemplateMessage();
+        try {
+            let m = this._messages.value.find((m) => m.status === 0);
 
-        if (error.value !== null) {
-            m.status = -1;
-            m.message = "Server error";
+            if (!m)
+                m = this.pushTemplateMessage();
 
-            return false;
+            if (error.value !== null) {
+                m.status = -1;
+                m.message = "Server error";
+
+                return false;
+            }
+
+            m.message = data.value.answer;
+            m.status = 1;
+        }finally {
+            release();
         }
-
-        m.message = data.value.answer;
-        m.status = 1;
 
         return true;
     }
@@ -126,11 +183,11 @@ export class AiApi extends AbstractApi {
         return message;
     }
 
-    public async newContext(): Promise<boolean> {
+    public async newContext(lang): Promise<boolean> {
         const opts = {
             method: "POST",
             params: {
-                additionalSystemMessage: "When responding, use markdown and, if necessary, format the data into tables, the client will be glad to see it"
+                additionalSystemMessage: "When responding, use markdown and, if necessary, format the data into tables, the client will be glad to see it. User language: " + lang
             }
         };
 
