@@ -1,16 +1,16 @@
 <template>
-  <toasts-board>
+  <div class="flex flex-col justify-between">
+    <div class="min-h-screen">
+      <toasts-board/>
+      <navigation/>
 
-  </toasts-board>
+      <div class="page-content">
+        <slot />
+      </div>
+    </div>
 
-  <navigation>
-
-  </navigation>
-
-  <div class="page-content">
-    <slot />
+    <fw-footer class="mt-24"/>
   </div>
-
 </template>
 
 <script setup>

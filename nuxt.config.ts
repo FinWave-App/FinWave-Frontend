@@ -1,4 +1,10 @@
 import { NuxtConfig } from '@nuxt/types'
+import {resolve} from "path";
+import {readFileSync} from "fs";
+
+const packageJsonPath = resolve(process.cwd(), 'package.json')
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
+const version = packageJson.version
 
 const config: NuxtConfig = {
     ssr: false,
@@ -65,6 +71,7 @@ const config: NuxtConfig = {
 
     runtimeConfig: {
         public: {
+            clientVersion: version,
             apiURL: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:8080/',
             allowCustomApiURL: process.env.NUXT_ALLOW_CUSTOM_API_URL || false,
         },

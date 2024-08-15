@@ -22,9 +22,12 @@ import {useServer} from "~/composables/useServer";
 import {CategoriesBudgetApi} from "~/libs/api/category/budget/CategoriesBudgetApi";
 import {AiApi} from "~/libs/api/ai/AiApi";
 import {FilesApi} from "~/libs/api/files/FilesApi";
+import {ServerApi} from "~/libs/api/server/ServerApi";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
+    private readonly serverApi: ServerApi;
+
     private readonly userApi: UserApi;
     private readonly sessionsApi : SessionsApi;
 
@@ -54,6 +57,8 @@ export const useApiLoader = new class ApiLoader {
 
     constructor() {
         this.serverConfigs = new ConfigManager();
+        this.serverApi = new ServerApi();
+
         this.userApi = new UserApi();
         this.sessionsApi = new SessionsApi();
 
@@ -86,6 +91,7 @@ export const useApiLoader = new class ApiLoader {
         return Promise.all([
             auth,
             this.sessionsApi.init(),
+            this.serverApi.init(),
             this.accountsApi.init(),
             this.accountsFoldersApi.init(),
             this.transactionsCategoriesApi.init(),
@@ -210,6 +216,7 @@ export const useApiLoader = new class ApiLoader {
         return {
             provide: {
                 serverConfigs: this.serverConfigs,
+                serverApi: this.serverApi,
                 accountsApi: this.accountsApi,
                 accountsFoldersApi: this.accountsFoldersApi,
                 transactionsCategoriesApi: this.transactionsCategoriesApi,
