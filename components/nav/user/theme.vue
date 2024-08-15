@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="dropdown dropdown-bottom dropdown-hover">
+    <div class="dropdown dropdown-position dropdown-hover">
       <div tabindex="0" role="button" class="cursor-pointer size-10 flex justify-center items-center">
         <theme-icon :theme="currentTheme"/>
       </div>
@@ -13,7 +13,6 @@
           </div>
         </li>
         <li @click="handleClick">
-
           <div class="flex gap-2 rounded-xl" :class="{ 'bg-base-200' : currentTheme === 'dark' }" @click="currentTheme = 'dark'">
             <theme-icon :theme="'dark'"/>
 
@@ -65,5 +64,17 @@ const handleClick = () => {
 </script>
 
 <style scoped>
+
+@media (max-width: 640px) {
+  .dropdown-position {
+    @apply dropdown-end
+  }
+}
+
+@media (min-width: 640px) {
+  .dropdown-position {
+    @apply  dropdown-bottom
+  }
+}
 
 </style>
