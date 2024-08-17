@@ -97,7 +97,7 @@ const close = () => {
 }
 
 const newSession = () => {
-  $sessionsApi.newSession(configs.userSessionsLifetimeDays, newSessionDescription.value.length > 0 ? newSessionDescription.value : null).then((s) => {
+  $sessionsApi.newSession(configs.userSessionsLifetimeDays, newSessionDescription.value && newSessionDescription.value.length > 0 ? newSessionDescription.value : null).then((s) => {
     if (s) {
       copyToClipboard(s);
       $toastsManager.pushToast(t("modals.sessions.messages.successCreate"), 2500, "success");
