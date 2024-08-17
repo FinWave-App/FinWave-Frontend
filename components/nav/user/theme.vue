@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="dropdown dropdown-position dropdown-hover">
+    <div class="dropdown dropdown-end dropdown-hover">
       <div tabindex="0" role="button" class="cursor-pointer size-10 flex justify-center items-center">
         <theme-icon :theme="currentTheme"/>
       </div>
@@ -64,17 +64,5 @@ const handleClick = () => {
 </script>
 
 <style scoped>
-
-@media (max-width: 640px) {
-  .dropdown-position {
-    @apply dropdown-end
-  }
-}
-
-@media (min-width: 640px) {
-  .dropdown-position {
-    @apply  dropdown-bottom
-  }
-}
 
 </style>
