@@ -25,6 +25,11 @@ const props = defineProps({
 
   currencyFilter: {
     type: Number
+  },
+
+  overrideHidden: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -45,21 +50,23 @@ const options = computed(() => {
   const resultArray = [];
 
   folders.value.forEach((t) => {
-    const options = getFolderAccounts(t).map((a) => {
-      if (props.excludeAccount && props.excludeAccount === a.accountId)
-        return null;
+    const options = getFolderAccounts(t)
+        .map((a) => {
+          if (props.excludeAccount && props.excludeAccount === a.accountId || !props.overrideHidden && a.hidden)
+            return null;
 
-      return {
-        label: a.name,
-        value: a.accountId
-      }
-    });
+          return {
+            label: a.name,
+            value: a.accountId
+          }
+        })
+        .filter(a => a !== null);
 
-    resultArray.push({
-      label: t.name,
-      options: options.filter(a => a !== null)
-    });
-
+    if (options.length > 0)
+      resultArray.push({
+        label: t.name,
+        options: options
+      });
   });
 
   return resultArray;

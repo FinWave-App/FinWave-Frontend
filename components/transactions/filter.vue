@@ -8,25 +8,24 @@
                             :close-on-select="false"
                             :categories-tree="categoriesTree"
                             :can-be-without-parent="false"
-    >
-
-    </select-transaction-category>
+    />
 
     <select-account class="flex-1 h-10 min-w-48"
                     mode="tags"
                     v-model="filterAccounts"
                     :searchable="true"
                     :placeholder='$t("transactionsPage.placeholders.filters.accounts")'
-                    :close-on-select="false">
-    </select-account>
+                    :close-on-select="false"
+                    :override-hidden="true"
+    />
 
     <select-currency class="flex-1 h-10 min-w-48"
                      mode="tags"
                      v-model="filterCurrencies"
                      :searchable="true"
                      :placeholder='$t("transactionsPage.placeholders.filters.currencies")'
-                     :close-on-select="false">
-    </select-currency>
+                     :close-on-select="false"
+    />
 
     <Datepicker class="flex-1 min-w-64 dp-h-10"
                 v-model="filterTime"
@@ -34,7 +33,8 @@
                 :enable-time-picker="false"
                 :placeholder='$t("transactionsPage.placeholders.filters.time")'
                 :locale="locale"
-                range />
+                range
+    />
 
     <input type="text"
            class="input input-bordered flex-1 h-10 text-sm font-bold min-w-48"

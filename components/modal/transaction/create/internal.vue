@@ -127,7 +127,7 @@
   </div>
 
   <div class="modal-action flex justify-between items-center">
-    <nuxt-link to="/bulk" class="btn btn-sm disabled">
+    <nuxt-link to="/bulk" class="btn btn-sm invisible lg:visible">
       {{ $t('modals.newTransaction.buttons.bulkMode') }}
     </nuxt-link>
 

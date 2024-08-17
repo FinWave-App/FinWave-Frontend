@@ -105,7 +105,7 @@ const singIn = async () => {
 
   const {data, error} = await useApi('auth/login', {
     method: "POST",
-    query: {login: login.value, password: password.value}
+    query: {login: login.value, password: password.value, description: navigator.userAgent.slice(0, configs.maxSessionDescriptionLength)}
   })
 
   if (error.value !== null) {

@@ -67,3 +67,7 @@ body {
 .min-w-64 {
     min-width: 16rem;
 }
+
+.modal {
+    @apply z-40;
+}
