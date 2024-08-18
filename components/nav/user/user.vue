@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="dropdown dropdown-end dropdown-hover max-w-24 sm:max-w-64 md:max-w-80 lg:max-w-80 2xl:max-w-80">
+    <div class="dropdown dropdown-end dropdown-hover max-w-24 sm:max-w-64 md:max-w-80 lg:max-w-80 2xl:max-w-80 ">
       <div tabindex="0" role="button" class="cursor-pointer m-1">
         <avatar class="overflow-hidden" :avatar-letter="avatarLetter" :username="username"/>
       </div>
-      <div tabindex="0" class="dropdown-content z-[2] p-2 shadow bg-base-100 rounded-box w-52">
+      <div tabindex="0" class="dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 z-20">
         <ul class="menu p-0">
           <li>
             <div @click="copyToClipboard(username)">
