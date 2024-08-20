@@ -14,13 +14,13 @@
       </div>
 
       <div class="flex gap-4 flex-col-reverse mt-4">
-        <div v-for="(transaction, index) in transactions" :key="transaction._id" class="flex justify-between gap-2 items-center border rounded-xl p-2 border-base-200" :class="{'border-error' : highlightWrong === index}">
+        <div v-for="(transaction, index) in transactions" :key="transaction._id + '_' + index" class="flex justify-between gap-2 items-center border rounded-xl p-2 border-base-200" :class="{'border-error' : highlightWrong === index}">
           <select-transaction-category
               class="w-full flex-1"
               :allow-new="true"
               :can-be-without-parent="false"
               :categories-tree="categoriesTree"
-              v-model="transaction.categoriesId"
+              v-model="transaction.categoryId"
           />
 
           <div class="flex flex-col justify-center items-center gap-2 flex-1">
@@ -47,7 +47,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.accountId)"
-                  :categories-id="transaction.categoriesId"
+                  :category-id="transaction.categoryId"
                   v-model="transaction.delta"
               />
             </template>
@@ -55,7 +55,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.accountId)"
-                  :categories-id="transaction.categoriesId"
+                  :category-id="transaction.categoryId"
                   v-model="transaction.delta"
                   :sign-override="-1"
               />
@@ -67,7 +67,7 @@
               <transaction-amount-field
                   class="w-full"
                   :currency-id="accountIdToCurrencyId(transaction.toAccountId)"
-                  :categories-id="transaction.categoriesId"
+                  :category-id="transaction.categoryId"
                   v-model="transaction.toDelta"
                   :sign-override="1"
               />
@@ -169,7 +169,7 @@ const checkAll = () => {
   let lastCheck = 0;
 
   for (let t of transactions.value) {
-    if (!t.categoriesId || !categoriesMap.value.has(t.categoriesId))
+    if (!t.categoryId || !categoriesMap.value.has(t.categoryId))
       return lastCheck;
 
     if (!t.accountId || !accountsMap.value.has(t.accountId))

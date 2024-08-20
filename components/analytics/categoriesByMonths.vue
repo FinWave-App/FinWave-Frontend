@@ -83,7 +83,7 @@ const buildChart = async () => {
 
       let categorySeries = null;
 
-      if (categories[v.currencyId + "-" + v.categoriesId] === undefined) {
+      if (categories[v.currencyId + "-" + v.categoryId] === undefined) {
         categorySeries = {
           name: categoryName + " (" + currencySymbol + ")",
           data: []
@@ -93,7 +93,7 @@ const buildChart = async () => {
         series.push(categorySeries);
         colors.push(useColor(v.categoryId));
       } else {
-        categorySeries = categories[v.currencyId + "-" + v.categoryiesId];
+        categorySeries = categories[v.currencyId + "-" + v.categoryId];
       }
 
       categorySeries.data[i] = v.delta;

@@ -51,6 +51,9 @@
     },
     "categories": {
       "emptyMessage": "Category spending summary for the current month will be here"
+    },
+    "total": {
+      "onlyExpansesCheckbox": "Only Expanses"
     }
   },
 

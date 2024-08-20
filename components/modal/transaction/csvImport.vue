@@ -271,9 +271,20 @@ const parseDateWithLocale = (dateString) => {
   moment.locale(locale.value);
 
   const formats = {
-    'ru': ['DD MMMM YYYY', 'DD.MM.YYYY', 'D MMM YYYY', 'YYYY-MM-DD'],
-    'en': ['MMMM DD, YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD', 'D MMM YYYY'],
-    'ro': ['DD MMMM YYYY', 'DD.MM.YYYY', 'D MMM YYYY', 'YYYY-MM-DD']
+    'ru': [
+      'DD MMMM YYYY',      'DD.MM.YYYY',      'D MMM YYYY',      'YYYY-MM-DD',
+      'DD MMMM YYYY HH:mm', 'DD.MM.YYYY HH:mm', 'D MMM YYYY HH:mm', 'YYYY-MM-DD HH:mm'
+    ],
+
+    'en': [
+      'MMMM DD, YYYY',      'MM/DD/YYYY',      'YYYY-MM-DD',      'D MMM YYYY',
+      'MMMM DD, YYYY HH:mm', 'MM/DD/YYYY HH:mm', 'YYYY-MM-DD HH:mm', 'D MMM YYYY HH:mm',
+    ],
+
+    'ro': [
+      'DD MMMM YYYY',      'DD.MM.YYYY',      'D MMM YYYY',      'YYYY-MM-DD',
+      'DD MMMM YYYY HH:mm', 'DD.MM.YYYY HH:mm', 'D MMM YYYY HH:mm', 'YYYY-MM-DD HH:mm'
+    ]
   };
 
   const parsedDate = moment(dateString, formats[locale.value], true);

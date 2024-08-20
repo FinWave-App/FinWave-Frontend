@@ -3,7 +3,7 @@
     <transactions-filter-div v-model="filter" />
 
     <transition-group name="status">
-      <div v-if="loadStatus === 0" :key="'loadScreen'" class="skeleton w-full h-32 bg-opacity-70 mt-4">
+      <div v-if="loadStatus === 0" :key="'loadScreen'" class="skeleton w-full h-screen bg-opacity-70 mt-4">
       </div>
       <div v-else class="overflow-x-auto overflow-y-hidden mt-2" :key="'table'">
         <table class="table table-sm lg:table-md table-zebra table-pin-rows">
@@ -127,10 +127,11 @@ const changePage = async (pageNeed) => {
   loadStatus.value = 0;
   page.value = pageNeed;
 
+  window.scrollTo(0,0);
+
   await fetchTransactions();
 
   loadStatus.value = 1;
-  window.scrollTo(0,0);
 }
 
 watch(filter, async () => {

@@ -29,6 +29,11 @@ const props = defineProps({
   period: {
     type: Number,
     required: true
+  },
+
+  onlyExpanses: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -36,7 +41,14 @@ const categoriesMap = $transactionsCategoriesApi.getCategoriesMap();
 const currenciesMap = $currenciesApi.getCurrenciesMap();
 
 const currency = computed(() => currenciesMap.value.get(props.currencyId));
-const fromDate = computed(() => new Date().setDate(new Date() - props.period))
+
+const analytics = ref([]);
+
+const fromDate = computed(() => {
+  const d = new Date();
+  d.setDate(d.getDate() - props.period)
+  return d;
+})
 
 const chartSeries = ref([]);
 const chartOptions = ref({
@@ -56,21 +68,30 @@ const formatAmount = (delta) => {
   return formatter.format(delta).replace(currency.value.code + " ", currency.value.symbol).replace(" " + currency.value.code, " " + currency.value.symbol);
 }
 
+const fetchData = async () => {
+  analytics.value = await $analyticsApi.getAnalyticsByDays(
+      new TransactionsFilter(null, null, [currency.value.currencyId], fromDate.value, new Date(), null)
+  );
+}
+
 const buildChart = async () => {
   const newSeries = [
-    {
-      name: t("analyticsPage.income"),
-      data: []
-    },
     {
       name: t("analyticsPage.expanse"),
       data: []
     }
   ];
 
+  if (!props.onlyExpanses) {
+    newSeries.push({
+      name: t("analyticsPage.income"),
+      data: []
+    });
+  }
+
   const newOptions = {
     labels: [],
-    colors:['#31c48d', '#f05252'],
+    colors: ['#f05252', '#31c48d'],
     chart: {
       id: props.id,
       foreColor: undefined
@@ -85,13 +106,9 @@ const buildChart = async () => {
     },
   };
 
-  const analytics = (await $analyticsApi.getAnalyticsByDays(
-      new TransactionsFilter(null, null, [currency.value.currencyId], fromDate.value, new Date(), null)
-  ));
-
   const data = new Map();
 
-  analytics.forEach((v, k) => {
+  analytics.value.forEach((v, k) => {
     let income = 0;
     let expanse = 0;
 
@@ -102,6 +119,9 @@ const buildChart = async () => {
         expanse += v.delta;
     });
 
+    if (income === 0)
+      income = null;
+
     data.set(k, { income, expanse });
   })
   const sortedData = new Map(Array.from(data).sort(([a], [b]) => a.localeCompare(b)));
@@ -110,21 +130,27 @@ const buildChart = async () => {
     const date = new Date(k).toLocaleString(locale.value, {year: 'numeric', month: 'numeric', day: 'numeric'})
 
     newOptions.labels.push(date);
-    newSeries[0].data.push(v.income);
-    newSeries[1].data.push(v.expanse);
+    newSeries[0].data.push(v.expanse);
+
+    if (!props.onlyExpanses)
+      newSeries[1].data.push(v.income);
   });
 
   chartSeries.value = newSeries;
   chartOptions.value = newOptions;
 }
 
-watch([() => props.currencyId,() =>  props.period], () => {
-  buildChart();
+watch([() => props.currencyId,() => props.period], () => {
+  fetchData();
 });
 
-$transactionsApi.registerUpdateListener(buildChart)
+$transactionsApi.registerUpdateListener(fetchData)
 
-buildChart();
+watch([analytics, () => props.onlyExpanses], () => {
+  buildChart();
+})
+
+fetchData();
 
 </script>
 

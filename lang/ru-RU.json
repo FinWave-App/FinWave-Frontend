@@ -51,6 +51,9 @@
     },
     "categories": {
       "emptyMessage": "Здесь будет общая сводка трат по категориям за текущий месяц"
+    },
+    "total": {
+      "onlyExpansesCheckbox": "Только расход"
     }
   },
 

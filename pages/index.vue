@@ -55,16 +55,13 @@ const { $serverConfigs, $accountsApi, $notesApi, $toastsManager } = useNuxtApp()
 const configs = $serverConfigs.configs;
 const haveAccounts = $accountsApi.getAccounts().value.length !== 0
 
-const summaryPeriod = ref(0);
+const summaryPeriod = ref(31);
 
 if (configs.users.demoMode && !haveAccounts) {
   useApiLoader.initDemo().then(() => {
     $accountsApi.reloadAccounts();
-    summaryPeriod.value = 31
   })
   $toastsManager.pushToast(t("loginPage.demoMessage"), 5000, "warning")
-}else if (!configs.users.demoMode) {
-  summaryPeriod.value = 31
 }
 
 const newTransaction = ref(false);

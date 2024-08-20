@@ -19,7 +19,7 @@
 }
 
 :root{
-    @apply bg-base-200 no-scrollbar;
+    @apply bg-base-200;
 }
 
 body {
