@@ -209,7 +209,9 @@
 
 <script setup>
 import Datepicker from "@vuepic/vue-datepicker";
-import {ca} from "date-fns/locale";
+import "moment/locale/ru.js"
+import "moment/locale/ro.js"
+import moment from "moment";
 
 const props = defineProps({
   opened: {
@@ -264,6 +266,24 @@ const highlightError = ref(false)
 
 const unknownValues = ref(new Map());
 const unknownMap = ref(new Map());
+
+const parseDateWithLocale = (dateString) => {
+  moment.locale(locale.value);
+
+  const formats = {
+    'ru': ['DD MMMM YYYY', 'DD.MM.YYYY', 'D MMM YYYY', 'YYYY-MM-DD'],
+    'en': ['MMMM DD, YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD', 'D MMM YYYY'],
+    'ro': ['DD MMMM YYYY', 'DD.MM.YYYY', 'D MMM YYYY', 'YYYY-MM-DD']
+  };
+
+  const parsedDate = moment(dateString, formats[locale.value], true);
+
+  if (parsedDate.isValid()) {
+    return parsedDate.toDate();
+  } else {
+    return null;
+  }
+}
 
 const transformToTransactions = () => {
   const result = [];
@@ -320,8 +340,10 @@ const transformToTransactions = () => {
           transaction.categoryId = category;
           break;
         case 4: // date
-            if (!Number.isNaN(Date.parse(data)))
-                transaction.created = new Date(data);
+            const date = parseDateWithLocale(data);
+
+            if (date)
+                transaction.created = date;
             else
               transaction.created = new Date(unknownMap.value.get(type)[data]);
           break;
@@ -396,7 +418,9 @@ const findUnknownValues = () => {
           if (categories.value.find((t) => t.name.toLowerCase() === data.toLowerCase()) || unknownMap.value.get(type)[data]) continue;
           break;
         case 4: // date
-          if (!Number.isNaN(Date.parse(data)) || unknownMap.value.get(type)[data]) continue;
+          const date = parseDateWithLocale(data);
+
+          if (date || unknownMap.value.get(type)[data]) continue;
           break;
       }
 
