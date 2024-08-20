@@ -332,7 +332,7 @@ const transformToTransactions = () => {
 
           break;
         case 2: // amount
-            let amount = Number.parseFloat(data);
+            let amount = Number.parseFloat(data.replaceAll(" ", ""));
 
             if (Number.isNaN(amount))
               amount = unknownMap.value.get(type)[data];
