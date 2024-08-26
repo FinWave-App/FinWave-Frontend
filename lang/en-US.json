@@ -581,6 +581,7 @@
     "sessions": {
       "title": "Sessions",
       "warning": "Sessions allow you to log in and use third-party clients. Don't share tokens unless you know what they're for!",
+      "newToken": "A new token has been created and copied to clipboard:",
       "newSession": "New session:",
       "placeholders": {
         "description": "Description"

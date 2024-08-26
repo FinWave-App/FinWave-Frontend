@@ -7,6 +7,17 @@
       <span>{{ $t("modals.sessions.warning") }}</span>
     </div>
 
+    <div v-if="newToken" class="alert alert-success mt-2 flex-col">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-current shrink-0 h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+      </svg>
+      <span class="sm:text-nowrap">{{ $t("modals.sessions.newToken") }}</span>
+
+      <p class="p-2 py-0 bg-base-100/20 rounded-2xl w-full overflow-x-scroll no-scrollbar">
+        {{ newToken }}
+      </p>
+    </div>
+
     <div class="overflow-x-auto">
       <table class="table table-xs mt-4">
         <thead>
@@ -80,16 +91,19 @@ const configs = $serverConfigs.configs.users;
 const emit = defineEmits(['close'])
 
 const sessionsData = ref([]);
-
 const newSessionDescription = ref();
+
+const newToken = ref(null);
 
 const fetchSessions = async () => {
   sessionsData.value = await $sessionsApi.getSessions();
 }
 
 watch(() => props.opened, async () => {
-  if (props.opened)
+  if (props.opened) {
+    newToken.value = null;
     await fetchSessions();
+  }
 })
 
 const close = () => {
@@ -97,13 +111,14 @@ const close = () => {
 }
 
 const newSession = () => {
-  $sessionsApi.newSession(configs.userSessionsLifetimeDays, newSessionDescription.value && newSessionDescription.value.length > 0 ? newSessionDescription.value : null).then((s) => {
+  $sessionsApi.newSession(configs.userSessionsLifetimeDays, newSessionDescription.value && newSessionDescription.value.length > 0 ? newSessionDescription.value : null).then(async (s) => {
     if (s) {
-      copyToClipboard(s);
+      newToken.value = s;
+      await copyToClipboard(s);
       $toastsManager.pushToast(t("modals.sessions.messages.successCreate"), 2500, "success");
       fetchSessions();
-    }else {
-      $toastsManager.pushToast(t("modals.sessions.messages.errorCreate"), 3000,"error");
+    } else {
+      $toastsManager.pushToast(t("modals.sessions.messages.errorCreate"), 3000, "error");
     }
   });
 }
@@ -125,12 +140,15 @@ const deleteSession = (session) => {
   });
 }
 
-const copyToClipboard = (text) => {
-  navigator.clipboard.writeText(text).then(function() {
-    $toastsManager.pushToast(t("modals.sessions.messages.successCopy"), 2500, "success");
-  }, function(err) {
-    $toastsManager.pushToast(t("modals.sessions.messages.errorCopy"), 3000,"error");
-  });
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text).then(function () {
+      $toastsManager.pushToast(t("modals.sessions.messages.successCopy"), 2500, "success");
+    });
+  } catch (err) {
+    console.error(err);
+    $toastsManager.pushToast(t("modals.sessions.messages.errorCopy"), 3000, "error");
+  }
 }
 
 </script>
