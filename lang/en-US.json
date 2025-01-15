@@ -354,7 +354,15 @@
       "hided": "Account hidden",
       "hideFail": "Failed to hide account",
       "showed": "Account restored",
-      "showFail": "Failed to restore account"
+      "showFail": "Failed to restore account",
+
+      "deleted": "Account deleted",
+      "deleteFailCause": {
+        "recurring": "Account deletion failed because some recurring transaction affects to account",
+        "accumulation": "Account deletion failed because some accumulation settings affects to account",
+        "transactions": "Account deletion failed because some transactions affects to account",
+        "unknown": "Account deletion failed"
+      }
     }
   },
 

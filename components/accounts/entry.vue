@@ -16,6 +16,7 @@
 
           <div class="flex gap-1" v-if="!hideButtons">
             <hide-button class="btn btn-xs btn-ghost m-0 p-0.5" :hide-status="account.hidden" @hide="hide" @unHide="unHide"/>
+            <delete-button v-if="account.hidden" class="btn btn-xs btn-ghost m-0 p-0.5" @event="deleteAccount" />
             <edit-button v-if="!account.hidden" class="btn btn-xs btn-ghost m-0 p-0.5" @event="emit('edit-modal')"/>
           </div>
         </div>
@@ -57,6 +58,28 @@ const currency = $currenciesApi.getCurrencies().value.find(c => c.currencyId ===
 
 const formatAmount = (delta) => {
   return useCurrencyFormatter(delta, currency, locale.value);
+}
+
+const deleteAccount = () => {
+  $accountsApi.deleteAccount(props.account.accountId).then((r) => {
+    if (r.success)
+      $toastsManager.pushToast(t("accountEntry.messages.deleted"), 2500, "success")
+    else {
+      var messageType = "unknown";
+
+      if (r.errorMessage) {
+        if (r.errorMessage.startsWith("Some recurring")) {
+          messageType = "recurring";
+        }else if (r.errorMessage.startsWith("Some accumulation")) {
+          messageType = "accumulation";
+        }else if (r.errorMessage.startsWith("Some transactions")) {
+          messageType = "transactions";
+        }
+      }
+
+      $toastsManager.pushToast(t("accountEntry.messages.deleteFailCause." + messageType), 3000,"error")
+    }
+  })
 }
 
 const hide = () => {

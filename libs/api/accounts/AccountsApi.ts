@@ -106,6 +106,27 @@ export class AccountsApi extends AbstractApi {
         return true;
     }
 
+    public async deleteAccount(accountId: number) : Promise<{success: boolean, errorMessage: string | null}> {
+        const opts = {
+            method: "POST",
+            params: { accountId: accountId }
+        };
+
+        const { data, error } = await useApi("/user/accounts/delete", opts);
+
+        if (error.value !== null) {
+            if (!data.value || !data.value.data)
+                return {success: false, errorMessage: null}
+
+            return {success: false, errorMessage: data.value.data.message};
+        }
+
+        this.accounts.value = this.accounts.value.filter((t) => t.accountId != accountId);
+        this.reloadMap();
+
+        return {success: true, errorMessage: null};
+    }
+
     public async showAccount(accountId: number) {
         const opts = {
             method: "POST",
