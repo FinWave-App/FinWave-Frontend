@@ -15,9 +15,17 @@
         </div>
       </div>
 
-      <p v-if="!hideStatus" class="opacity-80 text-sm">
-        {{folder.description}}
-      </p>
+      <div v-if="!hideStatus">
+        <div class="flex gap-1">
+          <div v-for="[key, value] in map" class="badge badge-xs badge-neutral opacity-90 font-bold min-text p-1.5">
+            {{ formatAmount(value, key) }}
+          </div>
+        </div>
+
+        <p class="opacity-80 text-sm mt-1">
+          {{folder.description}}
+        </p>
+      </div>
     </div>
     <div v-if="!hideStatus" class="bg-base-300 rounded-b-2xl p-2">
       <div v-if="accounts.length > 0" class="flex flex-col gap-2">
@@ -69,11 +77,13 @@ import HideButton from "~/components/buttons/hideButton.vue";
 import EditButton from "~/components/buttons/editButton.vue";
 import PlusButton from "~/components/buttons/plusButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 const emit = defineEmits(['hide', 'unHide']);
 
-const {$serverConfigs, $accountsApi, $accountsFoldersApi, $toastsManager} = useNuxtApp();
-const { t } = useI18n();
+const {$currenciesApi, $accountsFoldersApi, $toastsManager} = useNuxtApp();
+const { t, locale } = useI18n();
+const currencyMap = $currenciesApi.getCurrenciesMap();
 
 const props = defineProps({
   accounts: {
@@ -93,6 +103,27 @@ const props = defineProps({
 const showedAccounts = computed(() => props.accounts.filter((a) => !a.hidden));
 const hiddenAccounts = computed(() => props.accounts.filter((a) => a.hidden));
 
+const formatAmount = (delta, currency) => {
+  return useCurrencyFormatter(delta, currency, locale.value);
+}
+
+const map = computed(() => {
+  const result = new Map();
+
+  for (const account of showedAccounts.value) {
+    const currency = currencyMap.value.get(account.currencyId);
+
+    if (!currency)
+      continue;
+
+    if (!result.has(currency))
+      result.set(currency, 0);
+
+    result.set(currency, result.get(currency) + account.amount);
+  }
+
+  return result;
+})
 const createAccountModal = ref(false);
 const folderDeleteModal = ref(false);
 const folderEditModal = ref(false);
@@ -101,6 +132,7 @@ const accumulationSetModal = ref(false);
 const accountEditModal = ref(false);
 const accountToEdit = ref(null);
 const accountToAccumulation = ref(null);
+
 const setHide = () => {
   emit('hide');
 }
@@ -137,6 +169,11 @@ const confirmDelete = () => {
 </script>
 
 <style scoped>
+.min-text {
+  font-size: 0.65rem;
+  line-height: 5rem;
+}
+
 .folder-info {
   @apply p-2 px-3 bg-base-100 rounded-t-2xl;
 }
@@ -156,4 +193,5 @@ const confirmDelete = () => {
   @apply w-max;
   position: absolute;
 }
+
 </style>
