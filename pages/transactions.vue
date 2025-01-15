@@ -11,7 +11,7 @@
           <tr>
             <th>{{$t("transactionsPage.table.amount")}}</th>
             <th class="w-8"></th>
-            <th>{{$t("transactionsPage.table.categories")}}</th>
+            <th>{{$t("transactionsPage.table.category")}}</th>
             <th>{{$t("transactionsPage.table.createdAt")}}</th>
             <th>{{$t("transactionsPage.table.account")}}</th>
             <th>{{$t("transactionsPage.table.description")}}</th>

@@ -85,6 +85,7 @@ import EditButton from "~/components/buttons/editButton.vue";
 import ArrowLeftButton from "~/components/buttons/arrowLeftButton.vue";
 import PlusButton from "~/components/buttons/plusButton.vue";
 import CategoriesBudgetSummary from "~/components/misc/categoriesBudgetSummary.vue";
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 definePageMeta({
   middleware: [
@@ -111,13 +112,7 @@ const categoryToEdit = ref(null);
 
 const formatDelta = (delta, currencyId) => {
   const currency = currenciesMap.value.get(currencyId);
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const findBudgets = (treeEntry, fromRoot = true) => {

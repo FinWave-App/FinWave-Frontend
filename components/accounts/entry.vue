@@ -37,6 +37,7 @@ import HideButton from "~/components/buttons/hideButton.vue";
 import EditButton from "~/components/buttons/editButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
 import WalletButton from "~/components/buttons/walletButton.vue";
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 const emit = defineEmits(['edit-modal', 'accumulation-modal']);
 
@@ -55,13 +56,7 @@ const { $currenciesApi, $accountsApi, $toastsManager } = useNuxtApp();
 const currency = $currenciesApi.getCurrencies().value.find(c => c.currencyId === props.account.currencyId)
 
 const formatAmount = (delta) => {
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const hide = () => {

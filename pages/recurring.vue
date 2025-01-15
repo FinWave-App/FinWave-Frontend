@@ -78,6 +78,7 @@ import Datepicker from '@vuepic/vue-datepicker';
 import PagesNavigation from "~/components/buttons/pagesNavigation.vue";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 import TransactionsFilterDiv from "~/components/transactions/filter.vue"
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 definePageMeta({
   middleware: [
@@ -116,13 +117,7 @@ const formatMode = (mode, arg) => {
 
 const formatDelta = (delta, currencyId) => {
   const currency = currenciesMap.value.get(currencyId);
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const confirmDelete = () => {

@@ -66,6 +66,8 @@
 
 <script setup>
 
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
+
 const { t, locale } = useI18n();
 const { $transactionsCategoriesApi, $categoriesBudgetApi, $currenciesApi } = useNuxtApp();
 
@@ -79,13 +81,8 @@ const expectExpanses = ref([]);
 
 const formatDelta = (delta, currencyId) => {
   const currency = currenciesMap.value.get(currencyId);
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const capitalizeFirstLetter = (string) => {

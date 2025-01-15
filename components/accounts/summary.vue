@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
+
 const {$accountsApi, $currenciesApi} = useNuxtApp();
 const { t, locale } = useI18n();
 
@@ -23,13 +25,7 @@ const accounts = $accountsApi.getAccounts();
 const currencyMap = $currenciesApi.getCurrenciesMap();
 
 const formatAmount = (delta, currency) => {
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta).replace(currency.code + " ", currency.symbol).replace(" " + currency.code, " " + currency.symbol);
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const map = computed(() => {

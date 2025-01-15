@@ -45,6 +45,7 @@ import ApexChart from "vue3-apexcharts";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
 import Datepicker from "@vuepic/vue-datepicker";
 import {useColor} from "~/composables/useColor";
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 const props = defineProps({
   sign: {
@@ -145,14 +146,7 @@ $transactionsApi.registerUpdateListener(() => {
 const formatAmount = (delta) => {
   const currencyObject = currenciesMap.value.get(currency.value);
 
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currencyObject.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currencyObject.decimals
-  });
-
-  return formatter.format(delta).replace(currencyObject.code + " ", currencyObject.symbol).replace(" " + currencyObject.code, " " + currencyObject.symbol);
+  return useCurrencyFormatter(delta, currencyObject, locale.value);
 }
 
 const formatter = (value) => {

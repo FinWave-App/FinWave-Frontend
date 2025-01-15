@@ -46,6 +46,7 @@
     <div v-else-if="tab === 1" class="w-full flex flex-col gap-2">
       <select-transaction-category class="w-full"
                               v-model.number="category"
+                              :class="{'input-error' : highlightErrors && !category }"
                               :searchable="true"
                               :can-be-without-parent="false"
                               :categories-tree="categoriesTree"
@@ -60,6 +61,7 @@
 
         <input type="number"
                class="input input-bordered join-item w-full"
+               :class="{'input-error' : highlightErrors && newAmount === props.account.amount }"
                :placeholder="$t('modals.editAccount.placeholders.amount')"
                v-model="newAmount"
         >
@@ -111,6 +113,7 @@ const description = ref();
 const folder = ref();
 
 const newAmount = ref(0);
+const highlightErrors = ref(false);
 const allValid = computed(() => props.account && category.value && newAmount.value !== props.account.amount)
 
 const nameSyncStatus = ref(1);
@@ -204,8 +207,11 @@ const syncFolder = () => {
 }
 
 const applyNewAmount = () => {
-  if (!allValid.value)
+  if (!allValid.value) {
+    highlightErrors.value = true;
     return
+  }
+  highlightErrors.value = false;
 
   close();
 

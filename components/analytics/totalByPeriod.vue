@@ -11,6 +11,7 @@
 
 import ApexChart from "vue3-apexcharts";
 import {TransactionsFilter} from "~/libs/api/transactions/TransactionsFilter";
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
 
 const { $analyticsApi, $transactionsApi, $transactionsCategoriesApi, $currenciesApi, $serverConfigs } = useNuxtApp();
 const { t, locale } = useI18n();
@@ -58,14 +59,7 @@ const chartOptions = ref({
 });
 
 const formatAmount = (delta) => {
-  const formatter = Intl.NumberFormat(locale.value, {
-    style: 'currency',
-    currency: currency.value.code,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: currency.value.decimals
-  });
-
-  return formatter.format(delta).replace(currency.value.code + " ", currency.value.symbol).replace(" " + currency.value.code, " " + currency.value.symbol);
+  return useCurrencyFormatter(delta, currency.value, locale.value);
 }
 
 const fetchData = async () => {

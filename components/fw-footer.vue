@@ -19,7 +19,7 @@
       </svg>
       <div class="flex flex-col gap-1 flex-wrap">
         <p class="opacity-60 font-bold text-sm">
-          Copyright © 2024 <a href="https://finwave.app" target="_blank" class="underline">FinWave Project</a>. All rights reserved
+          Copyright © 2025 <a href="https://finwave.app" target="_blank" class="underline">FinWave Project</a>. All rights reserved
         </p>
         <p class="opacity-60 font-bold text-sm">
           This project is licensed under the <a href="/license.txt" target="_blank" class="underline">MIT License</a>.

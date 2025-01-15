@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
+
 const { t, locale } = useI18n();
 
 const props = defineProps({
@@ -79,11 +81,8 @@ const budgetsMap = $categoriesBudgetApi.getBudgetsMap();
 
 const formatAmount = (delta, currencyId) => {
   const currency = currenciesMap.value.get(currencyId);
-  const formatter = Intl.NumberFormat(locale.value, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: currency.decimals
-  });
-  return formatter.format(delta);
+
+  return useCurrencyFormatter(delta, currency, locale.value);
 }
 
 const fetchData = async () => {
