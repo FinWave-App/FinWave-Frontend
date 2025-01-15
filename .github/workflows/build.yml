@@ -30,6 +30,7 @@ jobs:
         with:
           name: FinWave Frontend
           path: .output/
+          include-hidden-files: true
   build-docker:
     needs: build
     runs-on: self-hosted
