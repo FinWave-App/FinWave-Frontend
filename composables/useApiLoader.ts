@@ -23,6 +23,7 @@ import {CategoriesBudgetApi} from "~/libs/api/category/budget/CategoriesBudgetAp
 import {AiApi} from "~/libs/api/ai/AiApi";
 import {FilesApi} from "~/libs/api/files/FilesApi";
 import {ServerApi} from "~/libs/api/server/ServerApi";
+import {ExchangeRateApi} from "~/libs/api/currencies/ExchangeRateApi";
 
 export const useApiLoader = new class ApiLoader {
     private readonly serverConfigs: ConfigManager;
@@ -39,6 +40,8 @@ export const useApiLoader = new class ApiLoader {
     private readonly recurringTransactionsApi : RecurringTransactionsApi;
 
     private readonly currenciesApi : CurrenciesApi;
+    private readonly exchangeRateApi : ExchangeRateApi;
+
     private readonly analyticsApi : AnalyticsApi;
     private readonly notesApi : NotesApi;
     private readonly notificationsApi : NotificationApi;
@@ -70,6 +73,8 @@ export const useApiLoader = new class ApiLoader {
         this.recurringTransactionsApi = new RecurringTransactionsApi(this.accountsApi);
 
         this.currenciesApi = new CurrenciesApi();
+        this.exchangeRateApi = new ExchangeRateApi();
+
         this.analyticsApi = new AnalyticsApi();
         this.notesApi = new NotesApi();
         this.notificationsApi = new NotificationApi();
@@ -98,6 +103,7 @@ export const useApiLoader = new class ApiLoader {
             this.transactionsApi.init(),
             this.recurringTransactionsApi.init(),
             this.currenciesApi.init(),
+            this.exchangeRateApi.init(),
             this.analyticsApi.init(),
             this.notesApi.init(),
             this.notificationsApi.init(),
@@ -223,6 +229,7 @@ export const useApiLoader = new class ApiLoader {
                 transactionsApi: this.transactionsApi,
                 recurringTransactionsApi: this.recurringTransactionsApi,
                 currenciesApi: this.currenciesApi,
+                exchangeRateApi: this.exchangeRateApi,
                 analyticsApi: this.analyticsApi,
                 notesApi: this.notesApi,
                 userApi: this.userApi,

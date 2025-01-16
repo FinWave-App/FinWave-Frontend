@@ -10,9 +10,15 @@
       </div>
       <div class="w-full">
         <div class="flex justify-between gap-2">
-          <p class="text-lg">
+          <p v-if="!account.hidden" class="text-lg">
             {{account.name}}
           </p>
+          <div class="flex gap-2" v-else>
+            {{account.name}}
+            <p class="font-bold">
+              {{ formatAmount(account.amount) }}
+            </p>
+          </div>
 
           <div class="flex gap-1" v-if="!hideButtons">
             <hide-button class="btn btn-xs btn-ghost m-0 p-0.5" :hide-status="account.hidden" @hide="hide" @unHide="unHide"/>
@@ -25,7 +31,7 @@
           {{account.description}}
         </p>
 
-        <p class="font-bold">
+        <p v-if="!account.hidden" class="font-bold">
           {{ formatAmount(account.amount) }}
         </p>
       </div>

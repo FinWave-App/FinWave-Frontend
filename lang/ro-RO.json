@@ -86,7 +86,7 @@
     },
     "table": {
       "amount": "Sumă",
-      "categories": "Categorie",
+      "category": "Categorie",
       "account": "Cont",
       "createdAt": "Creat",
       "description": "Descriere",

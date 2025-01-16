@@ -47,7 +47,8 @@
       "allNotesButton": "All Notes"
     },
     "summary": {
-      "emptyMessage": "Account summary will be here"
+      "emptyMessage": "Account summary will be here",
+      "preferredTip": "Approximate conversion to your preferred currency"
     },
     "categories": {
       "emptyMessage": "Category spending summary for the current month will be here"

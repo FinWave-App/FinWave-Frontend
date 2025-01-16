@@ -16,13 +16,22 @@
       </div>
 
       <div v-if="!hideStatus">
-        <div class="flex gap-1">
-          <div v-for="[key, value] in map" class="badge badge-xs badge-neutral opacity-90 font-bold min-text p-1.5">
-            {{ formatAmount(value, key) }}
+        <div v-if="map.size > 0" class="flex flex-wrap gap-1 mb-1">
+          <div v-if="exchangesEnabled" class="badge badge-xs badge-accent opacity-90 font-bold min-text p-1.5">
+            <p v-if="preferredResult">
+              {{ formatAmount(preferredResult, preferredCurrency) }}
+            </p>
+            <span v-else class="loading loading-dots loading-xs"></span>
           </div>
+
+          <template v-if="showBadges">
+            <div v-for="[key, value] in map" class="badge badge-xs badge-neutral opacity-90 font-bold min-text p-1.5">
+              {{ formatAmount(value, key) }}
+            </div>
+          </template>
         </div>
 
-        <p class="opacity-80 text-sm mt-1">
+        <p class="opacity-80 text-sm">
           {{folder.description}}
         </p>
       </div>
@@ -78,12 +87,19 @@ import EditButton from "~/components/buttons/editButton.vue";
 import PlusButton from "~/components/buttons/plusButton.vue";
 import DeleteButton from "~/components/buttons/deleteButton.vue";
 import {useCurrencyFormatter} from "~/composables/useCurrencyFormatter";
+import {useStorage} from "@vueuse/core";
 
 const emit = defineEmits(['hide', 'unHide']);
 
-const {$currenciesApi, $accountsFoldersApi, $toastsManager} = useNuxtApp();
+const {$currenciesApi, $accountsFoldersApi, $toastsManager, $exchangeRateApi, $serverConfigs} = useNuxtApp();
 const { t, locale } = useI18n();
+
 const currencyMap = $currenciesApi.getCurrenciesMap();
+const exchangesEnabled = $serverConfigs.configs.exchanges.enabled;
+
+const preferredCurrencyId = useStorage("preferred_currency", 1);
+const preferredCurrency = computed(() => currencyMap.value.get(preferredCurrencyId.value))
+const preferredResult = ref()
 
 const props = defineProps({
   accounts: {
@@ -124,6 +140,42 @@ const map = computed(() => {
 
   return result;
 })
+
+const calculatePreferred = async () => {
+  preferredResult.value = null;
+
+  const target = preferredCurrencyId.value;
+  let result = 0;
+
+  for (const [key, value] of map.value) {
+    if (key.currencyId === target) {
+      result += value;
+      continue;
+    }
+
+    const rate = await $exchangeRateApi.getExchangeRate(key.currencyId, target)
+
+    if (rate === -1)
+      continue;
+
+    result += value * rate;
+  }
+
+  preferredResult.value = result;
+}
+
+const showBadges = computed(() => {
+  return !exchangesEnabled || map.value.size > 1 || (map.value.size === 1 && !map.value.has(preferredCurrency.value));
+});
+
+if (exchangesEnabled) {
+  watch([() => map.value, preferredCurrencyId], () => {
+    calculatePreferred();
+  })
+
+  calculatePreferred();
+}
+
 const createAccountModal = ref(false);
 const folderDeleteModal = ref(false);
 const folderEditModal = ref(false);

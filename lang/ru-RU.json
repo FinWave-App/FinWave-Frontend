@@ -47,7 +47,8 @@
       "allNotesButton": "Все заметки"
     },
     "summary": {
-      "emptyMessage": "Здесь будет общая сводка счетов"
+      "emptyMessage": "Здесь будет общая сводка счетов",
+      "preferredTip": "Примерная конвертация в предпочитаемую валюту"
     },
     "categories": {
       "emptyMessage": "Здесь будет общая сводка трат по категориям за текущий месяц"
@@ -93,7 +94,7 @@
     },
     "table": {
       "amount": "Сумма",
-      "categories": "Категория",
+      "category": "Категория",
       "account": "Счет",
       "createdAt": "Создан",
       "description": "Описание",
